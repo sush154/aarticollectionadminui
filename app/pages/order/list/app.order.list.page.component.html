@@ -1,0 +1,28 @@
+<div class="bg-white">
+    <table class="table table-hover">
+        <thead class="thead-inverse">
+        <tr>
+            <th>#</th>
+            <th>Order Date</th>
+            <th>Customer</th>
+            <th class="hidden-sm-down">Amount</th>
+            <th>Order Status</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let order of ordersList">
+            <td>{{order.orderId}}</td>
+            <td>{{order.orderDate | dateParser}}</td>
+            <td>{{order.customer.firstName}} {{order.customer.lastName}}</td>
+            <td class="hidden-sm-down">{{order.amount}}</td>
+            <td>{{order.orderStatus | orderStatusParser}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="fixed-action-button">
+    <button type="button" class="btn btn-primary" [routerLink]="['/orders/addOrder']">
+        <i class="fa fa-plus"></i>
+    </button>
+</div>

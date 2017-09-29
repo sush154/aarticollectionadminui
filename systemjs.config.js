@@ -31,7 +31,8 @@
       'rxjs':                      'npm:rxjs',
       'ngx-pagination': 'https://npmcdn.com/ngx-pagination',
       'angular2-highcharts': 'node_modules/angular2-highcharts',
-      'highcharts': 'node_modules/highcharts'
+      'highcharts': 'node_modules/highcharts',
+      "ng2-rating": "node_modules/ng2-rating"
     },
     // packages tells the System loader how to load when no filename and/or no extension
     packages: {
@@ -50,7 +51,8 @@
       'angular2-highcharts': {
         main: './index.js',
         defaultExtension: 'js'
-      }
+      },
+      "ng2-rating": { "main": "index.js", "defaultExtension": "js" }
     }
   });
 })(this);

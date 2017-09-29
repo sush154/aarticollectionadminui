@@ -11,11 +11,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var platform_browser_1 = require('@angular/platform-browser');
 var router_1 = require('@angular/router');
-var app_header_module_1 = require('./navigation/header/app.header.module');
-var app_dashboard_module_1 = require('./dashboard/app.dashboard.module');
-var app_router_module_1 = require('./routing/app.router.module');
-var app_orders_list_module_1 = require('./order/list/app.orders.list.module');
-var app_products_list_model_1 = require('./product/list/app.products.list.model');
+var http_1 = require('@angular/http');
+var app_header_module_1 = require('./header/app.header.module');
+var app_router_module_1 = require('./router/app.router.module');
+var app_dashboard_page_module_1 = require('../pages/dashboard/app.dashboard.page.module');
+var app_order_list_page_module_1 = require('../pages/order/list/app.order.list.page.module');
+var app_order_add_page_module_1 = require('../pages/order/add/app.order.add.page.module');
+var app_customer_add_page_module_1 = require('../pages/customer/add/app.customer.add.page.module');
 var app_component_1 = require('./app.component');
 var AppModule = (function () {
     function AppModule() {
@@ -23,8 +25,8 @@ var AppModule = (function () {
     AppModule = __decorate([
         core_1.NgModule({
             imports: [
-                platform_browser_1.BrowserModule, router_1.RouterModule, app_header_module_1.AppHeaderModule, app_dashboard_module_1.AppDashboardModule, app_router_module_1.AppRoutingModule, app_orders_list_module_1.OrdersListModule,
-                app_products_list_model_1.ProductsListModule
+                platform_browser_1.BrowserModule, router_1.RouterModule, http_1.HttpModule, app_header_module_1.AppHeaderModule, app_router_module_1.AppRoutingModule, app_dashboard_page_module_1.AppDashboardPageModule,
+                app_order_list_page_module_1.OrderListPageModule, app_order_add_page_module_1.AddOrderPageModule, app_customer_add_page_module_1.CustomerAddPageModule
             ],
             declarations: [app_component_1.AppComponent],
             bootstrap: [app_component_1.AppComponent]

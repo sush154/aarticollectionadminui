@@ -1,0 +1,30 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item p-l-r-20" (click)="navigate('dashboard')" [class.active]="selectedPage === 'dashboard'">
+                <a class="nav-link">Dashboard</a>
+            </li>
+            <li class="nav-item p-l-r-20" (click)="navigate('products')" [class.active]="selectedPage === 'products'">
+                <a class="nav-link">Products</a>
+            </li>
+            <li class="nav-item p-l-r-20" (click)="navigate('orders')" [class.active]="selectedPage === 'orders'">
+                <a class="nav-link">Orders</a>
+            </li>
+            <li class="nav-item p-l-r-20" (click)="navigate('customers')" [class.active]="selectedPage === 'customers'">
+                <a class="nav-link">Customers</a>
+            </li>
+        </ul>
+
+        <ul class="navbar-nav">
+            <li class="nav-item authColor">
+                <a class="float-right font-18">&nbsp;Log Out&nbsp;</a>
+                <i class="fa fa-sign-out float-right p-t-per fa-2x"></i>
+            </li>
+        </ul>
+    </div>
+</nav>

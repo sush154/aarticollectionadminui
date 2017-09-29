@@ -1,0 +1,120 @@
+
+
+<div class="bg-white p-50px">
+    <form id="addOrderForm" name="addOrderForm" #addOrderForm="ngForm">
+        <div class="form-group row p-t-20px">
+            <label class="col-sm-2 col-form-label no-wrap">Order Date</label>
+            <div class="col-sm-10">
+                <my-date-picker name="orderDate" [options]="myDatePickerOptions"
+                                [(ngModel)]="expCompDate" required></my-date-picker>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="customer" class="col-sm-2 col-form-label">Customer</label>
+            <div class="col-sm-10">
+                <select class="form-control" id="customer" name="customer" #customerSelect (change)="navigateAddCustomer(customerSelect.value)">
+                    <option [value]="0">-- Select Customer --</option>
+                    <option [value]="1">Add New Customer</option>
+                    <option [value]="customer._id" *ngFor="let customer of customersList">{{customer.firstName}} {{customer.lastName}}, {{customer.city}}</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Products</label>
+            <div class="col-sm-10">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <td colspan="4" class="text-right">
+                                <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#productFilter" (click)="getAllProducts()">Add Product</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>#</th>
+                            <th>Product Name</th>
+                            <th>Quantity</th>
+                            <th>Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let product of productsList">
+                            <td>{{product.productId}}</td>
+                            <td>{{product.productName}}</td>
+                            <td>{{product.productQuantity}}</td>
+                            <td>{{product.amount}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="paymentStatus" class="col-sm-2 col-form-label">Payment Status</label>
+            <div class="col-sm-4">
+                <select class="form-control" id="paymentStatus" name="paymentStatus" #paymentStatus>
+                    <option [value]="0">-- Select Payment Status --</option>
+                    <option [value]="paymentStatus.id" *ngFor="let paymentStatus of paymentStatusList">{{paymentStatus.value}}</option>
+                </select>
+            </div>
+            <label for="paymentType" class="col-sm-2 col-form-label">Payment Type</label>
+            <div class="col-sm-4">
+                <select class="form-control" id="paymentType" name="paymentType" #paymentType>
+                    <option [value]="0">-- Select Payment Type --</option>
+                    <option [value]="paymentType.id" *ngFor="let paymentType of paymentTypeList">{{paymentType.value}}</option>
+                </select>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="modal fade bd-example-modal-lg" id="productFilter" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add Products</h5>
+            </div>
+            <div class="modal-body">
+                <form id="productNameFilterForm" name="productNameFilterForm">
+                    <input type="text" id="productNameFilter" name="productNameFilter" placeholder="Provide Product Name" class="form-control" #productNameFilter (keyup)="searchTerm$.next($event.target.value)">
+                </form>
+                <div class="m-t-20px">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Product Name</th>
+                                <th>Image</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let filteredProduct of filteredProductsList | paginate: { itemsPerPage: 10, currentPage: p, id: 'first' }">
+                                <td>{{filteredProduct.productId}}</td>
+                                <td>{{filteredProduct.productName}}</td>
+                                <td></td>
+                                <td>{{filteredProduct.price}}</td>
+                                <td>
+                                    <input type="number" id="productQuantity" name="productQuantity" #productQuanity>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-sm btn-primary" (click)="addProductToCart(filteredProduct,productQuanity.value)">Add</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tr *ngIf="filteredProductsList?.length > 10">
+                            <td colspan="5">
+                                <pagination-controls (pageChange)="p = $event" id="first" style="float: right;"></pagination-controls>
+                            </td>
+                        </tr>
+                        <tr *ngIf="filteredProductsList?.length === 0">
+                            <td colspan="5" style="text-align : center;">
+                                <h5 class="h5">No Products to Show</h5>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

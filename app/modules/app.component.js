@@ -20,21 +20,11 @@ var AppComponent = (function () {
     AppComponent = __decorate([
         core_1.Component({
             selector: 'admin-collection',
-            template: "<app-header></app-header>\n        <div class=\"container p-t-50px\"><router-outlet></router-outlet></div>\n    "
+            template: "<app-header></app-header>\n        <div class=\"container p-t-50px\">\n            <router-outlet></router-outlet>\n        </div>\n    "
         }), 
         __metadata('design:paramtypes', [router_1.Router])
     ], AppComponent);
     return AppComponent;
 }());
 exports.AppComponent = AppComponent;
-/*<div class="container-fluid">
-                      <div class="row">
-                          <div class="col-3">
-                              <div class="d-inline-block" style="height: 100%"><app-sidenav></app-sidenav></div>
-                          </div>
-                          <div class="col-9">
-                              <div class="d-inline-block align-top"><router-outlet></router-outlet></div>
-                          </div>
-                      </div>
-                  </div>*/ 
 //# sourceMappingURL=app.component.js.map

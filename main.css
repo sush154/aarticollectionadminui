@@ -4,12 +4,25 @@ body {
     font-size: 13px;
 }
 
-a {
+a, button {
     text-decoration: none !important;
+    cursor : pointer;
 }
 
 aside {
     min-height: 100%;
+}
+
+.h5 {
+    margin-bottom: .5rem;
+    font-family: inherit;
+    font-weight: 500;
+    line-height: 1.1;
+    color: inherit;
+}
+
+.m-10px {
+    margin: 10px;
 }
 
 .m-t-10px {
@@ -28,6 +41,10 @@ aside {
     padding: 50px 0px;
 }
 
+.p-50px {
+    padding: 50px;
+}
+
 .m-t-b-10px {
     margin-top: 10px;
     margin-bottom: 10px;
@@ -41,8 +58,16 @@ aside {
     padding: 0px 30px;
 }
 
+.p-l-r-20 {
+    padding: 0px 20px;
+}
+
 .p-t-50px {
     padding-top: 50px;
+}
+
+.p-t-20px {
+    padding-top: 20px;
 }
 
 .h-50px {
@@ -67,6 +92,44 @@ aside {
 
 .white-color {
     color: #fff;
+}
+
+.star-icon {
+    color: #000 !important;
+}
+
+.font-18 {
+    font-size: 18px;
+}
+
+.no-wrap {
+    white-space : nowrap;
+}
+
+.fixed-action-button {
+    position: fixed;
+    z-index: 998;
+    right: 35px;
+    bottom: 35px;
+    padding-top: 15px;
+    margin-bottom: 0;
+}
+
+.fixed-action-button .btn {
+    border-radius: 50px;
+    height: 50px;
+    width: 50px;
+    cursor: pointer;
+}
+
+.fixed-action-button .btn .fa {
+    font-size: 25px !important;
+}
+
+.no-spin::-webkit-inner-spin-button, .no-spin::-webkit-outer-spin-button {
+    -webkit-appearance: none !important;
+    margin: 0 !important;
+    -moz-appearance:textfield !important;
 }
 
 /* Extra small devices (portrait phones, less than 576px)*/

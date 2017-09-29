@@ -1,0 +1,114 @@
+.small-box {
+    border-radius: 2px;
+    position: relative;
+    display: block;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+}
+
+.small-box > .inner {
+    padding: 10px;
+}
+
+.small-box h3, .small-box p {
+    z-index: 5;
+}
+
+.small-box h3 {
+    font-size: 38px;
+    font-weight: bold;
+    margin: 0 0 10px 0;
+    white-space: nowrap;
+    padding: 0;
+    color: #fff;
+}
+
+.small-box p {
+    font-size: 15px;
+    color: #fff;
+}
+
+.small-box .icon {
+    -webkit-transition: all .3s linear;
+    -o-transition: all .3s linear;
+    transition: all .3s linear;
+    position: absolute;
+    top: -10px;
+    right: 10px;
+    z-index: 0;
+    font-size: 90px;
+    color: rgba(0,0,0,0.15);
+}
+
+.small-box > .small-box-footer {
+    position: relative;
+    text-align: center;
+    padding: 3px 0;
+    color: #fff;
+    color: rgba(255,255,255,0.8);
+    display: block;
+    z-index: 10;
+    background: rgba(0,0,0,0.1);
+    text-decoration: none;
+}
+
+
+.container {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.nav-item {
+    width: 200px;
+    text-align: center;
+}
+
+.nav-item a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.nav-item .nav-link {
+    border: none;
+}
+
+.nav-item > a.active {
+    border: 1px solid #ddd;
+    border-bottom-color: transparent;
+}
+
+.nav-link {
+    font-weight: 800;
+    font-size: 18px;
+}
+
+.nav-link.active {
+    background: #e5edfa;
+    color: #000 !important;
+    border-top: 4px solid #100079 !important;
+    border-right: none !important;
+    border-left: none !important;
+}
+
+@media (max-width: 767px) {
+    .sidenav {
+        display: none !important;
+    }
+
+}
+
+/* Extra Small Mobiles */
+@media (max-width: 575px) {
+    .mobile-hide {
+        display: none;
+    }
+
+
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) and (max-width: 767px) {
+    .mobile-hide {
+        display: none;
+    }
+}
