@@ -9,13 +9,20 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
+var angular2_toaster_1 = require('angular2-toaster');
 var app_order_provider_1 = require('../../providers/order/app.order.provider');
+var app_product_provider_1 = require('../../providers/product/app.product.provider');
 var app_order_sort_chart_1 = require('../../util/sort/orderChart/app.order.sort.chart');
 var AppDashboardPageComponent = (function () {
-    function AppDashboardPageComponent(orderProvider, sortOrderForChart) {
+    function AppDashboardPageComponent(orderProvider, sortOrderForChart, productProvider, toastrService) {
         this.orderProvider = orderProvider;
         this.sortOrderForChart = sortOrderForChart;
+        this.productProvider = productProvider;
+        this.toastrService = toastrService;
         this.orders = [];
+        this.newOrdersCount = 0;
+        this.totalProductsCount = 0;
+        this.totalIncomeTillDate = 0;
     }
     AppDashboardPageComponent.prototype.getOrderCountAndIncome = function () {
         var _this = this;
@@ -24,6 +31,39 @@ var AppDashboardPageComponent = (function () {
                 _this.totalOrdersCount = res.data.totalCount;
                 _this.currentMonthOrderCount = res.data.currentMonthOrder;
                 _this.currentMonthIncome = res.data.currentMonthIncome;
+            }
+        });
+    };
+    AppDashboardPageComponent.prototype.getNewOrdersCount = function () {
+        var _this = this;
+        this.orderProvider.getNewOrderCount().then(function (res) {
+            if (res.status === 200) {
+                _this.newOrdersCount = res.order;
+            }
+            else {
+                _this.toastrService.pop('error', 'Server Error', 'We encountered server error. Please try later !');
+            }
+        });
+    };
+    AppDashboardPageComponent.prototype.getTotalProductsCount = function () {
+        var _this = this;
+        this.productProvider.getTotalProductsCount().then(function (res) {
+            if (res.status === 200) {
+                _this.totalProductsCount = res.product;
+            }
+            else {
+                _this.toastrService.pop('error', 'Server Error', 'We encountered server error. Please try later !');
+            }
+        });
+    };
+    AppDashboardPageComponent.prototype.getTotalIncomeThisYear = function () {
+        var _this = this;
+        this.orderProvider.getIncomeThisYear().then(function (res) {
+            if (res.status === 200) {
+                _this.totalIncomeTillDate = res.data.totalIncome;
+            }
+            else {
+                _this.toastrService.pop('error', 'Server Error', 'We encountered server error. Please try later !');
             }
         });
     };
@@ -80,6 +120,9 @@ var AppDashboardPageComponent = (function () {
     AppDashboardPageComponent.prototype.ngOnInit = function () {
         this.populateChart();
         this.getOrderCountAndIncome();
+        this.getNewOrdersCount();
+        this.getTotalProductsCount();
+        this.getTotalIncomeThisYear();
     };
     AppDashboardPageComponent = __decorate([
         core_1.Component({
@@ -88,7 +131,7 @@ var AppDashboardPageComponent = (function () {
             styleUrls: ['./app/pages/dashboard/app.dashboard.page.component.css'],
             providers: [app_order_provider_1.OrderProvider, app_order_sort_chart_1.SortOrderForChart]
         }), 
-        __metadata('design:paramtypes', [app_order_provider_1.OrderProvider, app_order_sort_chart_1.SortOrderForChart])
+        __metadata('design:paramtypes', [app_order_provider_1.OrderProvider, app_order_sort_chart_1.SortOrderForChart, app_product_provider_1.ProductProvider, angular2_toaster_1.ToasterService])
     ], AppDashboardPageComponent);
     return AppDashboardPageComponent;
 }());

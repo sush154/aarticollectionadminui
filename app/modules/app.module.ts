@@ -10,13 +10,14 @@ import {AppDashboardPageModule} from '../pages/dashboard/app.dashboard.page.modu
 import {OrderListPageModule} from '../pages/order/list/app.order.list.page.module';
 import {AddOrderPageModule} from '../pages/order/add/app.order.add.page.module';
 import {CustomerAddPageModule} from '../pages/customer/add/app.customer.add.page.module';
+import {OrderDetailsPageModule} from '../pages/order/details/app.order.details.page.module';
 
 import {AppComponent} from './app.component';
 
 @NgModule ({
     imports: [
         BrowserModule, RouterModule, HttpModule, AppHeaderModule, AppRoutingModule, AppDashboardPageModule,
-        OrderListPageModule, AddOrderPageModule, CustomerAddPageModule
+        OrderListPageModule, AddOrderPageModule, CustomerAddPageModule, OrderDetailsPageModule
     ],
     declarations: [AppComponent],
     bootstrap : [AppComponent]

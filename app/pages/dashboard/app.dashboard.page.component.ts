@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-
+import {ToasterService} from 'angular2-toaster';
 import {OrderProvider} from '../../providers/order/app.order.provider';
+import {ProductProvider} from '../../providers/product/app.product.provider';
 import {SortOrderForChart} from '../../util/sort/orderChart/app.order.sort.chart';
 
 @Component({
@@ -16,10 +17,15 @@ export class AppDashboardPageComponent implements OnInit{
     orders : any = [];
     totalOrdersCount : Number;
     currentMonthOrderCount : Number;
-    currentMonthIncome : Number
+    currentMonthIncome : Number;
+    newOrdersCount : Number = 0;
+    totalProductsCount : Number = 0;
+    totalIncomeTillDate : Number = 0;
 
     constructor(private orderProvider : OrderProvider,
-                private sortOrderForChart : SortOrderForChart){}
+                private sortOrderForChart : SortOrderForChart,
+                private productProvider : ProductProvider,
+                private toastrService : ToasterService){}
 
     getOrderCountAndIncome() : void {
         this.orderProvider.getOrderCountAndIncome().then((res) => {
@@ -27,6 +33,36 @@ export class AppDashboardPageComponent implements OnInit{
                 this.totalOrdersCount = res.data.totalCount;
                 this.currentMonthOrderCount = res.data.currentMonthOrder;
                 this.currentMonthIncome = res.data.currentMonthIncome;
+            }
+        });
+    }
+
+    getNewOrdersCount() : void {
+        this.orderProvider.getNewOrderCount().then((res) => {
+            if(res.status === 200){
+                this.newOrdersCount = res.order;
+            }else{
+                this.toastrService.pop('error', 'Server Error', 'We encountered server error. Please try later !');
+            }
+        });
+    }
+
+    getTotalProductsCount() : void {
+        this.productProvider.getTotalProductsCount().then((res) => {
+            if(res.status === 200){
+                this.totalProductsCount = res.product;
+            }else {
+                this.toastrService.pop('error', 'Server Error', 'We encountered server error. Please try later !');
+            }
+        });
+    }
+
+    getTotalIncomeThisYear() : void {
+        this.orderProvider.getIncomeThisYear().then((res) => {
+            if(res.status === 200) {
+                this.totalIncomeTillDate = res.data.totalIncome;
+            }else {
+                this.toastrService.pop('error', 'Server Error', 'We encountered server error. Please try later !');
             }
         });
     }
@@ -89,6 +125,9 @@ export class AppDashboardPageComponent implements OnInit{
     ngOnInit() : void {
         this.populateChart();
         this.getOrderCountAndIncome();
+        this.getNewOrdersCount();
+        this.getTotalProductsCount();
+        this.getTotalIncomeThisYear();
     }
 
 }

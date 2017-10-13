@@ -2,13 +2,13 @@
     <div class="col-lg-4 col-md-4 col-sm-12">
         <div class="small-box bg-aqua">
             <div class="inner">
-                <h3>150</h3>
+                <h3>{{newOrdersCount}}</h3>
                 <p>New Orders</p>
             </div>
             <div class="icon">
                 <i class="fa fa-shopping-bag"></i>
             </div>
-            <a href="#" class="small-box-footer">
+            <a [routerLink]="['/orders']" class="small-box-footer">
                 More Info
                 <i class="fa fa-arrow-circle-right"></i>
             </a>
@@ -17,13 +17,13 @@
     <div class="col-lg-4 col-md-4 col-sm-12">
         <div class="small-box bg-green">
             <div class="inner">
-                <h3>150</h3>
+                <h3>{{totalProductsCount}}</h3>
                 <p>Total Products</p>
             </div>
             <div class="icon">
                 <i class="fa fa-product-hunt"></i>
             </div>
-            <a href="#" class="small-box-footer">
+            <a [routerLink]="['/products']" class="small-box-footer">
                 More Info
                 <i class="fa fa-arrow-circle-right"></i>
             </a>
@@ -32,13 +32,13 @@
     <div class="col-lg-4 col-md-4 col-sm-12">
         <div class="small-box bg-red">
             <div class="inner">
-                <h3><i class="fa fa-inr" aria-hidden="true"></i>&nbsp;5000</h3>
-                <p>Total Income</p>
+                <h3><i class="fa fa-inr" aria-hidden="true"></i>&nbsp;{{totalIncomeTillDate}}</h3>
+                <p>Total Income This Year</p>
             </div>
             <div class="icon">
                 <i class="fa fa-money"></i>
             </div>
-            <a href="#" class="small-box-footer">
+            <a [routerLink]="['/orders']" class="small-box-footer">
                 More Info
                 <i class="fa fa-arrow-circle-right"></i>
             </a>
@@ -82,10 +82,10 @@
     </ul>
 
     <div class="tab-content">
-        <div class="tab-pane active m-t-20" id="orders">
+        <div class="tab-pane active m-t-20px" id="orders">
             <dashboard-order-list></dashboard-order-list>
         </div>
-        <div class="tab-pane m-t-20" id="products">
+        <div class="tab-pane m-t-20px" id="products">
             <dashboard-products-list></dashboard-products-list>
         </div>
     </div>

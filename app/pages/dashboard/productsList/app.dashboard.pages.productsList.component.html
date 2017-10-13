@@ -9,7 +9,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let product of productsList">
+        <tr *ngFor="let product of productsList | paginate: { itemsPerPage: 10, currentPage: p, id: 'second'}">
             <td>{{product.productId}}</td>
             <td>{{product.productName}}</td>
             <td>{{product.category.categoryName}}</td>
@@ -17,4 +17,14 @@
             <td>{{product.quantity}}</td>
         </tr>
     </tbody>
+    <tr *ngIf="productsList?.length > 10">
+        <td colspan="5">
+            <pagination-controls (pageChange)="p = $event" id="second" style="float: right;"></pagination-controls>
+        </td>
+    </tr>
+    <tr *ngIf="productsList?.length === 0">
+        <td colspan="5" style="text-align: center;">
+            <h5 class="h5">No Products to Show</h5>
+        </td>
+    </tr>
 </table>

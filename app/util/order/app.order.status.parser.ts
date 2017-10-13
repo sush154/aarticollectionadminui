@@ -11,7 +11,7 @@ export class OrderStatusParser implements PipeTransform {
     transform(record : any) : any {
         if(record !== undefined){
             for(let status of ORDERSTATUS){
-                if(status.id === parseInt(record)){
+                if(status.id == record){
                     return status.value;
                 }
             }

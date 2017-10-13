@@ -9,10 +9,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
+var router_1 = require('@angular/router');
 var app_order_provider_1 = require('../../../providers/order/app.order.provider');
 var DashboardOrdersListComponent = (function () {
-    function DashboardOrdersListComponent(orderProvider) {
+    function DashboardOrdersListComponent(orderProvider, router) {
         this.orderProvider = orderProvider;
+        this.router = router;
     }
     DashboardOrdersListComponent.prototype.populateAllOrders = function () {
         var _this = this;
@@ -21,6 +23,9 @@ var DashboardOrdersListComponent = (function () {
                 _this.ordersList = res.order;
             }
         });
+    };
+    DashboardOrdersListComponent.prototype.navigateToOrderDetails = function (orderId) {
+        this.router.navigate(['/orders', orderId]);
     };
     DashboardOrdersListComponent.prototype.ngOnInit = function () {
         this.populateAllOrders();
@@ -32,7 +37,7 @@ var DashboardOrdersListComponent = (function () {
             styleUrls: ['./app/pages/dashboard/ordersList/app.dashboard.pages.ordersList.component.css'],
             providers: [app_order_provider_1.OrderProvider]
         }), 
-        __metadata('design:paramtypes', [app_order_provider_1.OrderProvider])
+        __metadata('design:paramtypes', [app_order_provider_1.OrderProvider, router_1.Router])
     ], DashboardOrdersListComponent);
     return DashboardOrdersListComponent;
 }());

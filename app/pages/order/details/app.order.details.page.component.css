@@ -1,0 +1,86 @@
+.nav-link {
+    border: none;
+}
+
+.nav-link.active {
+    border-bottom: 4px solid !important;
+    border-color: #495057 !important;
+    font-weight: bold;
+}
+
+.nav-item a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.invoice-button {
+    position: absolute;
+}
+
+h1 {
+    font-size: 38px;
+}
+
+.title {
+    color: #8f8f8f;
+}
+
+.bold-text {
+    font-weight: 700;
+    color: #5a5a5a;
+}
+
+.black-bold-text {
+    font-weight: 700;
+}
+
+.statuses {
+    margin-top: 5px;
+    background-color: #eff8fe;
+    padding: 5px 9px 9px 16px;
+    border: 1px solid #dfecf6;
+    -moz-border-radius: 7px;
+    -webkit-border-radius: 7px;
+    border-radius: 7px;
+}
+
+.status {
+    padding-top: 3px;
+}
+
+.label {
+    line-height: 30px;
+    font-size: 16px;
+    padding-top: 0;
+    padding-bottom: 0;
+    color: #466682;
+    font-weight: 700;
+}
+
+.btn-save {
+    background-color: #f0ad4e;
+    border-color: #eea236;
+    color: #fff;
+}
+
+.subtotal-table td {
+    border: none;
+}
+
+.grand-total {
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.invoice-table th {
+    border-top : none;
+}
+
+.invoice-shipping-table, .invoice-order-table {
+    width: 100%;
+}
+
+.invoice-shipping-table td {
+    width: 50%;
+    padding-top: 50px;
+}

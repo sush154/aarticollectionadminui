@@ -25,6 +25,10 @@ export class OrderListPageComponent implements OnInit{
         })
     }
 
+    private openOrderDetails(orderId : any) : void {
+        this.router.navigate(['/orders', orderId]);
+    }
+
     ngOnInit() : void {
         this.populateOrdersList();
     }

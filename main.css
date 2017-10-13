@@ -1,7 +1,7 @@
 body {
     font-family: 'Open Sans', sans-serif !important;
     background: #f3f3f4;
-    font-size: 13px;
+    font-size: 15px;
 }
 
 a, button {
@@ -9,8 +9,17 @@ a, button {
     cursor : pointer;
 }
 
+button[disabled] {
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
 aside {
     min-height: 100%;
+}
+
+table tbody > tr:hover {
+    cursor : pointer;
 }
 
 .h5 {
@@ -70,6 +79,10 @@ aside {
     padding-top: 20px;
 }
 
+.p-r-50px {
+    padding-right: 50px;
+}
+
 .h-50px {
     height: 50px;
 }
@@ -102,6 +115,10 @@ aside {
     font-size: 18px;
 }
 
+.font-16 {
+    font-size: 16px;
+}
+
 .no-wrap {
     white-space : nowrap;
 }
@@ -130,6 +147,16 @@ aside {
     -webkit-appearance: none !important;
     margin: 0 !important;
     -moz-appearance:textfield !important;
+}
+
+.view {
+    padding-top: 10px;
+    padding-bottom: 2px;
+    font-weight: 700;
+    color: #6d879d;
+    width: 160px;
+    line-height: 22px;
+    font-size: 14px;
 }
 
 /* Extra small devices (portrait phones, less than 576px)*/
@@ -183,4 +210,10 @@ aside {
     .border-bottom {
         border-bottom: 1px solid rgba(0,0,0,.1)
     }
+}
+
+@media print {
+  .container {
+    width: auto;
+  }
 }

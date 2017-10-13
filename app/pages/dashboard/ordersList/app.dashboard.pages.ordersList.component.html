@@ -9,7 +9,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let order of ordersList">
+        <tr *ngFor="let order of ordersList | orderStatusSort | paginate: { itemsPerPage: 10, currentPage: t, id: 'first' }" (click)="navigateToOrderDetails(order.orderId)">
             <td>{{order.orderId}}</td>
             <td>{{order.orderDate | dateParser}}</td>
             <td>{{order.customer.firstName}} {{order.customer.lastName}}</td>
@@ -17,4 +17,14 @@
             <td>{{order.orderStatus | orderStatusParser}}</td>
         </tr>
     </tbody>
+    <tr *ngIf="ordersList?.length > 10">
+        <td colspan="5">
+            <pagination-controls (pageChange)="t = $event" id="first" style="float: right;"></pagination-controls>
+        </td>
+    </tr>
+    <tr *ngIf="ordersList?.length === 0">
+        <td colspan="5" style="text-align: center;">
+            <h5 class="h5">No Orders to Show</h5>
+        </td>
+    </tr>
 </table>

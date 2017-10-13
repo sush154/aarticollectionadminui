@@ -24,6 +24,9 @@ var OrderListPageComponent = (function () {
             }
         });
     };
+    OrderListPageComponent.prototype.openOrderDetails = function (orderId) {
+        this.router.navigate(['/orders', orderId]);
+    };
     OrderListPageComponent.prototype.ngOnInit = function () {
         this.populateOrdersList();
     };

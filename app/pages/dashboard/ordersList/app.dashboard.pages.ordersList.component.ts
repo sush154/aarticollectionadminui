@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
 
 import {OrderProvider} from '../../../providers/order/app.order.provider';
 @Component({
@@ -12,14 +13,19 @@ export class DashboardOrdersListComponent implements OnInit{
 
     ordersList : any;
 
-    constructor(private orderProvider : OrderProvider){}
+    constructor(private orderProvider : OrderProvider,
+                private router : Router){}
 
-    populateAllOrders() : void {
+    private populateAllOrders() : void {
         this.orderProvider.getAllOrders().then((res) => {
             if(res.status === 200){
                 this.ordersList = res.order;
             }
         });
+    }
+
+    private navigateToOrderDetails(orderId : any) : void {
+        this.router.navigate(['/orders', orderId]);
     }
 
     ngOnInit() : void {

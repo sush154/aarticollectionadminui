@@ -17,7 +17,7 @@ var OrderStatusParser = (function () {
         if (record !== undefined) {
             for (var _i = 0, ORDERSTATUS_1 = app_order_status_1.ORDERSTATUS; _i < ORDERSTATUS_1.length; _i++) {
                 var status_1 = ORDERSTATUS_1[_i];
-                if (status_1.id === parseInt(record)) {
+                if (status_1.id == record) {
                     return status_1.value;
                 }
             }

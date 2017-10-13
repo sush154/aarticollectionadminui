@@ -42,6 +42,23 @@ export class ProductProvider {
 
 
     /*
+    *   This method gets total count of products
+    */
+    getTotalProductsCount() : Promise<any> {
+        let url = this.serviceUrl + "/getProductsCount";
+
+        return this.http
+            .get(url, {headers: this.headers,withCredentials: true})
+            .toPromise()
+            .then((res) => {
+                return res.json().data;
+            })
+            .catch((err) => {
+                this.handleError(err);
+            })
+    }
+
+    /*
     *   This method filter applied on the Product Name
     */
     productNameFilter(filterValue : Observable<string>) {

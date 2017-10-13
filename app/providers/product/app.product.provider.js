@@ -43,6 +43,22 @@ var ProductProvider = (function () {
         });
     };
     /*
+    *   This method gets total count of products
+    */
+    ProductProvider.prototype.getTotalProductsCount = function () {
+        var _this = this;
+        var url = this.serviceUrl + "/getProductsCount";
+        return this.http
+            .get(url, { headers: this.headers, withCredentials: true })
+            .toPromise()
+            .then(function (res) {
+            return res.json().data;
+        })
+            .catch(function (err) {
+            _this.handleError(err);
+        });
+    };
+    /*
     *   This method filter applied on the Product Name
     */
     ProductProvider.prototype.productNameFilter = function (filterValue) {

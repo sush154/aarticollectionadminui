@@ -54,6 +54,86 @@ var OrderProvider = (function () {
             _this.handleError(err);
         });
     };
+    /*
+    *   This method gets the count of new Orders
+    */
+    OrderProvider.prototype.getNewOrderCount = function () {
+        var _this = this;
+        var url = this.serviceUrl + "/getNewOrdersCount";
+        return this.http
+            .get(url, { headers: this.headers, withCredentials: true })
+            .toPromise()
+            .then(function (res) {
+            return res.json().data;
+        })
+            .catch(function (err) {
+            _this.handleError(err);
+        });
+    };
+    /*
+    *   This method gets income till date
+    */
+    OrderProvider.prototype.getIncomeThisYear = function () {
+        var _this = this;
+        var url = this.serviceUrl + "/getIncomeThisYear";
+        return this.http
+            .get(url, { headers: this.headers, withCredentials: true })
+            .toPromise()
+            .then(function (res) {
+            return res.json().data;
+        })
+            .catch(function (err) {
+            _this.handleError(err);
+        });
+    };
+    /*
+    *   This method adds new order
+    */
+    OrderProvider.prototype.addNewOrder = function (newOrder) {
+        var _this = this;
+        var url = this.serviceUrl + "/addOrder";
+        return this.http
+            .post(url, JSON.stringify(newOrder), { headers: this.headers, withCredentials: true })
+            .toPromise()
+            .then(function (res) {
+            return res.json().data;
+        })
+            .catch(function (err) {
+            _this.handleError(err);
+        });
+    };
+    /*
+    *   This method populates details for the selected order
+    */
+    OrderProvider.prototype.getOrderDetails = function (orderId) {
+        var _this = this;
+        var url = this.serviceUrl + "/getOrderDetails/" + orderId;
+        return this.http
+            .get(url, { headers: this.headers, withCredentials: true })
+            .toPromise()
+            .then(function (res) {
+            return res.json().data;
+        })
+            .catch(function (err) {
+            _this.handleError(err);
+        });
+    };
+    /*
+    *   This method updates selected order details
+    */
+    OrderProvider.prototype.updateOrder = function (orderdetails) {
+        var _this = this;
+        var url = this.serviceUrl + '/updateOrder';
+        return this.http
+            .post(url, JSON.stringify(orderdetails), { headers: this.headers, withCredentials: true })
+            .toPromise()
+            .then(function (res) {
+            return res.json().data;
+        })
+            .catch(function (err) {
+            _this.handleError(err);
+        });
+    };
     OrderProvider = __decorate([
         core_1.Injectable(), 
         __metadata('design:paramtypes', [http_1.Http])

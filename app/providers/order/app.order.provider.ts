@@ -50,4 +50,95 @@ export class OrderProvider {
                 this.handleError(err);
             });
     }
+
+
+    /*
+    *   This method gets the count of new Orders
+    */
+    getNewOrderCount() : Promise<any> {
+        let url = this.serviceUrl + "/getNewOrdersCount";
+
+        return this.http
+            .get(url, {headers: this.headers,withCredentials: true})
+            .toPromise()
+            .then((res) => {
+                return res.json().data;
+            })
+            .catch((err) => {
+                this.handleError(err);
+            });
+    }
+
+
+    /*
+    *   This method gets income till date
+    */
+    getIncomeThisYear() : Promise<any> {
+        let url = this.serviceUrl + "/getIncomeThisYear";
+
+        return this.http
+            .get(url, {headers: this.headers,withCredentials: true})
+            .toPromise()
+            .then((res) => {
+                return res.json().data;
+            })
+            .catch((err) => {
+                this.handleError(err);
+            });
+    }
+
+
+    /*
+    *   This method adds new order
+    */
+    addNewOrder(newOrder : any) : Promise<any> {
+        let url = this.serviceUrl + "/addOrder";
+
+        return this.http
+            .post(url, JSON.stringify(newOrder), {headers: this.headers,withCredentials: true})
+            .toPromise()
+            .then((res) => {
+                return res.json().data;
+            })
+            .catch((err) => {
+                this.handleError(err);
+            })
+    }
+
+
+    /*
+    *   This method populates details for the selected order
+    */
+    getOrderDetails(orderId : any) : Promise<any> {
+        let url = this.serviceUrl + "/getOrderDetails/"+orderId;
+
+        return this.http
+            .get(url, {headers: this.headers,withCredentials: true})
+            .toPromise()
+            .then((res) => {
+                return res.json().data;
+            })
+            .catch((err) => {
+                this.handleError(err);
+            })
+    }
+
+
+    /*
+    *   This method updates selected order details
+    */
+    updateOrder(orderdetails : any) : Promise<any> {
+        let url = this.serviceUrl + '/updateOrder';
+
+        return this.http
+            .post(url, JSON.stringify(orderdetails), {headers: this.headers,withCredentials: true})
+            .toPromise()
+            .then((res) => {
+                return res.json().data;
+            })
+            .catch((err) => {
+                this.handleError(err);
+            })
+    }
+
 }

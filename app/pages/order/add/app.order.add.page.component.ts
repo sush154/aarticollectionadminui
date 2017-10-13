@@ -2,12 +2,16 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {ToasterService} from 'angular2-toaster';
 import {IMyDpOptions} from 'mydatepicker';
+import {Location} from '@angular/common';
 import {AppCustomerProvider} from '../../../providers/customer/app.customer.provider';
 import {ProductProvider} from '../../../providers/product/app.product.provider';
+import {OrderProvider} from '../../../providers/order/app.order.provider';
 import { Subject } from 'rxjs/Subject';
 
 import {PAYMENTTYPE} from '../../../common/app.payment.type';
 import {PAYMENTSTATUS} from '../../../common/app.payment.status';
+import {ORDERTYPE} from '../../../common/app.order.type';
+import {DELIVERYTYPE} from '../../../common/app.delivery.type';
 
 @Component({
     selector : 'add-order-page',
@@ -21,17 +25,33 @@ export class AddOrderPageComponent implements OnInit{
     private customersList : any;
     private paymentTypeList : any = PAYMENTTYPE;
     private paymentStatusList : any = PAYMENTSTATUS;
+    private orderTypeList : any = ORDERTYPE;
+    private deliveryTypeList : any = DELIVERYTYPE;
     private productsList : any = [];
     private filteredProductsList : any;
     private searchTerm$ = new Subject<string>();
     private myDatePickerOptions: IMyDpOptions = {
         dateFormat: 'dd/mm/yyyy',
     };
+    private newOrder : any = {};
+    private awaitingPayment : boolean = true;
+    private partiallyPaid : boolean = true;
+    private totalOrderAmount : number = 0;
+    private transactTrackFlag : Boolean = false;
 
     constructor(private customerProvider : AppCustomerProvider,
                 private router : Router,
                 private toastrService : ToasterService,
-                private productProvider : ProductProvider){}
+                private productProvider : ProductProvider,
+                private orderProvider : OrderProvider,
+                private location : Location){}
+
+    /*
+    *   This method formats the date
+    */
+    private formatDate(date : any) : string {
+        return date.formatted;
+    }
 
     /*
     *   This method retrieves all the customers list
@@ -40,6 +60,8 @@ export class AddOrderPageComponent implements OnInit{
         this.customerProvider.getAllCustomers().then((res) => {
             if(res.status === 200) {
                 this.customersList = res.customer;
+            }else {
+                this.toastrService.pop('error', 'Server Error', 'We encountered server error. Please try later !');
             }
         });
     }
@@ -62,6 +84,8 @@ export class AddOrderPageComponent implements OnInit{
         this.productProvider.getAllProducts().then((res) => {
             if(res.status === 200) {
                 this.filteredProductsList= res.product;
+            }else {
+                this.toastrService.pop('error', 'Server Error', 'We encountered server error. Please try later !');
             }
         });
     }
@@ -69,32 +93,95 @@ export class AddOrderPageComponent implements OnInit{
     /*
     *   This method adds product to cart
     */
-    addProductToCart(product : any, productQuanity : number) : void {
+    private addProductToCart(product : any, productQuantity : number) : void {
 
-        let counter = 0;
-
-        if(this.productsList.length > 0){
-
-            for(let i = 0; i < this.productsList.length; i++){
-
-                if(this.productsList[i].productId == product.productId){
-                    
-                    this.productsList[i].productQuantity += parseInt(productQuantity);
-                    this.productsList[i].amount = parseInt(this.productsList[i].price) * parseInt(this.productsList[i].productQuantity);
-                    this.productsList.push(this.productsList[i]);
-                    counter++;
-                }
-            }
-        }
-
-        if(counter === 0){
-            product.productQuantity = productQuanity;
-            product.amount = parseInt(product.price) * parseInt(productQuanity);
+        if(productQuantity > 0){
+            product.productQuantity = productQuantity;
+            product.amount = parseInt(product.price) * productQuantity;
             this.productsList.push(product);
+            this.totalOrderAmount = this.totalOrderAmount + parseInt(product.amount);
+
+            (<HTMLFormElement>document.getElementById("productNameFilterForm")).reset();
+            $("#productFilter").modal('hide');
+        }
+    }
+
+    /*
+    *   This method enables/disables payment type drop down
+    */
+    private paidSomePart(status : any) : void {
+        if(status === '0'){
+            this.awaitingPayment = true;
+        }else {
+            this.awaitingPayment = false;
+        }
+    }
+
+    /*
+    *   This method enables/disables amount paid input box
+    */
+    private populateAmountPaid(status : any) : void {
+        if(status === '1'){
+            this.partiallyPaid = false;
+            this.newOrder.paymentAmount = 0;
+        }else if(status === '2') {
+            this.partiallyPaid = true;
+            this.newOrder.paymentAmount = this.totalOrderAmount;
+        }else {
+            this.partiallyPaid = true;
+        }
+    }
+
+    /*
+    *   This method displays/hide transaction track id input
+    */
+    private paymentTypeTrack(paymentType : any) : void {
+        if(paymentType === '1' || paymentType === '2'){
+            this.transactTrackFlag = true;
+        }else {
+            this.transactTrackFlag = false;
+        }
+    }
+
+    /*
+    *   This method adds new order
+    */
+    private addNewOrder() : void {
+        if(this.newOrder.orderDate !== undefined && this.newOrder.orderDate !== 'undefined'){
+            this.newOrder.orderDate = this.formatDate(this.newOrder.orderDate);
         }
 
-        (<HTMLFormElement>document.getElementById("productNameFilterForm")).reset();
-        $("#productFilter").modal('hide');
+        this.newOrder.productIds = [];
+
+        for(let p of this.productsList){
+            /*for(let i=0; i < product.productQuantity; i++){
+                this.newOrder.productIds.push(product._id);
+            }*/
+
+            let product : any = {};
+
+            product.productId = p.productId;
+            product.productName = p.productName;
+            product.price = p.price;
+            product.discount = p.discount;
+            product.quantity = p.productQuantity;
+
+            this.newOrder.productIds.push(product);
+
+            this.newOrder.amount = this.totalOrderAmount;
+        }
+
+        this.orderProvider.addNewOrder(this.newOrder).then((res) => {
+            if(res.status === 200){
+                this.location.back();
+            }else {
+                this.toastrService.pop('error', 'Server Error', 'We encountered server error. Please try later !');
+            }
+        });
+    }
+
+    private goBack() : void {
+        this.location.back();
     }
 
     ngOnInit() : void {
@@ -106,6 +193,11 @@ export class AddOrderPageComponent implements OnInit{
                 if(res.status === 200) {
                     this.filteredProductsList  = res.product;
                 }
-            })
+            });
+
+        this.newOrder.paymentStatus = '-1';
+        this.newOrder.paymentType = '-1';
+        this.newOrder.orderType = '-1';
+        this.newOrder.deliveryType = '-1';
     }
 }
