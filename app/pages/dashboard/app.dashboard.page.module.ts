@@ -9,6 +9,7 @@ import {DateParserModule} from '../../util/dateParser/app.date.parser.module';
 import {OrderParserModule} from '../../util/order/app.order.parser.module';
 import {ToasterModule, ToasterService} from 'angular2-toaster';
 import {OrderStatusSortModule} from '../../util/sort/orderStatus/app.order.status.module';
+import {AppHeaderModule} from '../../modules/header/app.header.module';
 
 import {DashboardOrdersListComponent} from './ordersList/app.dashboard.pages.ordersList.component';
 import {DashboardProductsListComponent} from './productsList/app.dashboard.pages.productsList.component';
@@ -18,7 +19,7 @@ import {ProductProvider} from '../../providers/product/app.product.provider';
 
 @NgModule({
     imports : [CommonModule, ChartModule.forRoot(require('highcharts')), DateParserModule, OrderParserModule,
-                NgxPaginationModule, ToasterModule, OrderStatusSortModule, RouterModule],
+                NgxPaginationModule, ToasterModule, OrderStatusSortModule, RouterModule, AppHeaderModule],
     declarations : [AppDashboardPageComponent, DashboardOrdersListComponent, DashboardProductsListComponent],
     exports : [AppDashboardPageComponent],
     providers : [OrderProvider, ProductProvider]

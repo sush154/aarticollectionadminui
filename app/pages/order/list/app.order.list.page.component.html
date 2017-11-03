@@ -1,38 +1,43 @@
-<div class="bg-white">
-    <table class="table table-hover">
-        <thead class="thead-inverse">
-        <tr>
-            <th>#</th>
-            <th>Order Date</th>
-            <th>Customer</th>
-            <th class="hidden-sm-down">Amount</th>
-            <th>Order Status</th>
-        </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let order of ordersList | orderStatusSort | paginate: { itemsPerPage: 10, currentPage: p, id: 'first'}" (click)="openOrderDetails(order.orderId)">
-                <td>{{order.orderId}}</td>
-                <td>{{order.orderDate | dateParser}}</td>
-                <td>{{order.customer.firstName}} {{order.customer.lastName}}</td>
-                <td class="hidden-sm-down">{{order.amount}}</td>
-                <td>{{order.orderStatus | orderStatusParser}}</td>
-            </tr>
-        </tbody>
-        <tr *ngIf="ordersList?.length > 10">
-            <td colspan="5">
-                <pagination-controls (pageChange)="p = $event" id="first" style="float: right;"></pagination-controls>
-            </td>
-        </tr>
-        <tr *ngIf="ordersList?.length === 0">
-            <td colspan="5" style="text-align: center;">
-                <h5 class="h5">No Orders to Show</h5>
-            </td>
-        </tr>
-    </table>
-</div>
+<app-header></app-header>
+<div class="container p-t-50px">
 
-<div class="fixed-action-button">
-    <button type="button" class="btn btn-primary" [routerLink]="['/orders/addOrder']">
-        <i class="fa fa-plus"></i>
-    </button>
+    <div class="bg-white">
+        <table class="table table-hover">
+            <thead class="thead-inverse">
+            <tr>
+                <th>#</th>
+                <th>Order Date</th>
+                <th>Customer</th>
+                <th class="hidden-sm-down">Amount</th>
+                <th>Order Status</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let order of ordersList | orderStatusSort | paginate: { itemsPerPage: 10, currentPage: p, id: 'first'}" (click)="openOrderDetails(order.orderId)">
+                    <td>{{order.orderId}}</td>
+                    <td>{{order.orderDate | dateParser}}</td>
+                    <td>{{order.customer.firstName}} {{order.customer.lastName}}</td>
+                    <td class="hidden-sm-down">{{order.amount}}</td>
+                    <td>{{order.orderStatus | orderStatusParser}}</td>
+                </tr>
+            </tbody>
+            <tr *ngIf="ordersList?.length > 10">
+                <td colspan="5">
+                    <pagination-controls (pageChange)="p = $event" id="first" style="float: right;"></pagination-controls>
+                </td>
+            </tr>
+            <tr *ngIf="ordersList?.length === 0">
+                <td colspan="5" style="text-align: center;">
+                    <h5 class="h5">No Orders to Show</h5>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="fixed-action-button">
+        <button type="button" class="btn btn-primary" [routerLink]="['/orders/addOrder']">
+            <i class="fa fa-plus"></i>
+        </button>
+    </div>
+
 </div>

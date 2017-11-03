@@ -1,15 +1,16 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router'
 
+import {AppComponent} from '../app.component';
 import {AppDashboardPageComponent} from '../../pages/dashboard/app.dashboard.page.component';
 import {OrderListPageComponent} from '../../pages/order/list/app.order.list.page.component';
 import {AddOrderPageComponent} from '../../pages/order/add/app.order.add.page.component';
 import {CustomerAddPageComponent} from '../../pages/customer/add/app.customer.add.page.component';
 import {OrderDetailsPageComponent} from '../../pages/order/details/app.order.details.page.component';
-
+import {LoginPageComponent} from '../../pages/login/app.login.page.component';
 
 const routes : Routes = [
-    {path : '', component : AppDashboardPageComponent},
+    {path : 'login', component : LoginPageComponent},
     {path : 'dashboard' , component : AppDashboardPageComponent},
     {path : 'products', component : AppDashboardPageComponent},
     {path : 'orders', component : OrderListPageComponent},

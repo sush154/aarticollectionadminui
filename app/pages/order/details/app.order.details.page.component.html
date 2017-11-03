@@ -1,186 +1,422 @@
-<toaster-container></toaster-container>
+<app-header></app-header>
+<div class="container p-t-50px">
 
-<div class="bg-white p-50px">
+    <toaster-container></toaster-container>
 
-    <div style="height: 50px;">
-        <button class="btn btn-danger btn-sm" (click)="goBack()">Go Back</button>
-        <button type="button" class="btn float-right btn-invoice" (click)="printInvoice()">Print Invoice</button>
-    </div>
+    <div class="bg-white p-50px">
 
-    <div class="m-t-20px">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item active">
-                <h3>Order Details</h3>
-            </li>
-        </ol>
+        <div style="height: 50px;">
+            <button class="btn btn-danger btn-sm" (click)="goBack()">Go Back</button>
+            <button type="button" class="btn float-right btn-invoice" (click)="printInvoice()">Print Invoice</button>
+        </div>
 
-        <ul class="nav nav-tabs">
-            <li class="nav-item">
-                <a class="nav-link active" href="#generalInfo" data-toggle="tab">General Info</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#invoice" data-toggle="tab">Invoice</a>
-            </li>
-        </ul>
+        <div class="m-t-20px">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item active">
+                    <h3>Order Details</h3>
+                </li>
+            </ol>
 
-        <div class="tab-content">
-            <div class="tab-pane m-t-20px active" id="generalInfo">
-                <h1>Order &nbsp; #{{orderDetails.orderId}}</h1>
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#generalInfo" data-toggle="tab">General Info</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#invoice" data-toggle="tab">Invoice</a>
+                </li>
+            </ul>
 
-                <div class="title m-t-50px">
-                    <div class="font-16">
-                        Placed On
-                        <span class="black-bold-text">{{orderDetails.orderDate | date}}</span>
+            <div class="tab-content">
+                <div class="tab-pane m-t-20px active" id="generalInfo">
+                    <h1>Order &nbsp; #{{orderDetails.orderId}}</h1>
+
+                    <div class="title m-t-50px">
+                        <div class="font-16">
+                            Placed On
+                            <span class="black-bold-text">{{orderDetails.orderDate | date}}</span>
+                        </div>
+                        <div class="font-16">
+                            by
+                            <span class="black-bold-text">{{customerDetails.firstName}} {{customerDetails.lastName}}</span>
+                        </div>
                     </div>
-                    <div class="font-16">
-                        by
-                        <span class="black-bold-text">{{customerDetails.firstName}} {{customerDetails.lastName}}</span>
+
+                    <div class="row m-t-50px">
+                        <div class="col-lg-6">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <span class="black-bold-text font-18">Payment Method:</span>
+                                    <div>
+                                        <div class="view">{{orderDetails.paymentType | paymentTypeParser}}</div>
+                                    </div>
+
+                                    <div class="m-t-20px" *ngIf="orderDetails.paymentType === '1' || orderDetails.paymentType === '2'">
+                                        <span class="black-bold-text font-18">Transaction ID:</span>
+
+                                        <div>
+                                            <div class="view">{{orderDetails.transactTrackId}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <span class="black-bold-text font-18">Shipping Method:</span>
+                                    <div>
+                                        <div class="view">{{orderDetails.deliveryType | deliveryTypeParser}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row m-t-50px">
+                                <div class="col-lg-6">
+                                    <span class="black-bold-text font-18">Billing Address:</span>
+                                    <div class="m-t-10px">
+                                        <div class="bold-text font-16">{{customerDetails.firstName}} {{customerDetails.lastName}}</div>
+                                        <div>
+                                            {{customerDetails.address}}
+                                        </div>
+                                        <div>
+                                            {{customerDetails.city}},
+                                        </div>
+                                        <div>
+                                            {{customerDetails.state | stateParser}},
+                                        </div>
+                                        <div>
+                                            {{customerDetails.pincode}}
+                                        </div>
+                                        <div>
+                                            <span class="bold-text">Phone:</span> {{customerDetails.phoneNo}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <span class="black-bold-text font-18">Shipping Address:</span>
+                                    <div class="m-t-10px">
+                                        Same as Billing Address
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="statuses">
+                                <div class="status form-group row">
+                                    <div class="d-inline col-sm-6">
+                                        <label for="orderStatusDD" class="label no-wrap">Order Status</label>
+                                    </div>
+                                    <div class="d-inline col-sm-6">
+                                        <select id="orderStatusDD" name="orderStatusDD" class="form-control" [(ngModel)]="orderDetails.orderStatus" #orderStatusDD [disabled]="disabledOrderStatusDD" (change)="displayCourier(orderDetails.orderStatus)">
+                                            <option [value]="orderStatus.id" *ngFor="let orderStatus of orderStatusList">{{orderStatus.value}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="status form-group row">
+                                    <div class="col-sm-6">
+                                        <label for="paymentStatusDD" class="label no-wrap">Payment Status</label>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <select id="paymentStatusDD" name="paymentStatusDD" class="form-control" [(ngModel)]="orderDetails.paymentStatus" #paymentStatusDD [disabled]="disabledPaymentStatusDD">
+                                            <option [value]="paymentStatus.id" *ngFor="let paymentStatus of paymentStatusList">{{paymentStatus.value}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="status form-group row" *ngIf="orderDetails.paymentStatus !== '3' && orderDetails.paymentStatus !== '4' ">
+                                    <div class="col-sm-6">
+                                        <label for="amountPaid" class="label no-wrap">Amount Paid</label>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input id="amountPaid" name="amountPaid" type="text" [(ngModel)]="orderDetails.paymentAmount" class="form-control" [disabled]="disabledAmountPaid">
+                                    </div>
+                                </div>
+                                <div class="status form-group row" *ngIf="displayCourierSection">
+                                    <div class="col-sm-6">
+                                        <label for="courier" class="label no-wrap">Courier</label>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <select id="courier" name="courier" class="form-control" [(ngModel)]="orderDetails.courier" (change)="navigateAddCourier(courierDD.value)" #courierDD [disabled]="orderDetails.orderStatus === '3'">
+                                            <option [value]="0" style="color: #ccccc;">-- Select Courier --</option>
+                                            <option [value]="-1" style="color: #ff0000;">Add New Courier</option>
+                                            <option [value]="courier._id" *ngFor="let courier of courierList">{{courier.name}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="status form-group row" *ngIf="displayCourierSection">
+                                    <div class="col-sm-6">
+                                        <label for="trackingID" class="label no-wrap">Tracking ID</label>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input id="trackingID" name="trackingID" class="form-control" [(ngModel)]="orderDetails.deliveryTrackId" type="text" [disabled]="orderDetails.orderStatus === '3'" required>
+                                    </div>
+                                </div>
+                                <div class="status fomr-group row" *ngIf="displayCourierSection">
+                                    <div class="col-sm-6">
+                                        <label class="label no-wrap">Delivery Date</label>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <my-date-picker name="orderDate" [options]="myDatePickerOptions"
+                                                        [(ngModel)]="deliveryDateObj" required [disabled]="orderDetails.orderStatus === '3'"></my-date-picker>
+                                    </div>
+                                </div>
+                                <div class="status form-group row">
+                                    <div class="col-sm-12 p-r-50px">
+                                        <button type="button" class="btn btn-save float-right" [disabled]="disabledSaveButton" (click)="updateOrderDetails()">Save</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="m-t-50px">
+                        <h4>Order Items</h4>
+
+                        <div class="m-t-20px">
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Product Name</th>
+                                    <th>Quantity</th>
+                                    <th>Total</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr *ngFor="let product of orderDetails.products">
+                                    <td>{{product.productId}}</td>
+                                    <td>{{product.productName}}</td>
+                                    <td>{{product.quantity}}</td>
+                                    <td><i class="fa fa-inr"></i> {{product.quantity * product.price}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="m-t-10px">
+                            <table class="table subtotal-table">
+                                <tr>
+                                    <td style="width: 30%"></td>
+                                    <td style="width: 30%"></td>
+                                    <td style="width: 20%"><div class="bold-text float-right">SubTotal:</div></td>
+                                    <td style="width: 20%; padding-left: 3%;"><i class="fa fa-inr"></i> {{subTotal}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 30%"></td>
+                                    <td style="width: 30%"></td>
+                                    <td style="width: 20%"><div class="bold-text float-right">Discount:</div></td>
+                                    <td style="width: 20%; padding-left: 3%;">{{orderDetails.discount | discountParser}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 30%"></td>
+                                    <td style="width: 30%"></td>
+                                    <td style="width: 20%"><div class="grand-total float-right">Grand Total:</div></td>
+                                    <td style="width: 20%; padding-left: 3%;" class="grand-total">
+                                        <i class="fa fa-inr"></i> {{orderDetails.amount}}
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
                     </div>
                 </div>
-
-                <div class="row m-t-50px">
-                    <div class="col-lg-6">
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <span class="black-bold-text font-18">Payment Method:</span>
-                                <div>
-                                    <div class="view">{{orderDetails.paymentType | paymentTypeParser}}</div>
-                                </div>
-
-                                <div class="m-t-20px" *ngIf="orderDetails.paymentType === '1' || orderDetails.paymentType === '2'">
-                                    <span class="black-bold-text font-18">Transaction ID:</span>
-
-                                    <div>
-                                        <div class="view">{{orderDetails.transactTrackId}}</div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-6">
-                                <span class="black-bold-text font-18">Shipping Method:</span>
-                                <div>
-                                    <div class="view">{{orderDetails.deliveryType | deliveryTypeParser}}</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row m-t-50px">
-                            <div class="col-lg-6">
-                                <span class="black-bold-text font-18">Billing Address:</span>
-                                <div class="m-t-10px">
-                                    <div class="bold-text font-16">{{customerDetails.firstName}} {{customerDetails.lastName}}</div>
-                                    <div>
-                                        {{customerDetails.address}}
-                                    </div>
-                                    <div>
-                                        {{customerDetails.city}},
-                                    </div>
-                                    <div>
-                                        {{customerDetails.state | stateParser}},
-                                    </div>
-                                    <div>
-                                        {{customerDetails.pincode}}
-                                    </div>
-                                    <div>
-                                        <span class="bold-text">Phone:</span> {{customerDetails.phoneNo}}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <span class="black-bold-text font-18">Shipping Address:</span>
-                                <div class="m-t-10px">
-                                    Same as Billing Address
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="statuses">
-                            <div class="status form-group row">
-                                <div class="d-inline col-sm-6">
-                                    <label for="orderStatusDD" class="label no-wrap">Order Status</label>
-                                </div>
-                                <div class="d-inline col-sm-6">
-                                    <select id="orderStatusDD" name="orderStatusDD" class="form-control" [(ngModel)]="orderDetails.orderStatus" #orderStatusDD [disabled]="disabledOrderStatusDD" (change)="displayCourier(orderDetails.orderStatus)">
-                                        <option [value]="orderStatus.id" *ngFor="let orderStatus of orderStatusList">{{orderStatus.value}}</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="status form-group row">
-                                <div class="col-sm-6">
-                                    <label for="paymentStatusDD" class="label no-wrap">Payment Status</label>
-                                </div>
-                                <div class="col-sm-6">
-                                    <select id="paymentStatusDD" name="paymentStatusDD" class="form-control" [(ngModel)]="orderDetails.paymentStatus" #paymentStatusDD [disabled]="disabledPaymentStatusDD">
-                                        <option [value]="paymentStatus.id" *ngFor="let paymentStatus of paymentStatusList">{{paymentStatus.value}}</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="status form-group row" *ngIf="orderDetails.paymentStatus !== '3' && orderDetails.paymentStatus !== '4' ">
-                                <div class="col-sm-6">
-                                    <label for="amountPaid" class="label no-wrap">Amount Paid</label>
-                                </div>
-                                <div class="col-sm-6">
-                                    <input id="amountPaid" name="amountPaid" type="text" [(ngModel)]="orderDetails.paymentAmount" class="form-control" [disabled]="disabledAmountPaid">
-                                </div>
-                            </div>
-                            <div class="status form-group row" *ngIf="displayCourierSection">
-                                <div class="col-sm-6">
-                                    <label for="courier" class="label no-wrap">Courier</label>
-                                </div>
-                                <div class="col-sm-6">
-                                    <select id="courier" name="courier" class="form-control" [(ngModel)]="orderDetails.courier" (change)="navigateAddCourier(courierDD.value)" #courierDD [disabled]="orderDetails.orderStatus === '3'">
-                                        <option [value]="0" style="color: #ccccc;">-- Select Courier --</option>
-                                        <option [value]="-1" style="color: #ff0000;">Add New Courier</option>
-                                        <option [value]="courier._id" *ngFor="let courier of courierList">{{courier.name}}</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="status form-group row" *ngIf="displayCourierSection">
-                                <div class="col-sm-6">
-                                    <label for="trackingID" class="label no-wrap">Tracking ID</label>
-                                </div>
-                                <div class="col-sm-6">
-                                    <input id="trackingID" name="trackingID" class="form-control" [(ngModel)]="orderDetails.deliveryTrackId" type="text" [disabled]="orderDetails.orderStatus === '3'" required>
-                                </div>
-                            </div>
-                            <div class="status fomr-group row" *ngIf="displayCourierSection">
-                                <div class="col-sm-6">
-                                    <label class="label no-wrap">Delivery Date</label>
-                                </div>
-                                <div class="col-sm-6">
-                                    <my-date-picker name="orderDate" [options]="myDatePickerOptions"
-                                                    [(ngModel)]="deliveryDateObj" required [disabled]="orderDetails.orderStatus === '3'"></my-date-picker>
-                                </div>
-                            </div>
-                            <div class="status form-group row">
-                                <div class="col-sm-12 p-r-50px">
-                                    <button type="button" class="btn btn-save float-right" [disabled]="disabledSaveButton" (click)="updateOrderDetails()">Save</button>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-
-                <div class="m-t-50px">
-                    <h4>Order Items</h4>
-
-                    <div class="m-t-20px">
-                        <table class="table table-bordered">
-                            <thead>
+                <div class="tab-pane m-t-20px" id="invoice">
+                    <div>
+                        <table class="invoice-order-table">
+                            <tbody>
                             <tr>
-                                <th>#</th>
-                                <th>Product Name</th>
-                                <th>Quantity</th>
-                                <th>Total</th>
+                                <td>
+                                    <h1>Invoice &nbsp; #{{orderDetails.orderId}}</h1>
+                                </td>
+                                <td>
+                                    <!-- Add Company Logo here -->
+                                    <!--<img src="../../../../favicon.ico" class="float-right"> -->
+                                </td>
                             </tr>
+                            </tbody>
+                        </table>
+                        <!--<div class="col-lg-6">
+                            <h1>Invoice &nbsp; #{{orderDetails.orderId}}</h1>
+                        </div>
+                        <div class="col-lg-6">
+                            &lt;!&ndash; Add Company Logo here&ndash;&gt;
+                            &lt;!&ndash;<img src="../../../../favicon.ico" class="float-right">&ndash;&gt;
+                            <button type="button" class="btn" (click)="printInvoice()">Print Invoice</button>
+                        </div>-->
+                    </div>
+
+                    <div class="m-t-50px">
+                        <div class="font-18">
+                            {{orderDetails.orderDate | date}}
+                        </div>
+                        <div class="font-18">
+                            Grand Total: &nbsp;
+                            <strong>&#x20B9; {{orderDetails.amount}}</strong>
+                        </div>
+                    </div>
+
+                    <div>
+                        <table class="invoice-shipping-table">
+                            <tbody>
+                            <tr>
+                                <td>
+                                    <span class="black-bold-text font-18">Billing Address:</span>
+                                    <div class="m-t-10px">
+                                        <div class="bold-text font-16">{{customerDetails.firstName}} {{customerDetails.lastName}}</div>
+                                        <div>
+                                            {{customerDetails.address}}
+                                        </div>
+                                        <div>
+                                            {{customerDetails.city}},
+                                        </div>
+                                        <div>
+                                            {{customerDetails.state | stateParser}},
+                                        </div>
+                                        <div>
+                                            {{customerDetails.pincode}}
+                                        </div>
+                                        <div>
+                                            <span class="bold-text">Phone:</span> {{customerDetails.phoneNo}}
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="black-bold-text font-18">Shipping Address:</span>
+                                    <div class="m-t-10px">
+                                        <div class="bold-text font-16">{{customerDetails.firstName}} {{customerDetails.lastName}}</div>
+                                        <div>
+                                            {{customerDetails.address}}
+                                        </div>
+                                        <div>
+                                            {{customerDetails.city}},
+                                        </div>
+                                        <div>
+                                            {{customerDetails.state | stateParser}},
+                                        </div>
+                                        <div>
+                                            {{customerDetails.pincode}}
+                                        </div>
+                                        <div>
+                                            <span class="bold-text">Phone:</span> {{customerDetails.phoneNo}}
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="black-bold-text font-18">Shipping Method</span>
+                                    <div>
+                                        {{orderDetails.deliveryType | deliveryTypeParser}}
+                                    </div>
+
+                                    <div class="m-t-20px" *ngIf="orderDetails.orderStatus === '2'">
+                                        <span class="bold-text font-18">Courier</span>
+                                        <div>
+                                            {{orderDetails.courier.name}}
+                                        </div>
+                                    </div>
+
+                                    <div class="m-t-20px" *ngIf="orderDetails.orderStatus === '2'">
+                                        <span class="bold-text font-18">Courier Tracking ID</span>
+                                        <div>
+                                            {{orderDetails.deliveryTrackId}}
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="black-bold-text font-18">Payment Method</span>
+                                    <div>
+                                        {{orderDetails.paymentType | paymentTypeParser}}
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!--<div class="row m-t-50px">
+                        <div class="col-lg-6">
+                            <span class="bold-text font-18">Billing Address:</span>
+                            <div class="m-t-10px">
+                                <div class="bold-text font-16">{{customerDetails.firstName}} {{customerDetails.lastName}}</div>
+                                <div>
+                                    {{customerDetails.address}}
+                                </div>
+                                <div>
+                                    {{customerDetails.city}},
+                                </div>
+                                <div>
+                                    {{customerDetails.state | stateParser}},
+                                </div>
+                                <div>
+                                    {{customerDetails.pincode}}
+                                </div>
+                                <div>
+                                    <span class="bold-text">Phone:</span> {{customerDetails.phoneNo}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <span class="bold-text font-18">Shipping Address:</span>
+                            <div class="m-t-10px">
+                                <div class="bold-text font-16">{{customerDetails.firstName}} {{customerDetails.lastName}}</div>
+                                <div>
+                                    {{customerDetails.address}}
+                                </div>
+                                <div>
+                                    {{customerDetails.city}},
+                                </div>
+                                <div>
+                                    {{customerDetails.state | stateParser}},
+                                </div>
+                                <div>
+                                    {{customerDetails.pincode}}
+                                </div>
+                                <div>
+                                    <span class="bold-text">Phone:</span> {{customerDetails.phoneNo}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row m-t-50px">
+                        <div class="col-lg-6">
+                            <span class="bold-text font-18">Shipping Method</span>
+                            <div>
+                                {{orderDetails.deliveryType | deliveryTypeParser}}
+                            </div>
+
+                            <div class="m-t-20px" *ngIf="orderDetails.orderStatus === '2'">
+                                <span class="bold-text font-18">Courier</span>
+                                <div>
+                                    {{orderDetails.courier.name}}
+                                </div>
+                            </div>
+
+                            <div class="m-t-20px" *ngIf="orderDetails.orderStatus === '2'">
+                                <span class="bold-text font-18">Courier Tracking ID</span>
+                                <div>
+                                    {{orderDetails.deliveryTrackId}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <span class="bold-text font-18">Payment Method</span>
+                            <div>
+                                {{orderDetails.paymentType | paymentTypeParser}}
+                            </div>
+                        </div>
+                    </div>-->
+
+                    <div class="row m-t-50px">
+                        <table class="table invoice-table">
+                            <thead>
+                            <th>Item Name</th>
+                            <th>Price</th>
+                            <th>Quanity</th>
+                            <th>Total</th>
                             </thead>
                             <tbody>
                             <tr *ngFor="let product of orderDetails.products">
-                                <td>{{product.productId}}</td>
-                                <td>{{product.productName}}</td>
+                                <td><span class="black-bold-text font-18">{{product.productName}}</span></td>
+                                <td>{{product.price}}</td>
                                 <td>{{product.quantity}}</td>
-                                <td><i class="fa fa-inr"></i> {{product.quantity * product.price}}</td>
+                                <td>&#x20B9; {{product.quantity * product.price}}</td>
                             </tr>
                             </tbody>
                         </table>
@@ -192,9 +428,9 @@
                                 <td style="width: 30%"></td>
                                 <td style="width: 30%"></td>
                                 <td style="width: 20%"><div class="bold-text float-right">SubTotal:</div></td>
-                                <td style="width: 20%; padding-left: 3%;"><i class="fa fa-inr"></i> {{subTotal}}</td>
+                                <td style="width: 20%; padding-left: 3%;">&#x20B9; {{subTotal}}</td>
                             </tr>
-                            <tr>
+                            <tr *ngIf="orderDetails.discount">
                                 <td style="width: 30%"></td>
                                 <td style="width: 30%"></td>
                                 <td style="width: 20%"><div class="bold-text float-right">Discount:</div></td>
@@ -203,275 +439,44 @@
                             <tr>
                                 <td style="width: 30%"></td>
                                 <td style="width: 30%"></td>
-                                <td style="width: 20%"><div class="grand-total float-right">Grand Total:</div></td>
-                                <td style="width: 20%; padding-left: 3%;" class="grand-total">
-                                    <i class="fa fa-inr"></i> {{orderDetails.amount}}
+                                <td style="width: 20%; border-top: 1px solid #cdcdcd;"><div class="grand-total float-right">Grand Total:</div></td>
+                                <td style="width: 20%; padding-left: 3%; border-top: 1px solid #cdcdcd;" class="grand-total">
+                                    &#x20B9; {{orderDetails.amount}}
                                 </td>
                             </tr>
                         </table>
                     </div>
                 </div>
             </div>
-            <div class="tab-pane m-t-20px" id="invoice">
-                <div>
-                    <table class="invoice-order-table">
-                        <tbody>
-                        <tr>
-                            <td>
-                                <h1>Invoice &nbsp; #{{orderDetails.orderId}}</h1>
-                            </td>
-                            <td>
-                                <!-- Add Company Logo here -->
-                                <!--<img src="../../../../favicon.ico" class="float-right"> -->
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                    <!--<div class="col-lg-6">
-                        <h1>Invoice &nbsp; #{{orderDetails.orderId}}</h1>
-                    </div>
-                    <div class="col-lg-6">
-                        &lt;!&ndash; Add Company Logo here&ndash;&gt;
-                        &lt;!&ndash;<img src="../../../../favicon.ico" class="float-right">&ndash;&gt;
-                        <button type="button" class="btn" (click)="printInvoice()">Print Invoice</button>
-                    </div>-->
+        </div>
+    </div>
+
+
+
+    <div class="modal bd-example-modal-lg" id="addCourierModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Courier</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
-
-                <div class="m-t-50px">
-                    <div class="font-18">
-                        {{orderDetails.orderDate | date}}
-                    </div>
-                    <div class="font-18">
-                        Grand Total: &nbsp;
-                        <strong>&#x20B9; {{orderDetails.amount}}</strong>
-                    </div>
+                <div class="modal-body">
+                    <form name="addCourierForm" #addCourierForm="ngForm" id="addCourierForm">
+                        <div class="form-group row p-t-20px">
+                            <label for="courierName" class="col-sm-2 col-form-label no-wrap">Courier Name</label>
+                            <div class="col-sm-10">
+                                <input id="courierName" name="courierName" class="form-control" [(ngModel)]="newCourier.courierName">
+                            </div>
+                        </div>
+                    </form>
                 </div>
-
-                <div>
-                    <table class="invoice-shipping-table">
-                        <tbody>
-                        <tr>
-                            <td>
-                                <span class="black-bold-text font-18">Billing Address:</span>
-                                <div class="m-t-10px">
-                                    <div class="bold-text font-16">{{customerDetails.firstName}} {{customerDetails.lastName}}</div>
-                                    <div>
-                                        {{customerDetails.address}}
-                                    </div>
-                                    <div>
-                                        {{customerDetails.city}},
-                                    </div>
-                                    <div>
-                                        {{customerDetails.state | stateParser}},
-                                    </div>
-                                    <div>
-                                        {{customerDetails.pincode}}
-                                    </div>
-                                    <div>
-                                        <span class="bold-text">Phone:</span> {{customerDetails.phoneNo}}
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <span class="black-bold-text font-18">Shipping Address:</span>
-                                <div class="m-t-10px">
-                                    <div class="bold-text font-16">{{customerDetails.firstName}} {{customerDetails.lastName}}</div>
-                                    <div>
-                                        {{customerDetails.address}}
-                                    </div>
-                                    <div>
-                                        {{customerDetails.city}},
-                                    </div>
-                                    <div>
-                                        {{customerDetails.state | stateParser}},
-                                    </div>
-                                    <div>
-                                        {{customerDetails.pincode}}
-                                    </div>
-                                    <div>
-                                        <span class="bold-text">Phone:</span> {{customerDetails.phoneNo}}
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span class="black-bold-text font-18">Shipping Method</span>
-                                <div>
-                                    {{orderDetails.deliveryType | deliveryTypeParser}}
-                                </div>
-
-                                <div class="m-t-20px" *ngIf="orderDetails.orderStatus === '2'">
-                                    <span class="bold-text font-18">Courier</span>
-                                    <div>
-                                        {{orderDetails.courier.name}}
-                                    </div>
-                                </div>
-
-                                <div class="m-t-20px" *ngIf="orderDetails.orderStatus === '2'">
-                                    <span class="bold-text font-18">Courier Tracking ID</span>
-                                    <div>
-                                        {{orderDetails.deliveryTrackId}}
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <span class="black-bold-text font-18">Payment Method</span>
-                                <div>
-                                    {{orderDetails.paymentType | paymentTypeParser}}
-                                </div>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <!--<div class="row m-t-50px">
-                    <div class="col-lg-6">
-                        <span class="bold-text font-18">Billing Address:</span>
-                        <div class="m-t-10px">
-                            <div class="bold-text font-16">{{customerDetails.firstName}} {{customerDetails.lastName}}</div>
-                            <div>
-                                {{customerDetails.address}}
-                            </div>
-                            <div>
-                                {{customerDetails.city}},
-                            </div>
-                            <div>
-                                {{customerDetails.state | stateParser}},
-                            </div>
-                            <div>
-                                {{customerDetails.pincode}}
-                            </div>
-                            <div>
-                                <span class="bold-text">Phone:</span> {{customerDetails.phoneNo}}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <span class="bold-text font-18">Shipping Address:</span>
-                        <div class="m-t-10px">
-                            <div class="bold-text font-16">{{customerDetails.firstName}} {{customerDetails.lastName}}</div>
-                            <div>
-                                {{customerDetails.address}}
-                            </div>
-                            <div>
-                                {{customerDetails.city}},
-                            </div>
-                            <div>
-                                {{customerDetails.state | stateParser}},
-                            </div>
-                            <div>
-                                {{customerDetails.pincode}}
-                            </div>
-                            <div>
-                                <span class="bold-text">Phone:</span> {{customerDetails.phoneNo}}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row m-t-50px">
-                    <div class="col-lg-6">
-                        <span class="bold-text font-18">Shipping Method</span>
-                        <div>
-                            {{orderDetails.deliveryType | deliveryTypeParser}}
-                        </div>
-
-                        <div class="m-t-20px" *ngIf="orderDetails.orderStatus === '2'">
-                            <span class="bold-text font-18">Courier</span>
-                            <div>
-                                {{orderDetails.courier.name}}
-                            </div>
-                        </div>
-
-                        <div class="m-t-20px" *ngIf="orderDetails.orderStatus === '2'">
-                            <span class="bold-text font-18">Courier Tracking ID</span>
-                            <div>
-                                {{orderDetails.deliveryTrackId}}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <span class="bold-text font-18">Payment Method</span>
-                        <div>
-                            {{orderDetails.paymentType | paymentTypeParser}}
-                        </div>
-                    </div>
-                </div>-->
-
-                <div class="row m-t-50px">
-                    <table class="table invoice-table">
-                        <thead>
-                        <th>Item Name</th>
-                        <th>Price</th>
-                        <th>Quanity</th>
-                        <th>Total</th>
-                        </thead>
-                        <tbody>
-                        <tr *ngFor="let product of orderDetails.products">
-                            <td><span class="black-bold-text font-18">{{product.productName}}</span></td>
-                            <td>{{product.price}}</td>
-                            <td>{{product.quantity}}</td>
-                            <td>&#x20B9; {{product.quantity * product.price}}</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <div class="m-t-10px">
-                    <table class="table subtotal-table">
-                        <tr>
-                            <td style="width: 30%"></td>
-                            <td style="width: 30%"></td>
-                            <td style="width: 20%"><div class="bold-text float-right">SubTotal:</div></td>
-                            <td style="width: 20%; padding-left: 3%;">&#x20B9; {{subTotal}}</td>
-                        </tr>
-                        <tr *ngIf="orderDetails.discount">
-                            <td style="width: 30%"></td>
-                            <td style="width: 30%"></td>
-                            <td style="width: 20%"><div class="bold-text float-right">Discount:</div></td>
-                            <td style="width: 20%; padding-left: 3%;">{{orderDetails.discount | discountParser}}</td>
-                        </tr>
-                        <tr>
-                            <td style="width: 30%"></td>
-                            <td style="width: 30%"></td>
-                            <td style="width: 20%; border-top: 1px solid #cdcdcd;"><div class="grand-total float-right">Grand Total:</div></td>
-                            <td style="width: 20%; padding-left: 3%; border-top: 1px solid #cdcdcd;" class="grand-total">
-                                &#x20B9; {{orderDetails.amount}}
-                            </td>
-                        </tr>
-                    </table>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-save" (click)="addNewCourier()">Add Courier</button>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-
-
-<div class="modal bd-example-modal-lg" id="addCourierModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Add Courier</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form name="addCourierForm" #addCourierForm="ngForm" id="addCourierForm">
-                    <div class="form-group row p-t-20px">
-                        <label for="courierName" class="col-sm-2 col-form-label no-wrap">Courier Name</label>
-                        <div class="col-sm-10">
-                            <input id="courierName" name="courierName" class="form-control" [(ngModel)]="newCourier.courierName">
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-save" (click)="addNewCourier()">Add Courier</button>
-            </div>
-        </div>
-    </div>
 </div>

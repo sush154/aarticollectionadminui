@@ -5,6 +5,7 @@ import {FormsModule} from '@angular/forms';
 import {OrderDetailsPageComponent} from './app.order.details.page.component';
 import {ToasterModule, ToasterService} from 'angular2-toaster';
 import { MyDatePickerModule } from 'mydatepicker';
+import {AppHeaderModule} from '../../../modules/header/app.header.module';
 
 import {AppPaymentParserModule} from '../../../util/payment/app.payment.parser.module';
 import {AppDeliveryParserModule} from '../../../util/delivery/app.delivery.parser.module';
@@ -14,7 +15,7 @@ import {DiscountParserModule} from '../../../util/discount/app.discount.parser.m
 
 @NgModule({
     imports : [ToasterModule, CommonModule, AppPaymentParserModule, AppDeliveryParserModule, StateParserModule,
-                FormsModule, DiscountParserModule, MyDatePickerModule],
+                FormsModule, DiscountParserModule, MyDatePickerModule, AppHeaderModule],
     declarations : [OrderDetailsPageComponent],
     exports : [OrderDetailsPageComponent]
 })

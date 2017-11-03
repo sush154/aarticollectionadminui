@@ -21,6 +21,7 @@ var CustomerAddPageComponent = (function () {
         this.statesList = app_states_1.STATES;
         this.stateSelected = false;
         this.newCustomer = {};
+        this.passwordFlag = false;
     }
     /*
     *   This method changes the disability mode of city input box based on state filter selected
@@ -35,10 +36,29 @@ var CustomerAddPageComponent = (function () {
         $("#city").val("");
     };
     /*
+    *   This method displays password input box if role is admin
+    */
+    CustomerAddPageComponent.prototype.displayPassword = function (role) {
+        console.log(role);
+        if (role === '2') {
+            this.passwordFlag = true;
+        }
+        else {
+            this.passwordFlag = false;
+        }
+    };
+    /*
     *   This method adds new customer
     */
     CustomerAddPageComponent.prototype.addCustomer = function () {
         var _this = this;
+        this.newCustomer.createdFrom = 'admin-portal';
+        if (this.newCustomer.role === '1') {
+            this.newCustomer.role = 'general';
+        }
+        else if (this.newCustomer.role === '2') {
+            this.newCustomer.role = 'admin';
+        }
         this.customerProvider.addCustomer(this.newCustomer).then(function (res) {
             if (res.status === 200) {
                 _this.location.back();

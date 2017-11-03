@@ -17,7 +17,7 @@ export class CustomerAddPageComponent implements OnInit{
     private statesList : any = STATES;
     private stateSelected : boolean = false;
     private newCustomer : any = {};
-
+    private passwordFlag : boolean = false;
 
     constructor(private customerProvider : AppCustomerProvider,
                 private toastrService : ToasterService,
@@ -36,9 +36,27 @@ export class CustomerAddPageComponent implements OnInit{
     }
 
     /*
+    *   This method displays password input box if role is admin
+    */
+    displayPassword(role : any) : void {
+        console.log(role);
+        if(role === '2'){
+            this.passwordFlag = true;
+        }else {
+            this.passwordFlag = false;
+        }
+    }
+
+    /*
     *   This method adds new customer
     */
     addCustomer() : void {
+        this.newCustomer.createdFrom = 'admin-portal';
+        if(this.newCustomer.role === '1'){
+            this.newCustomer.role = 'general';
+        }else if(this.newCustomer.role === '2'){
+            this.newCustomer.role = 'admin';
+        }
         this.customerProvider.addCustomer(this.newCustomer).then((res) => {
             if(res.status === 200){
                 this.location.back();

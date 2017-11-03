@@ -87,6 +87,10 @@ table tbody > tr:hover {
     height: 50px;
 }
 
+.h-20px {
+    height: 20px;
+}
+
 .bg-white {
     background: #fff;
 }

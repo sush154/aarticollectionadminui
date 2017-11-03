@@ -15,8 +15,9 @@ var app_order_list_page_component_1 = require('../../pages/order/list/app.order.
 var app_order_add_page_component_1 = require('../../pages/order/add/app.order.add.page.component');
 var app_customer_add_page_component_1 = require('../../pages/customer/add/app.customer.add.page.component');
 var app_order_details_page_component_1 = require('../../pages/order/details/app.order.details.page.component');
+var app_login_page_component_1 = require('../../pages/login/app.login.page.component');
 var routes = [
-    { path: '', component: app_dashboard_page_component_1.AppDashboardPageComponent },
+    { path: 'login', component: app_login_page_component_1.LoginPageComponent },
     { path: 'dashboard', component: app_dashboard_page_component_1.AppDashboardPageComponent },
     { path: 'products', component: app_dashboard_page_component_1.AppDashboardPageComponent },
     { path: 'orders', component: app_order_list_page_component_1.OrderListPageComponent },

@@ -1,168 +1,173 @@
-<toaster-container></toaster-container>
+<app-header></app-header>
+<div class="container p-t-50px">
 
-<div class="bg-white p-50px">
-    <div class="m-t-b-10px">
-        <button class="btn btn-danger btn-sm" (click)="goBack()">Go Back</button>
-    </div>
-    <div>
-        <form id="addOrderForm" name="addOrderForm" #addOrderForm="ngForm">
-            <div class="form-group row p-t-20px">
-                <label class="col-sm-2 col-form-label no-wrap">Order Date</label>
-                <div class="col-sm-10">
-                    <my-date-picker name="orderDate" [options]="myDatePickerOptions"
-                                    [(ngModel)]="newOrder.orderDate" required></my-date-picker>
+    <toaster-container></toaster-container>
+
+    <div class="bg-white p-50px">
+        <div class="m-t-b-10px">
+            <button class="btn btn-danger btn-sm" (click)="goBack()">Go Back</button>
+        </div>
+        <div>
+            <form id="addOrderForm" name="addOrderForm" #addOrderForm="ngForm">
+                <div class="form-group row p-t-20px">
+                    <label class="col-sm-2 col-form-label no-wrap">Order Date</label>
+                    <div class="col-sm-10">
+                        <my-date-picker name="orderDate" [options]="myDatePickerOptions"
+                                        [(ngModel)]="newOrder.orderDate" required></my-date-picker>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group row">
-                <label for="customer" class="col-sm-2 col-form-label">Customer</label>
-                <div class="col-sm-10">
-                    <select class="form-control" id="customer" name="customer" #customerSelect (change)="navigateAddCustomer(customerSelect.value)" required [(ngModel)]="newOrder.customer">
-                        <option [value]="0">-- Select Customer --</option>
-                        <option [value]="1">Add New Customer</option>
-                        <option [value]="customer._id" *ngFor="let customer of customersList">{{customer.firstName}} {{customer.lastName}}, {{customer.city}}</option>
-                    </select>
+                <div class="form-group row">
+                    <label for="customer" class="col-sm-2 col-form-label">Customer</label>
+                    <div class="col-sm-10">
+                        <select class="form-control" id="customer" name="customer" #customerSelect (change)="navigateAddCustomer(customerSelect.value)" required [(ngModel)]="newOrder.customer">
+                            <option [value]="0" selected>-- Select Customer --</option>
+                            <option [value]="1">Add New Customer</option>
+                            <option [value]="customer._id" *ngFor="let customer of customersList">{{customer.firstName}} {{customer.lastName}}, {{customer.city}}</option>
+                        </select>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group row">
-                <label class="col-sm-2 col-form-label">Products</label>
-                <div class="col-sm-10">
-                    <table class="table table-bordered">
-                        <thead>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Products</label>
+                    <div class="col-sm-10">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <td colspan="4" class="text-right">
+                                        <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#productFilter" (click)="getAllProducts()">Add Product</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Product Name</th>
+                                    <th>Quantity</th>
+                                    <th>Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let product of productsList">
+                                    <td>{{product.productId}}</td>
+                                    <td>{{product.productName}}</td>
+                                    <td>{{product.productQuantity}}</td>
+                                    <td>{{product.amount}}</td>
+                                </tr>
+                            </tbody>
                             <tr>
-                                <td colspan="4" class="text-right">
-                                    <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#productFilter" (click)="getAllProducts()">Add Product</button>
+                                <td colspan="3" class="text-right">
+                                    <b>Total Amount:</b>
+                                </td>
+                                <td>
+                                    {{totalOrderAmount}}
                                 </td>
                             </tr>
-                            <tr>
-                                <th>#</th>
-                                <th>Product Name</th>
-                                <th>Quantity</th>
-                                <th>Amount</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let product of productsList">
-                                <td>{{product.productId}}</td>
-                                <td>{{product.productName}}</td>
-                                <td>{{product.productQuantity}}</td>
-                                <td>{{product.amount}}</td>
-                            </tr>
-                        </tbody>
-                        <tr>
-                            <td colspan="3" class="text-right">
-                                <b>Total Amount:</b>
-                            </td>
-                            <td>
-                                {{totalOrderAmount}}
-                            </td>
-                        </tr>
-                    </table>
+                        </table>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group row">
-                <label for="paymentStatus" class="col-sm-2 col-form-label">Payment Status</label>
-                <div class="col-sm-8">
-                    <select class="form-control" id="paymentStatus" name="paymentStatus" #paymentStatus required [(ngModel)]="newOrder.paymentStatus" (change)="paidSomePart(paymentStatus.value); populateAmountPaid(paymentStatus.value)">
-                        <option [value]="-1">-- Select Payment Status --</option>
-                        <option [value]="paymentStatus.id" *ngFor="let paymentStatus of paymentStatusList">{{paymentStatus.value}}</option>
-                    </select>
-                </div>
+                <div class="form-group row">
+                    <label for="paymentStatus" class="col-sm-2 col-form-label">Payment Status</label>
+                    <div class="col-sm-8">
+                        <select class="form-control" id="paymentStatus" name="paymentStatus" #paymentStatus required [(ngModel)]="newOrder.paymentStatus" (change)="paidSomePart(paymentStatus.value); populateAmountPaid(paymentStatus.value)">
+                            <option [value]="-1">-- Select Payment Status --</option>
+                            <option [value]="paymentStatus.id" *ngFor="let paymentStatus of paymentStatusList">{{paymentStatus.value}}</option>
+                        </select>
+                    </div>
 
+                </div>
+                <div class="form-group row">
+                    <label for="paymentType" class="col-sm-2 col-form-label">Payment Type</label>
+                    <div class="col-sm-4">
+                        <select class="form-control" id="paymentType" name="paymentType" #paymentType required [(ngModel)]="newOrder.paymentType" [disabled]="awaitingPayment" (change)="paymentTypeTrack(paymentType.value)">
+                            <option [value]="-1">-- Select Payment Type --</option>
+                            <option [value]="paymentType.id" *ngFor="let paymentType of paymentTypeList">{{paymentType.value}}</option>
+                        </select>
+                    </div>
+                    <label for="paymentAmount" class="col-sm-2 col-form-label">Amount Paid</label>
+                    <div class="col-sm-4">
+                        <input type="number" class="form-control" id="paymentAmount" name="paymentAmount" [(ngModel)]="newOrder.paymentAmount" [disabled]="partiallyPaid">
+                    </div>
+                </div>
+                <div class="form-group row" *ngIf="transactTrackFlag">
+                    <label for="transactTrackId" class="col-sm-4 col-form-label">Transaction Tracking ID</label>
+                    <div class="col-sm-8">
+                        <input class="form-control" type="text" id="transactTrackId" name="transactTrackId" [(ngModel)]="newOrder.transactTrackId" required>
+                    </div>
+                </div>
+                <div class="form-group row m-t-20px">
+                    <label for="orderType" class="col-sm-2 col-form-label">Order Type</label>
+                    <div class="col-sm-4">
+                        <select class="form-control" id="orderType" name="orderType" #orderType required [(ngModel)]="newOrder.orderType">
+                            <option [value]="-1">-- Select Order Type --</option>
+                            <option [value]="orderType.id" *ngFor="let orderType of orderTypeList">{{orderType.value}}</option>
+                        </select>
+                    </div>
+                    <label for="deliveryType" class="col-sm-2 col-form-label">Delivery Type</label>
+                    <div class="col-sm-4">
+                        <select class="form-control" id="deliveryType" name="deliveryType" #deliveryType required [(ngModel)]="newOrder.deliveryType">
+                            <option [value]="-1">-- Select Delivery Type --</option>
+                            <option [value]="deliveryType.id" *ngFor="let deliveryType of deliveryTypeList">{{deliveryType.value}}</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+            <div class="form-group row p-t-50px">
+                <div class="col-sm-12">
+                    <button type="button" class="btn addOrder-btn float-right" (click)="addNewOrder()">Add Order</button>
+                </div>
             </div>
-            <div class="form-group row">
-                <label for="paymentType" class="col-sm-2 col-form-label">Payment Type</label>
-                <div class="col-sm-4">
-                    <select class="form-control" id="paymentType" name="paymentType" #paymentType required [(ngModel)]="newOrder.paymentType" [disabled]="awaitingPayment" (change)="paymentTypeTrack(paymentType.value)">
-                        <option [value]="-1">-- Select Payment Type --</option>
-                        <option [value]="paymentType.id" *ngFor="let paymentType of paymentTypeList">{{paymentType.value}}</option>
-                    </select>
+        </div>
+
+    </div>
+
+    <div class="modal fade bd-example-modal-lg" id="productFilter" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add Products</h5>
                 </div>
-                <label for="paymentAmount" class="col-sm-2 col-form-label">Amount Paid</label>
-                <div class="col-sm-4">
-                    <input type="number" class="form-control" id="paymentAmount" name="paymentAmount" [(ngModel)]="newOrder.paymentAmount" [disabled]="partiallyPaid">
+                <div class="modal-body">
+                    <form id="productNameFilterForm" name="productNameFilterForm" #productNameFilterForm="ngForm">
+                        <input type="text" id="productNameFilter" name="productNameFilter" placeholder="Provide Product Name" class="form-control" #productNameFilter (keyup)="searchTerm$.next($event.target.value)">
+                    </form>
+                    <div class="m-t-20px">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Product Name</th>
+                                    <th>Image</th>
+                                    <th>Price</th>
+                                    <th>Quantity</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let filteredProduct of filteredProductsList | paginate: { itemsPerPage: 10, currentPage: p, id: 'first' }">
+                                    <td>{{filteredProduct.productId}}</td>
+                                    <td>{{filteredProduct.productName}}</td>
+                                    <td></td>
+                                    <td>{{filteredProduct.price}}</td>
+                                    <td>
+                                        <input type="number" id="productQuantity" name="productQuantity" #productQuanity>
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-sm btn-primary" (click)="addProductToCart(filteredProduct,productQuanity.value)">Add</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tr *ngIf="filteredProductsList?.length > 10">
+                                <td colspan="5">
+                                    <pagination-controls (pageChange)="p = $event" id="first" style="float: right;"></pagination-controls>
+                                </td>
+                            </tr>
+                            <tr *ngIf="filteredProductsList?.length === 0">
+                                <td colspan="5" style="text-align : center;">
+                                    <h5 class="h5">No Products to Show</h5>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group row" *ngIf="transactTrackFlag">
-                <label for="transactTrackId" class="col-sm-4 col-form-label">Transaction Tracking ID</label>
-                <div class="col-sm-8">
-                    <input class="form-control" type="text" id="transactTrackId" name="transactTrackId" [(ngModel)]="newOrder.transactTrackId" required>
-                </div>
-            </div>
-            <div class="form-group row m-t-20px">
-                <label for="orderType" class="col-sm-2 col-form-label">Order Type</label>
-                <div class="col-sm-4">
-                    <select class="form-control" id="orderType" name="orderType" #orderType required [(ngModel)]="newOrder.orderType">
-                        <option [value]="-1">-- Select Order Type --</option>
-                        <option [value]="orderType.id" *ngFor="let orderType of orderTypeList">{{orderType.value}}</option>
-                    </select>
-                </div>
-                <label for="deliveryType" class="col-sm-2 col-form-label">Delivery Type</label>
-                <div class="col-sm-4">
-                    <select class="form-control" id="deliveryType" name="deliveryType" #deliveryType required [(ngModel)]="newOrder.deliveryType">
-                        <option [value]="-1">-- Select Delivery Type --</option>
-                        <option [value]="deliveryType.id" *ngFor="let deliveryType of deliveryTypeList">{{deliveryType.value}}</option>
-                    </select>
-                </div>
-            </div>
-        </form>
-        <div class="form-group row p-t-50px">
-            <div class="col-sm-12">
-                <button type="button" class="btn addOrder-btn float-right" (click)="addNewOrder()">Add Order</button>
             </div>
         </div>
     </div>
 
-</div>
-
-<div class="modal fade bd-example-modal-lg" id="productFilter" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Add Products</h5>
-            </div>
-            <div class="modal-body">
-                <form id="productNameFilterForm" name="productNameFilterForm" #productNameFilterForm="ngForm">
-                    <input type="text" id="productNameFilter" name="productNameFilter" placeholder="Provide Product Name" class="form-control" #productNameFilter (keyup)="searchTerm$.next($event.target.value)">
-                </form>
-                <div class="m-t-20px">
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Product Name</th>
-                                <th>Image</th>
-                                <th>Price</th>
-                                <th>Quantity</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let filteredProduct of filteredProductsList | paginate: { itemsPerPage: 10, currentPage: p, id: 'first' }">
-                                <td>{{filteredProduct.productId}}</td>
-                                <td>{{filteredProduct.productName}}</td>
-                                <td></td>
-                                <td>{{filteredProduct.price}}</td>
-                                <td>
-                                    <input type="number" id="productQuantity" name="productQuantity" #productQuanity>
-                                </td>
-                                <td>
-                                    <button type="button" class="btn btn-sm btn-primary" (click)="addProductToCart(filteredProduct,productQuanity.value)">Add</button>
-                                </td>
-                            </tr>
-                        </tbody>
-                        <tr *ngIf="filteredProductsList?.length > 10">
-                            <td colspan="5">
-                                <pagination-controls (pageChange)="p = $event" id="first" style="float: right;"></pagination-controls>
-                            </td>
-                        </tr>
-                        <tr *ngIf="filteredProductsList?.length === 0">
-                            <td colspan="5" style="text-align : center;">
-                                <h5 class="h5">No Products to Show</h5>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>

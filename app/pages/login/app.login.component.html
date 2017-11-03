@@ -1,0 +1,46 @@
+
+
+<div class="container">
+    <div class="card card-container" >
+
+            <!-- <img class="profile-img-card" src="//lh3.googleusercontent.com/-6V8xOA6M7BA/AAAAAAAAAAI/AAAAAAAAAAA/rzlHcD0KYwo/photo.jpg?sz=120" alt="" /> -->
+        <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
+
+        <p id="profile-name" class="profile-name-card"></p>
+        <div *ngIf="loginFormFlag">
+            <form class="form-signin" id="loginForm" #loginForm="ngForm">
+                <span id="reauth-email" class="reauth-email"></span>
+                <div class="form-group">
+                    <input type="email" id="inputEmail" name="inputEmail" class="form-control" placeholder="Email Address" [(ngModel)]="loginObj.email" required autofocus>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="inputPassword" name="inputPassword" class="form-control" placeholder="Password" [(ngModel)]="loginObj.password" required>
+                </div>
+                <div class="h-50px"></div>
+                <button class="btn btn-lg btn-primary btn-block btn-signin" type="button" (click)="login()">Sign in</button>
+            </form><!-- /form -->
+            <div class="h-20px"></div>
+            <a class="forgot-password" (click)="toggleForms('forgetPassword')" style="white-space: nowrap;">
+                Forgot the password?
+            </a>
+
+        </div>
+
+        <div *ngIf="forgetPasswordFlag">
+            <form class="form-signin" id="forgetPassForm" #forgetPassForm="ngForm">
+                <span>Please provide your Email ID. You will receive OTP on the provided email address</span>
+                <div class="h-50px"></div>
+                <div class="form-group">
+                    <input type="email" id="fpEmail" name="fpEmail" class="form-control" placeholder="Email Address" required>
+                </div>
+                <div class="h-20px"></div>
+                <button class="btn btn-lg btn-primary btn-block btn-signin" type="button">Send OTP</button>
+            </form>
+            <div class="h-20px"></div>
+            <a class="forgot-password" (click)="toggleForms('login')">
+                Back to Login
+            </a>
+        </div>
+
+    </div><!-- /card-container -->
+</div>

@@ -185,6 +185,7 @@ var AddOrderPageComponent = (function () {
         this.newOrder.paymentType = '-1';
         this.newOrder.orderType = '-1';
         this.newOrder.deliveryType = '-1';
+        this.newOrder.customer = '0';
     };
     AddOrderPageComponent = __decorate([
         core_1.Component({

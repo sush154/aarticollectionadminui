@@ -15,13 +15,15 @@ var router_1 = require('@angular/router');
 var angular2_toaster_1 = require('angular2-toaster');
 var mydatepicker_1 = require('mydatepicker');
 var ngx_pagination_1 = require('ngx-pagination');
+var app_header_module_1 = require('../../../modules/header/app.header.module');
 var app_order_add_page_component_1 = require('./app.order.add.page.component');
 var AddOrderPageModule = (function () {
     function AddOrderPageModule() {
     }
     AddOrderPageModule = __decorate([
         core_1.NgModule({
-            imports: [forms_1.FormsModule, common_1.CommonModule, router_1.RouterModule, angular2_toaster_1.ToasterModule, mydatepicker_1.MyDatePickerModule, ngx_pagination_1.NgxPaginationModule],
+            imports: [forms_1.FormsModule, common_1.CommonModule, router_1.RouterModule, angular2_toaster_1.ToasterModule, mydatepicker_1.MyDatePickerModule, ngx_pagination_1.NgxPaginationModule,
+                app_header_module_1.AppHeaderModule],
             declarations: [app_order_add_page_component_1.AddOrderPageComponent],
             exports: [app_order_add_page_component_1.AddOrderPageComponent]
         }), 

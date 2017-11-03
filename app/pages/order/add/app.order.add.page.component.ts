@@ -199,5 +199,6 @@ export class AddOrderPageComponent implements OnInit{
         this.newOrder.paymentType = '-1';
         this.newOrder.orderType = '-1';
         this.newOrder.deliveryType = '-1';
+        this.newOrder.customer = '0';
     }
 }
