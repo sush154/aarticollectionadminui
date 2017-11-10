@@ -9,16 +9,21 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
+var router_1 = require('@angular/router');
 var app_product_provider_1 = require('../../../providers/product/app.product.provider');
 var DashboardProductsListComponent = (function () {
-    function DashboardProductsListComponent(productProvider) {
+    function DashboardProductsListComponent(productProvider, router) {
         this.productProvider = productProvider;
+        this.router = router;
     }
     DashboardProductsListComponent.prototype.populateAllProducts = function () {
         var _this = this;
         this.productProvider.getAllProducts().then(function (res) {
             if (res.status === 200) {
                 _this.productsList = res.product;
+            }
+            else if (res.status === 401) {
+                _this.router.navigate(['/login']);
             }
         });
     };
@@ -32,7 +37,7 @@ var DashboardProductsListComponent = (function () {
             styleUrls: ['./app/pages/dashboard/productsList/app.dashboard.pages.productsList.component.css'],
             providers: [app_product_provider_1.ProductProvider]
         }), 
-        __metadata('design:paramtypes', [app_product_provider_1.ProductProvider])
+        __metadata('design:paramtypes', [app_product_provider_1.ProductProvider, router_1.Router])
     ], DashboardProductsListComponent);
     return DashboardProductsListComponent;
 }());

@@ -58,6 +58,9 @@ var AddOrderPageComponent = (function () {
             if (res.status === 200) {
                 _this.customersList = res.customer;
             }
+            else if (res.status === 401) {
+                _this.router.navigate(['/login']);
+            }
             else {
                 _this.toastrService.pop('error', 'Server Error', 'We encountered server error. Please try later !');
             }
@@ -79,6 +82,9 @@ var AddOrderPageComponent = (function () {
         this.productProvider.getAllProducts().then(function (res) {
             if (res.status === 200) {
                 _this.filteredProductsList = res.product;
+            }
+            else if (res.status === 401) {
+                _this.router.navigate(['/login']);
             }
             else {
                 _this.toastrService.pop('error', 'Server Error', 'We encountered server error. Please try later !');
@@ -163,6 +169,9 @@ var AddOrderPageComponent = (function () {
             if (res.status === 200) {
                 _this.location.back();
             }
+            else if (res.status === 401) {
+                _this.router.navigate(['/login']);
+            }
             else {
                 _this.toastrService.pop('error', 'Server Error', 'We encountered server error. Please try later !');
             }
@@ -179,6 +188,12 @@ var AddOrderPageComponent = (function () {
             .subscribe(function (res) {
             if (res.status === 200) {
                 _this.filteredProductsList = res.product;
+            }
+            else if (res.status === 401) {
+                _this.router.navigate(['/login']);
+            }
+            else {
+                _this.toastrService.pop('error', 'Server Error', 'We encountered server error. Please try later !');
             }
         });
         this.newOrder.paymentStatus = '-1';

@@ -22,6 +22,9 @@ var DashboardOrdersListComponent = (function () {
             if (res.status === 200) {
                 _this.ordersList = res.order;
             }
+            else if (res.status === 401) {
+                _this.router.navigate(['/login']);
+            }
         });
     };
     DashboardOrdersListComponent.prototype.navigateToOrderDetails = function (orderId) {

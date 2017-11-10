@@ -71,6 +71,9 @@ var CustomerAddPageComponent = (function () {
             }
         });
     };
+    CustomerAddPageComponent.prototype.goBack = function () {
+        this.location.back();
+    };
     CustomerAddPageComponent.prototype.ngOnInit = function () {
         this.newCustomer.state = "0";
     };

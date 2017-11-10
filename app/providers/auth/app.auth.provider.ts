@@ -11,8 +11,6 @@ export class AuthProvider{
 
     private headers = new Headers({'Content-Type': 'application/json'});
 
-    private serviceUrl = URL + "/order";
-
     private handleError(error: any): Promise<any> {
         console.error('An error occurred', error); // for demo purposes only
         return Promise.reject(error.message || error);
@@ -35,20 +33,4 @@ export class AuthProvider{
             })
     }
 
-    /*
-    *   This method authenticates user
-    */
-    login(loginForm : any) : void {
-        let url = URL + "/user/login";
-
-        this.http
-            .post(url, JSON.stringify(loginForm), {headers: this.headers,withCredentials: true})
-            .toPromise()
-            .then((res) => {
-                console.log(res.json());
-            })
-            .catch((err) => {
-                this.handleError(err);
-            })
-    }
 }

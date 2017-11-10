@@ -10,13 +10,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var router_1 = require('@angular/router');
+var angular2_toaster_1 = require('angular2-toaster');
+var common_1 = require('@angular/common');
 var app_header_component_1 = require('./app.header.component');
 var AppHeaderModule = (function () {
     function AppHeaderModule() {
     }
     AppHeaderModule = __decorate([
         core_1.NgModule({
-            imports: [router_1.RouterModule],
+            imports: [router_1.RouterModule, angular2_toaster_1.ToasterModule, common_1.CommonModule],
             declarations: [app_header_component_1.AppHeaderComponent],
             exports: [app_header_component_1.AppHeaderComponent]
         }), 

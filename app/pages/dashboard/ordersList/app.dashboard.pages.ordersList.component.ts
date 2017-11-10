@@ -20,7 +20,9 @@ export class DashboardOrdersListComponent implements OnInit{
         this.orderProvider.getAllOrders().then((res) => {
             if(res.status === 200){
                 this.ordersList = res.order;
-            }
+            }else if(res.status === 401){
+                 this.router.navigate(['/login']);
+             }
         });
     }
 

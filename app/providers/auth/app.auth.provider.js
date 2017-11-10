@@ -16,7 +16,6 @@ var AuthProvider = (function () {
     function AuthProvider(http) {
         this.http = http;
         this.headers = new http_1.Headers({ 'Content-Type': 'application/json' });
-        this.serviceUrl = app_service_url_1.URL + "/order";
     }
     AuthProvider.prototype.handleError = function (error) {
         console.error('An error occurred', error); // for demo purposes only
@@ -33,22 +32,6 @@ var AuthProvider = (function () {
             .toPromise()
             .then(function (res) {
             return res.json().data;
-        })
-            .catch(function (err) {
-            _this.handleError(err);
-        });
-    };
-    /*
-    *   This method authenticates user
-    */
-    AuthProvider.prototype.login = function (loginForm) {
-        var _this = this;
-        var url = app_service_url_1.URL + "/user/login";
-        this.http
-            .post(url, JSON.stringify(loginForm), { headers: this.headers, withCredentials: true })
-            .toPromise()
-            .then(function (res) {
-            console.log(res.json());
         })
             .catch(function (err) {
             _this.handleError(err);

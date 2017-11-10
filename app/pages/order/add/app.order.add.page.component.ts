@@ -60,9 +60,11 @@ export class AddOrderPageComponent implements OnInit{
         this.customerProvider.getAllCustomers().then((res) => {
             if(res.status === 200) {
                 this.customersList = res.customer;
+            }else if(res.status === 401){
+                this.router.navigate(['/login']);
             }else {
-                this.toastrService.pop('error', 'Server Error', 'We encountered server error. Please try later !');
-            }
+                 this.toastrService.pop('error', 'Server Error', 'We encountered server error. Please try later !');
+             }
         });
     }
 
@@ -84,9 +86,11 @@ export class AddOrderPageComponent implements OnInit{
         this.productProvider.getAllProducts().then((res) => {
             if(res.status === 200) {
                 this.filteredProductsList= res.product;
+            }else if(res.status === 401){
+                this.router.navigate(['/login']);
             }else {
-                this.toastrService.pop('error', 'Server Error', 'We encountered server error. Please try later !');
-            }
+                 this.toastrService.pop('error', 'Server Error', 'We encountered server error. Please try later !');
+             }
         });
     }
 
@@ -174,9 +178,11 @@ export class AddOrderPageComponent implements OnInit{
         this.orderProvider.addNewOrder(this.newOrder).then((res) => {
             if(res.status === 200){
                 this.location.back();
+            }else if(res.status === 401){
+                this.router.navigate(['/login']);
             }else {
-                this.toastrService.pop('error', 'Server Error', 'We encountered server error. Please try later !');
-            }
+                 this.toastrService.pop('error', 'Server Error', 'We encountered server error. Please try later !');
+             }
         });
     }
 
@@ -192,6 +198,10 @@ export class AddOrderPageComponent implements OnInit{
             .subscribe((res) => {
                 if(res.status === 200) {
                     this.filteredProductsList  = res.product;
+                }else if(res.status === 401){
+                    this.router.navigate(['/login']);
+                }else {
+                    this.toastrService.pop('error', 'Server Error', 'We encountered server error. Please try later !');
                 }
             });
 

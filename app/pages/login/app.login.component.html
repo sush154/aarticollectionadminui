@@ -1,9 +1,9 @@
-
+<toaster-container></toaster-container>
 
 <div class="container">
     <div class="card card-container" >
 
-            <!-- <img class="profile-img-card" src="//lh3.googleusercontent.com/-6V8xOA6M7BA/AAAAAAAAAAI/AAAAAAAAAAA/rzlHcD0KYwo/photo.jpg?sz=120" alt="" /> -->
+        <!-- <img class="profile-img-card" src="//lh3.googleusercontent.com/-6V8xOA6M7BA/AAAAAAAAAAI/AAAAAAAAAAA/rzlHcD0KYwo/photo.jpg?sz=120" alt="" /> -->
         <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
 
         <p id="profile-name" class="profile-name-card"></p>
@@ -17,12 +17,15 @@
                     <input type="password" id="inputPassword" name="inputPassword" class="form-control" placeholder="Password" [(ngModel)]="loginObj.password" required>
                 </div>
                 <div class="h-50px"></div>
-                <button class="btn btn-lg btn-primary btn-block btn-signin" type="button" (click)="login()">Sign in</button>
+                <button class="btn btn-lg btn-primary btn-block btn-signin" type="button" (click)="login(loginObj)" [disabled]="!loginForm.form.valid">Sign in</button>
             </form><!-- /form -->
             <div class="h-20px"></div>
             <a class="forgot-password" (click)="toggleForms('forgetPassword')" style="white-space: nowrap;">
                 Forgot the password?
             </a>
+            <!--<div class="p-t-20px">
+              <button class="btn btn-primary" (click)="toggleForms('register')">Register</button>
+            </div>-->
 
         </div>
 
@@ -34,7 +37,7 @@
                     <input type="email" id="fpEmail" name="fpEmail" class="form-control" placeholder="Email Address" required>
                 </div>
                 <div class="h-20px"></div>
-                <button class="btn btn-lg btn-primary btn-block btn-signin" type="button">Send OTP</button>
+                <button class="btn btn-lg btn-primary btn-block btn-signin" type="button" [disabled]="!forgetPassForm.form.valid">Send OTP</button>
             </form>
             <div class="h-20px"></div>
             <a class="forgot-password" (click)="toggleForms('login')">
@@ -42,5 +45,67 @@
             </a>
         </div>
 
+        <div *ngIf="registerFlag">
+            <form class="form-signin" id="registerForm" #registerForm="ngForm">
+                <div class="form-group">
+                    <input type="text" class="form-control" id="firstName" name="firstName" placeholder="First Name" [(ngModel)]="newUser.firstName" required>
+                </div>
+
+                <div class="form-group">
+                    <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Last Name" [(ngModel)]="newUser.lastName" required>
+                </div>
+
+                <div class="form-group">
+                    <textarea id="address" name="address" placeholder="Address" class="form-control" [(ngModel)]="newUser.address" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <select id="state" name="state" #stateDropdown class="form-control" (change)="stateSelected(stateDropdown.value)" [(ngModel)]="newUser.state">
+                        <option [value]="0">-- Select State --</option>
+                        <option [value]="state.id" *ngFor="let state of statesList">{{state.value}}</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <input type="text" id="city" name="city" class="form-control" placeholder="City" required [disabled]="selectedState" [(ngModel)]="newUser.city">
+                </div>
+
+                <div class="form-group">
+                    <input type="number" id="pincode" name="pincode" class="form-control no-spin" placeholder="Pin Code" [(ngModel)]="newUser.pincode" required>
+                </div>
+
+                <div class="form-group">
+                    <input type="email" id="email" name="email" class="form-control" placeholder="Email Address" [(ngModel)]="newUser.email" required>
+                </div>
+
+                <div class="form-group">
+                    <input type="tel" id="phoneNo" name="phoneNo" class="form-control" maxlength="10" placeholder="Phone Number" [(ngModel)]="newUser.phoneNo" required >
+                </div>
+
+                <div class="form-group">
+                    <input type="password" id="password" name="password" class="form-control" placeholder="Password" [(ngModel)]="newUser.password" required>
+                </div>
+
+                <div class="h-20px"></div>
+                <button class="btn btn-lg btn-primary btn-block btn-signin" type="button" (click)="register(newUser)" [disabled]="!registerForm.form.valid">Register</button>
+            </form>
+            <div class="h-20px"></div>
+            <a class="forgot-password" (click)="toggleForms('login')">
+                Back to Login
+            </a>
+        </div>
+
+        <div *ngIf="registrationSuccess">
+            <div>
+                <h2>Your registration is successful !</h2>
+            </div>
+            <div class="m-t-20px">
+                Please go to Login page for sign in to application by click below button
+            </div>
+            <div class="h-50px"></div>
+            <div class="text-center">
+                <button class="btn btn-primary" (click)="toggleForms('login')">Login</button>
+            </div>
+        </div>
     </div><!-- /card-container -->
 </div>

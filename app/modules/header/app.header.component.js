@@ -11,16 +11,32 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var router_1 = require('@angular/router');
 var common_1 = require('@angular/common');
+var angular2_toaster_1 = require('angular2-toaster');
+var app_logout_provider_1 = require('../../providers/logout/app.logout.provider');
 var AppHeaderComponent = (function () {
-    function AppHeaderComponent(router, location) {
+    function AppHeaderComponent(router, location, logoutProvider, toastrService) {
         this.router = router;
         this.location = location;
+        this.logoutProvider = logoutProvider;
+        this.toastrService = toastrService;
         this.menuHeader = true;
+        this.displayAdminsPage = false;
     }
     AppHeaderComponent.prototype.navigate = function (pageName) {
         var navigatedPage = "/" + pageName;
         this.selectedPage = pageName;
         this.router.navigate([navigatedPage]);
+    };
+    AppHeaderComponent.prototype.logout = function () {
+        var _this = this;
+        this.logoutProvider.logout().then(function (res) {
+            if (res.status === 200) {
+                _this.router.navigate(['/login']);
+            }
+            else {
+                _this.toastrService.pop('error', 'Server Error', 'We encountered server error. Please try later !');
+            }
+        });
     };
     AppHeaderComponent.prototype.ngDoCheck = function () {
         if (this.location.path().indexOf('dashboard') > -1) {
@@ -33,13 +49,27 @@ var AppHeaderComponent = (function () {
             this.selectedPage = 'orders';
         }
     };
+    AppHeaderComponent.prototype.ngOnInit = function () {
+        var cookies = document.cookie.split(';');
+        var userRole;
+        for (var _i = 0, cookies_1 = cookies; _i < cookies_1.length; _i++) {
+            var c = cookies_1[_i];
+            if (c.split('=')[0].trim() === 'userRole') {
+                userRole = c.split('=')[1].trim();
+            }
+        }
+        if (userRole === 'admin') {
+            this.displayAdminsPage = true;
+        }
+    };
     AppHeaderComponent = __decorate([
         core_1.Component({
             selector: 'app-header',
             templateUrl: './app/modules/header/app.header.component.html',
-            styleUrls: ['./app/modules/header/app.header.component.css']
+            styleUrls: ['./app/modules/header/app.header.component.css'],
+            providers: [app_logout_provider_1.LogoutProvider]
         }), 
-        __metadata('design:paramtypes', [router_1.Router, common_1.Location])
+        __metadata('design:paramtypes', [router_1.Router, common_1.Location, app_logout_provider_1.LogoutProvider, angular2_toaster_1.ToasterService])
     ], AppHeaderComponent);
     return AppHeaderComponent;
 }());

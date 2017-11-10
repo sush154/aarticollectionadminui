@@ -3,6 +3,7 @@ import {ToasterService} from 'angular2-toaster';
 import {OrderProvider} from '../../providers/order/app.order.provider';
 import {ProductProvider} from '../../providers/product/app.product.provider';
 import {SortOrderForChart} from '../../util/sort/orderChart/app.order.sort.chart';
+import {Router} from '@angular/router';
 
 @Component({
     selector : 'dashboard-page',
@@ -25,7 +26,8 @@ export class AppDashboardPageComponent implements OnInit{
     constructor(private orderProvider : OrderProvider,
                 private sortOrderForChart : SortOrderForChart,
                 private productProvider : ProductProvider,
-                private toastrService : ToasterService){}
+                private toastrService : ToasterService,
+                private router : Router){}
 
     getOrderCountAndIncome() : void {
         this.orderProvider.getOrderCountAndIncome().then((res) => {
@@ -33,6 +35,8 @@ export class AppDashboardPageComponent implements OnInit{
                 this.totalOrdersCount = res.data.totalCount;
                 this.currentMonthOrderCount = res.data.currentMonthOrder;
                 this.currentMonthIncome = res.data.currentMonthIncome;
+            }else if(res.status === 401){
+                this.router.navigate(['/login']);
             }
         });
     }
@@ -41,6 +45,8 @@ export class AppDashboardPageComponent implements OnInit{
         this.orderProvider.getNewOrderCount().then((res) => {
             if(res.status === 200){
                 this.newOrdersCount = res.order;
+            }else if(res.status === 401){
+                this.router.navigate(['/login']);
             }else{
                 this.toastrService.pop('error', 'Server Error', 'We encountered server error. Please try later !');
             }
@@ -51,6 +57,8 @@ export class AppDashboardPageComponent implements OnInit{
         this.productProvider.getTotalProductsCount().then((res) => {
             if(res.status === 200){
                 this.totalProductsCount = res.product;
+            }else if(res.status === 401){
+                this.router.navigate(['/login']);
             }else {
                 this.toastrService.pop('error', 'Server Error', 'We encountered server error. Please try later !');
             }
@@ -61,6 +69,8 @@ export class AppDashboardPageComponent implements OnInit{
         this.orderProvider.getIncomeThisYear().then((res) => {
             if(res.status === 200) {
                 this.totalIncomeTillDate = res.data.totalIncome;
+            }else if(res.status === 401){
+                this.router.navigate(['/login']);
             }else {
                 this.toastrService.pop('error', 'Server Error', 'We encountered server error. Please try later !');
             }
@@ -117,6 +127,8 @@ export class AppDashboardPageComponent implements OnInit{
                   };
                 /* Populating options for Chart - Ends */
 
+            }else if(res.status === 401){
+                this.router.navigate(['/login']);
             }
         });
 

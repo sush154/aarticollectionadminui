@@ -68,6 +68,9 @@ export class CustomerAddPageComponent implements OnInit{
         });
     }
 
+    private goBack() : void {
+        this.location.back();
+    }
 
     ngOnInit() : void {
         this.newCustomer.state = "0";

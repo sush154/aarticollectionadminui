@@ -13,12 +13,14 @@ var angular2_toaster_1 = require('angular2-toaster');
 var app_order_provider_1 = require('../../providers/order/app.order.provider');
 var app_product_provider_1 = require('../../providers/product/app.product.provider');
 var app_order_sort_chart_1 = require('../../util/sort/orderChart/app.order.sort.chart');
+var router_1 = require('@angular/router');
 var AppDashboardPageComponent = (function () {
-    function AppDashboardPageComponent(orderProvider, sortOrderForChart, productProvider, toastrService) {
+    function AppDashboardPageComponent(orderProvider, sortOrderForChart, productProvider, toastrService, router) {
         this.orderProvider = orderProvider;
         this.sortOrderForChart = sortOrderForChart;
         this.productProvider = productProvider;
         this.toastrService = toastrService;
+        this.router = router;
         this.orders = [];
         this.newOrdersCount = 0;
         this.totalProductsCount = 0;
@@ -32,6 +34,9 @@ var AppDashboardPageComponent = (function () {
                 _this.currentMonthOrderCount = res.data.currentMonthOrder;
                 _this.currentMonthIncome = res.data.currentMonthIncome;
             }
+            else if (res.status === 401) {
+                _this.router.navigate(['/login']);
+            }
         });
     };
     AppDashboardPageComponent.prototype.getNewOrdersCount = function () {
@@ -39,6 +44,9 @@ var AppDashboardPageComponent = (function () {
         this.orderProvider.getNewOrderCount().then(function (res) {
             if (res.status === 200) {
                 _this.newOrdersCount = res.order;
+            }
+            else if (res.status === 401) {
+                _this.router.navigate(['/login']);
             }
             else {
                 _this.toastrService.pop('error', 'Server Error', 'We encountered server error. Please try later !');
@@ -51,6 +59,9 @@ var AppDashboardPageComponent = (function () {
             if (res.status === 200) {
                 _this.totalProductsCount = res.product;
             }
+            else if (res.status === 401) {
+                _this.router.navigate(['/login']);
+            }
             else {
                 _this.toastrService.pop('error', 'Server Error', 'We encountered server error. Please try later !');
             }
@@ -61,6 +72,9 @@ var AppDashboardPageComponent = (function () {
         this.orderProvider.getIncomeThisYear().then(function (res) {
             if (res.status === 200) {
                 _this.totalIncomeTillDate = res.data.totalIncome;
+            }
+            else if (res.status === 401) {
+                _this.router.navigate(['/login']);
             }
             else {
                 _this.toastrService.pop('error', 'Server Error', 'We encountered server error. Please try later !');
@@ -115,6 +129,9 @@ var AppDashboardPageComponent = (function () {
                         }]
                 };
             }
+            else if (res.status === 401) {
+                _this.router.navigate(['/login']);
+            }
         });
     };
     AppDashboardPageComponent.prototype.ngOnInit = function () {
@@ -131,7 +148,7 @@ var AppDashboardPageComponent = (function () {
             styleUrls: ['./app/pages/dashboard/app.dashboard.page.component.css'],
             providers: [app_order_provider_1.OrderProvider, app_order_sort_chart_1.SortOrderForChart]
         }), 
-        __metadata('design:paramtypes', [app_order_provider_1.OrderProvider, app_order_sort_chart_1.SortOrderForChart, app_product_provider_1.ProductProvider, angular2_toaster_1.ToasterService])
+        __metadata('design:paramtypes', [app_order_provider_1.OrderProvider, app_order_sort_chart_1.SortOrderForChart, app_product_provider_1.ProductProvider, angular2_toaster_1.ToasterService, router_1.Router])
     ], AppDashboardPageComponent);
     return AppDashboardPageComponent;
 }());

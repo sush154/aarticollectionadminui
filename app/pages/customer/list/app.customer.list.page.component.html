@@ -1,0 +1,29 @@
+<app-header></app-header>
+
+<div class="container p-t-50px">
+
+    <toaster-container></toaster-container>
+
+    <div class="bg-white p-50px">
+        <!-- Search section - check with protracker project -->
+
+
+    </div>
+
+    <div class="card-view" *ngFor="let customer of customersList">
+        <div class="card" (click)="goToDetails(customer)">
+            <div class="card-block">
+                <h4 class="card-title">{{customer.firstName}} {{customer.lastName}}</h4>
+                <p class="card-text">
+                    {{customer.city}}, {{customer.state | stateParser}}
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="fixed-action-button">
+        <button type="button" class="btn btn-primary" [routerLink]="['/customers/addCustomer']">
+            <i class="fa fa-plus"></i>
+        </button>
+    </div>
+</div>

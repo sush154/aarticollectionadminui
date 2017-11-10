@@ -1,0 +1,16 @@
+.card {
+    width: 300px;
+    display: inline-block;
+    margin: 20px;
+    padding: 20px;
+    box-shadow: 10px 10px 5px #888888;
+}
+
+.card:hover {
+    background-color: #edeeff;
+    cursor: pointer;
+}
+
+.card-view {
+    display: inline-block;
+}

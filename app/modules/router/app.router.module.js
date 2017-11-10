@@ -16,6 +16,8 @@ var app_order_add_page_component_1 = require('../../pages/order/add/app.order.ad
 var app_customer_add_page_component_1 = require('../../pages/customer/add/app.customer.add.page.component');
 var app_order_details_page_component_1 = require('../../pages/order/details/app.order.details.page.component');
 var app_login_page_component_1 = require('../../pages/login/app.login.page.component');
+var app_customer_list_page_component_1 = require('../../pages/customer/list/app.customer.list.page.component');
+var app_customer_details_page_component_1 = require('../../pages/customer/details/app.customer.details.page.component');
 var routes = [
     { path: 'login', component: app_login_page_component_1.LoginPageComponent },
     { path: 'dashboard', component: app_dashboard_page_component_1.AppDashboardPageComponent },
@@ -23,8 +25,9 @@ var routes = [
     { path: 'orders', component: app_order_list_page_component_1.OrderListPageComponent },
     { path: 'orders/addOrder', component: app_order_add_page_component_1.AddOrderPageComponent },
     { path: 'orders/:id', component: app_order_details_page_component_1.OrderDetailsPageComponent },
-    { path: 'customers', component: app_order_list_page_component_1.OrderListPageComponent },
-    { path: 'customers/addCustomer', component: app_customer_add_page_component_1.CustomerAddPageComponent }
+    { path: 'customers', component: app_customer_list_page_component_1.CustomerListPageComponent },
+    { path: 'customers/addCustomer', component: app_customer_add_page_component_1.CustomerAddPageComponent },
+    { path: 'customers/:id', component: app_customer_details_page_component_1.CustomerDetailsPageComponent }
 ];
 var AppRoutingModule = (function () {
     function AppRoutingModule() {
