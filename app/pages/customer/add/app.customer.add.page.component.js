@@ -53,18 +53,13 @@ var CustomerAddPageComponent = (function () {
     CustomerAddPageComponent.prototype.addCustomer = function () {
         var _this = this;
         this.newCustomer.createdFrom = 'admin-portal';
-        if (this.newCustomer.role === '1') {
-            this.newCustomer.role = 'general';
-        }
-        else if (this.newCustomer.role === '2') {
-            this.newCustomer.role = 'admin';
-        }
+        this.newCustomer.role = 'customer';
         this.customerProvider.addCustomer(this.newCustomer).then(function (res) {
             if (res.status === 200) {
                 _this.location.back();
             }
             else if (res.status === 201) {
-                _this.toastrService.pop('error', 'Customer Already Available', 'The Customer Details you are trying to enter are already available.');
+                _this.toastrService.pop('error', 'Email Already Available', 'The Email Address entered is already in system. Please use different email !');
             }
             else {
                 _this.toastrService.pop('error', 'Server Error', 'We encountered server error. Please try later !');

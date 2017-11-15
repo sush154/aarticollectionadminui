@@ -19,11 +19,28 @@
                 <div class="form-group row">
                     <label for="customer" class="col-sm-2 col-form-label">Customer</label>
                     <div class="col-sm-10">
-                        <select class="form-control" id="customer" name="customer" #customerSelect (change)="navigateAddCustomer(customerSelect.value)" required [(ngModel)]="newOrder.customer">
-                            <option [value]="0" selected>-- Select Customer --</option>
+                        <!--<select class="form-control" id="customer" name="customer" #customerSelect (change)="navigateAddCustomer(customerSelect.value)" required [(ngModel)]="newOrder.customer">
+                            <option [value]="0" selected>&#45;&#45; Select Customer &#45;&#45;</option>
                             <option [value]="1">Add New Customer</option>
-                            <option [value]="customer._id" *ngFor="let customer of customersList">{{customer.firstName}} {{customer.lastName}}, {{customer.city}}</option>
-                        </select>
+                            <option [value]="customer._id" *ngFor="let customer of customersList">{{customer.customerName}}, {{customer.city}}</option>
+                        </select>-->
+                        <div class="row">
+                            <div class="col-sm-10 col-lg-10">
+                                <input type="text" id="customer" name="customer" class="form-control" (focus)="displayCustomerDropDown = true;" [(ngModel)]="newCustomerName" (keyup)="customerName.next($event.target.value)">
+                                <div class="customer-dropdown-div" *ngIf="displayCustomerDropDown" >
+                                    <ul>
+                                        <li *ngFor="let customer of customersList">
+                                            <a (click)="selectCustomer(customer)">{{customer.customerName}}, {{customer.city}}</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-sm-2 col-lg-2">
+                                <button type="button" class="btn btn-success">
+                                    <i class="fa fa-plus" (click)="navigateAddCustomer()"></i>
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="form-group row">

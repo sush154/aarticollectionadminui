@@ -1,0 +1,11 @@
+<div>
+    <input type="text" class="form-control" (focus)="displayCustomerDropDown = true;">
+    <div class="customer-dropdown-div" *ngIf="displayCustomerDropDown" (mouseover)="displayCustomerDropDown = true;" dropdownId="">
+        <ul>
+            <li *ngFor="let dropdown of dropdownlist">
+                <a (click)="selectCustomer(dropdown)">{{dropdown.customerName}}, {{dropdown.city}}</a>
+            </li>
+        </ul>
+    </div>
+</div>
+

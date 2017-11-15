@@ -30,6 +30,7 @@ export class AddOrderPageComponent implements OnInit{
     private productsList : any = [];
     private filteredProductsList : any;
     private searchTerm$ = new Subject<string>();
+    private customerName = new Subject<string>();
     private myDatePickerOptions: IMyDpOptions = {
         dateFormat: 'dd/mm/yyyy',
     };
@@ -38,6 +39,8 @@ export class AddOrderPageComponent implements OnInit{
     private partiallyPaid : boolean = true;
     private totalOrderAmount : number = 0;
     private transactTrackFlag : Boolean = false;
+    private displayCustomerDropDown : Boolean = false;
+    private newCustomerName : string;
 
     constructor(private customerProvider : AppCustomerProvider,
                 private router : Router,
@@ -71,12 +74,8 @@ export class AddOrderPageComponent implements OnInit{
     /*
     *   This method open add customer popup and populate state list
     */
-    private navigateAddCustomer(val : any) : void {
-
-        if(val === '1'){
-            this.router.navigate(['/customers/addCustomer']);
-        }
-
+    private navigateAddCustomer() : void {
+        this.router.navigate(['/customers/addCustomer']);
     }
 
     /*
@@ -190,6 +189,12 @@ export class AddOrderPageComponent implements OnInit{
         this.location.back();
     }
 
+    private selectCustomer(customer : any) : void {
+        this.newOrder.customer = customer._id;
+        this.newCustomerName = customer.customerName + ", " + customer.city;
+        this.displayCustomerDropDown = false;
+    }
+
     ngOnInit() : void {
         this.getAllCustomers();
         this.getAllProducts();
@@ -205,10 +210,20 @@ export class AddOrderPageComponent implements OnInit{
                 }
             });
 
+        this.customerProvider.applyTextFilter('customerName', this.customerName)
+            .subscribe((res) => {
+                if(res.status === 200){
+                    this.customersList = res.customer;
+                }else if(res.status === 401){
+                    this.router.navigate(['/login']);
+                }else {
+                    this.toastrService.pop('error', 'Server Error', 'We encountered server error. Please try later !');
+                }
+            });
+
         this.newOrder.paymentStatus = '-1';
         this.newOrder.paymentType = '-1';
         this.newOrder.orderType = '-1';
         this.newOrder.deliveryType = '-1';
-        this.newOrder.customer = '0';
     }
 }

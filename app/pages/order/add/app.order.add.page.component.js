@@ -34,6 +34,7 @@ var AddOrderPageComponent = (function () {
         this.deliveryTypeList = app_delivery_type_1.DELIVERYTYPE;
         this.productsList = [];
         this.searchTerm$ = new Subject_1.Subject();
+        this.customerName = new Subject_1.Subject();
         this.myDatePickerOptions = {
             dateFormat: 'dd/mm/yyyy',
         };
@@ -42,6 +43,7 @@ var AddOrderPageComponent = (function () {
         this.partiallyPaid = true;
         this.totalOrderAmount = 0;
         this.transactTrackFlag = false;
+        this.displayCustomerDropDown = false;
     }
     /*
     *   This method formats the date
@@ -69,10 +71,8 @@ var AddOrderPageComponent = (function () {
     /*
     *   This method open add customer popup and populate state list
     */
-    AddOrderPageComponent.prototype.navigateAddCustomer = function (val) {
-        if (val === '1') {
-            this.router.navigate(['/customers/addCustomer']);
-        }
+    AddOrderPageComponent.prototype.navigateAddCustomer = function () {
+        this.router.navigate(['/customers/addCustomer']);
     };
     /*
     *   This method retrieves all the products for selecting
@@ -180,6 +180,11 @@ var AddOrderPageComponent = (function () {
     AddOrderPageComponent.prototype.goBack = function () {
         this.location.back();
     };
+    AddOrderPageComponent.prototype.selectCustomer = function (customer) {
+        this.newOrder.customer = customer._id;
+        this.newCustomerName = customer.customerName + ", " + customer.city;
+        this.displayCustomerDropDown = false;
+    };
     AddOrderPageComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.getAllCustomers();
@@ -196,11 +201,22 @@ var AddOrderPageComponent = (function () {
                 _this.toastrService.pop('error', 'Server Error', 'We encountered server error. Please try later !');
             }
         });
+        this.customerProvider.applyTextFilter('customerName', this.customerName)
+            .subscribe(function (res) {
+            if (res.status === 200) {
+                _this.customersList = res.customer;
+            }
+            else if (res.status === 401) {
+                _this.router.navigate(['/login']);
+            }
+            else {
+                _this.toastrService.pop('error', 'Server Error', 'We encountered server error. Please try later !');
+            }
+        });
         this.newOrder.paymentStatus = '-1';
         this.newOrder.paymentType = '-1';
         this.newOrder.orderType = '-1';
         this.newOrder.deliveryType = '-1';
-        this.newOrder.customer = '0';
     };
     AddOrderPageComponent = __decorate([
         core_1.Component({

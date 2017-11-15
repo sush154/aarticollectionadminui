@@ -71,7 +71,7 @@ export class LoginPageComponent implements OnInit{
         this.registerProvider.register(registerObj).then((res) => {
           if(res.status === 200){
             this.toastrService.pop('success', 'Registered !', 'User has been successfully registered. Please go to Login page to sign in the application');
-
+            this.toggleForms('registrationSuccess');
           }else {
             this.toastrService.pop('error', 'Server Error', 'We encountered server error. Please try later !');
 

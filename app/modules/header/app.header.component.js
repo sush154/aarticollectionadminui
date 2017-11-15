@@ -48,6 +48,9 @@ var AppHeaderComponent = (function () {
         else if (this.location.path().indexOf('orders') > -1) {
             this.selectedPage = 'orders';
         }
+        else if (this.location.path().indexOf('customers') > -1) {
+            this.selectedPage = 'customers';
+        }
     };
     AppHeaderComponent.prototype.ngOnInit = function () {
         var cookies = document.cookie.split(';');

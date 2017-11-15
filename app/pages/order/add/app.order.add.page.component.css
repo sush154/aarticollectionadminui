@@ -7,3 +7,26 @@ label {
     background-color: #ed9c28;
     border-color: #d58512;
 }
+
+.customer-dropdown-div {
+    border: 1px solid rgba(0,0,0,0.15);
+    border-radius: 5px;
+    position: absolute;
+    width: 100%;
+    background-color: #fff;
+    z-index: 999;
+}
+
+.customer-dropdown-div ul {
+    padding-left: 0px;
+}
+
+.customer-dropdown-div li {
+    list-style-type : none;
+    padding: 5px;
+}
+
+.customer-dropdown-div li:hover {
+    cursor: pointer;
+    background-color: lightblue;
+}

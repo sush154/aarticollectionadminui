@@ -4,20 +4,51 @@
 
     <toaster-container></toaster-container>
 
-    <div class="bg-white p-50px">
+    <div class="bg-white p-50px row">
         <!-- Search section - check with protracker project -->
+        <div class="view col-lg-2 col-md-2 col-sm-12">
+            <h4>Filters: </h4>
+        </div>
+        <div class="view col-lg-5 col-md-5 col-sm-12">
+            <input type="text" id="customerName" name="customerName" placeholder="Customer Name" class="form-control material-input" (keyup)="searchTerm$.next($event.target.value)">
+        </div>
+        <div class="view col-lg-5 col-md-5 col-sm-12">
+            <button type="button" class="btn btn-mdb float-left" data-toggle="collapse" data-target="#filterCollapse" aria-expanded="false" aria-controls="filterCollapse">Advanced Filter</button>
+            <button type="button" class="btn float-right btn-applyFilter" (click)="resetFilter()">Reset Filter</button>
+        </div>
 
+        <div class="collapse m-t-50px w-100" id="filterCollapse">
+            <div class="card card-block filter-card">
+                <div class="d-inline-block p-l-r-50">
+                    <select class="form-control material-select" #filterState id="filterState" name="filterState" (change)="applyFilter('state', filterState.value)">
+                        <option [value]="0">-- Select State --</option>
+                        <option [value]="state.id" *ngFor="let state of statesList">{{state.value}}</option>
+                    </select>
+                </div>
+                <div class="d-inline-block p-l-r-50">
+                    <input type="text" class="form-control material-input" id="cityFilter" name="cityFilter" placeholder="City" (keyup)="cityFilter.next($event.target.value)">
+                </div>
+                <!--<div class="d-inline-block p-l-r-50px" style="vertical-align: bottom;">
 
+                </div>-->
+            </div>
+        </div>
     </div>
 
     <div class="card-view" *ngFor="let customer of customersList">
-        <div class="card" (click)="goToDetails(customer)">
+        <div class="card customer-card" (click)="goToDetails(customer)">
             <div class="card-block">
-                <h4 class="card-title">{{customer.firstName}} {{customer.lastName}}</h4>
-                <p class="card-text">
+                <h4 class="card-title">{{customer.customerName}}</h4>
+                <p class="card-text text-truncate">
                     {{customer.city}}, {{customer.state | stateParser}}
                 </p>
             </div>
+        </div>
+    </div>
+
+    <div *ngIf="customersList?.length === 0">
+        <div class="display-4 text-center m-t-50px">
+            No Customers available !
         </div>
     </div>
 

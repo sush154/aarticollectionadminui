@@ -12,7 +12,7 @@
         <tr *ngFor="let order of ordersList | orderStatusSort | paginate: { itemsPerPage: 10, currentPage: t, id: 'first' }" (click)="navigateToOrderDetails(order.orderId)">
             <td>{{order.orderId}}</td>
             <td>{{order.orderDate | dateParser}}</td>
-            <td>{{order.customer.firstName}} {{order.customer.lastName}}</td>
+            <td>{{order.customer.customerName}}</td>
             <td>{{order.amount}}</td>
             <td>{{order.orderStatus | orderStatusParser}}</td>
         </tr>

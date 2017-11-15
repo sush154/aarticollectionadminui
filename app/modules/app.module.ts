@@ -6,6 +6,7 @@ import {CommonModule} from '@angular/common';
 
 import {AppHeaderModule} from './header/app.header.module';
 import {AppRoutingModule} from './router/app.router.module';
+import {InputSelectBoxModule} from './input-selectbox/app.input.select.box.module';
 
 import {AppDashboardPageModule} from '../pages/dashboard/app.dashboard.page.module';
 import {OrderListPageModule} from '../pages/order/list/app.order.list.page.module';
@@ -22,7 +23,7 @@ import {AppComponent} from './app.component';
     imports: [
         BrowserModule, RouterModule, HttpModule, AppHeaderModule, AppRoutingModule, AppDashboardPageModule,
         OrderListPageModule, AddOrderPageModule, CustomerAddPageModule, OrderDetailsPageModule, LoginPageModule,
-        CommonModule, CustomerListModule, CustomerDetailsPageModule
+        CommonModule, CustomerListModule, CustomerDetailsPageModule, InputSelectBoxModule
     ],
     declarations: [AppComponent],
     bootstrap : [AppComponent]

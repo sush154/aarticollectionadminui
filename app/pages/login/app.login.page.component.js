@@ -70,6 +70,7 @@ var LoginPageComponent = (function () {
         this.registerProvider.register(registerObj).then(function (res) {
             if (res.status === 200) {
                 _this.toastrService.pop('success', 'Registered !', 'User has been successfully registered. Please go to Login page to sign in the application');
+                _this.toggleForms('registrationSuccess');
             }
             else {
                 _this.toastrService.pop('error', 'Server Error', 'We encountered server error. Please try later !');

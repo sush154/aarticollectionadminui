@@ -6,12 +6,13 @@ import {ToasterModule, ToasterService} from 'angular2-toaster';
 import { MyDatePickerModule } from 'mydatepicker';
 import {NgxPaginationModule} from 'ngx-pagination';
 import {AppHeaderModule} from '../../../modules/header/app.header.module';
+import {InputSelectBoxModule} from '../../../modules/input-selectbox/app.input.select.box.module';
 
 import {AddOrderPageComponent} from './app.order.add.page.component';
 
 @NgModule({
     imports : [FormsModule, CommonModule, RouterModule, ToasterModule, MyDatePickerModule, NgxPaginationModule,
-                AppHeaderModule],
+                AppHeaderModule, InputSelectBoxModule],
     declarations: [AddOrderPageComponent],
     exports: [AddOrderPageComponent]
 })

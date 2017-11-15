@@ -15,6 +15,7 @@ var http_1 = require('@angular/http');
 var common_1 = require('@angular/common');
 var app_header_module_1 = require('./header/app.header.module');
 var app_router_module_1 = require('./router/app.router.module');
+var app_input_select_box_module_1 = require('./input-selectbox/app.input.select.box.module');
 var app_dashboard_page_module_1 = require('../pages/dashboard/app.dashboard.page.module');
 var app_order_list_page_module_1 = require('../pages/order/list/app.order.list.page.module');
 var app_order_add_page_module_1 = require('../pages/order/add/app.order.add.page.module');
@@ -32,7 +33,7 @@ var AppModule = (function () {
             imports: [
                 platform_browser_1.BrowserModule, router_1.RouterModule, http_1.HttpModule, app_header_module_1.AppHeaderModule, app_router_module_1.AppRoutingModule, app_dashboard_page_module_1.AppDashboardPageModule,
                 app_order_list_page_module_1.OrderListPageModule, app_order_add_page_module_1.AddOrderPageModule, app_customer_add_page_module_1.CustomerAddPageModule, app_order_details_page_module_1.OrderDetailsPageModule, app_login_page_module_1.LoginPageModule,
-                common_1.CommonModule, app_customer_list_page_module_1.CustomerListModule, app_customer_details_page_module_1.CustomerDetailsPageModule
+                common_1.CommonModule, app_customer_list_page_module_1.CustomerListModule, app_customer_details_page_module_1.CustomerDetailsPageModule, app_input_select_box_module_1.InputSelectBoxModule
             ],
             declarations: [app_component_1.AppComponent],
             bootstrap: [app_component_1.AppComponent]

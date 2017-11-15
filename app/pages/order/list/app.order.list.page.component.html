@@ -16,7 +16,7 @@
                 <tr *ngFor="let order of ordersList | orderStatusSort | paginate: { itemsPerPage: 10, currentPage: p, id: 'first'}" (click)="openOrderDetails(order.orderId)">
                     <td>{{order.orderId}}</td>
                     <td>{{order.orderDate | dateParser}}</td>
-                    <td>{{order.customer.firstName}} {{order.customer.lastName}}</td>
+                    <td>{{order.customer.customerName}}</td>
                     <td class="hidden-sm-down">{{order.amount}}</td>
                     <td>{{order.orderStatus | orderStatusParser}}</td>
                 </tr>

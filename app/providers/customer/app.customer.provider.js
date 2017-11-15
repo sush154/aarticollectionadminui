@@ -12,6 +12,10 @@ var core_1 = require('@angular/core');
 var http_1 = require('@angular/http');
 require('rxjs/add/operator/toPromise');
 var app_service_url_1 = require('../../util/app.service.url');
+require('rxjs/add/operator/map');
+require('rxjs/add/operator/debounceTime');
+require('rxjs/add/operator/distinctUntilChanged');
+require('rxjs/add/operator/switchMap');
 var AppCustomerProvider = (function () {
     function AppCustomerProvider(http) {
         this.http = http;
@@ -39,6 +43,22 @@ var AppCustomerProvider = (function () {
         });
     };
     /*
+    *   This method retrieves only customers list - for admin user
+    */
+    AppCustomerProvider.prototype.getOnlyCustomers = function () {
+        var _this = this;
+        var url = this.serviceUrl + "/getOnlyCustomers";
+        return this.http
+            .get(url, { headers: this.headers, withCredentials: true })
+            .toPromise()
+            .then(function (res) {
+            return res.json().data;
+        })
+            .catch(function (err) {
+            _this.handleError(err);
+        });
+    };
+    /*
     *   This method creates new User in Customer Document
     *   Note : This method does not update User Document which is used for login
     */
@@ -47,6 +67,85 @@ var AppCustomerProvider = (function () {
         var url = this.serviceUrl + "/addCustomer";
         return this.http
             .post(url, JSON.stringify(newCustomer), { headers: this.headers, withCredentials: true })
+            .toPromise()
+            .then(function (res) {
+            return res.json().data;
+        })
+            .catch(function (err) {
+            _this.handleError(err);
+        });
+    };
+    /*
+    *   This method retrieves details for the selected customer
+    */
+    AppCustomerProvider.prototype.getCustomerDetails = function (customerId) {
+        var _this = this;
+        var url = this.serviceUrl + "/getCustomerDetails/" + customerId;
+        return this.http
+            .get(url, { headers: this.headers, withCredentials: true })
+            .toPromise()
+            .then(function (res) {
+            return res.json().data;
+        })
+            .catch(function (err) {
+            _this.handleError(err);
+        });
+    };
+    /*
+    *   This method updates the customer details for selected customer
+    */
+    AppCustomerProvider.prototype.updateCustomer = function (updatedCustomer) {
+        var _this = this;
+        var url = this.serviceUrl + "/updateCustomer";
+        return this.http
+            .post(url, JSON.stringify(updatedCustomer), { headers: this.headers, withCredentials: true })
+            .toPromise()
+            .then(function (res) {
+            return res.json().data;
+        })
+            .catch(function (err) {
+            _this.handleError(err);
+        });
+    };
+    /*
+    *   This method applies filter on customer name
+    */
+    AppCustomerProvider.prototype.applyTextFilter = function (filterType, filterValue) {
+        var _this = this;
+        return filterValue.debounceTime(400)
+            .distinctUntilChanged()
+            .switchMap(function (customer) {
+            if (customer !== '') {
+                var url = _this.serviceUrl + "/customerNameFilter/" + filterType + "/" + customer;
+                return _this.http
+                    .get(url, { headers: _this.headers, withCredentials: true })
+                    .map(function (res) {
+                    return res.json().data;
+                });
+            }
+            else {
+                var url = _this.serviceUrl + "/getOnlyCustomers";
+                return _this.http
+                    .get(url, { headers: _this.headers, withCredentials: true })
+                    .toPromise()
+                    .then(function (res) {
+                    return res.json().data;
+                })
+                    .catch(function (err) {
+                    _this.handleError(err);
+                });
+            }
+        });
+    };
+    /*
+    *   This method applies filter on state - advanced filter
+    */
+    AppCustomerProvider.prototype.applyFilter = function (filterType, filterValue) {
+        var _this = this;
+        var url = this.serviceUrl + "/applyFilter";
+        var data = { 'filterType': filterType, 'filterValue': filterValue };
+        return this.http
+            .post(url, JSON.stringify(data), { headers: this.headers, withCredentials: true })
             .toPromise()
             .then(function (res) {
             return res.json().data;
