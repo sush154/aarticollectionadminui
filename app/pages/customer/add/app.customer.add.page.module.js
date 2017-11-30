@@ -14,13 +14,14 @@ var router_1 = require('@angular/router');
 var common_1 = require('@angular/common');
 var angular2_toaster_1 = require('angular2-toaster');
 var app_header_module_1 = require('../../../modules/header/app.header.module');
+var angular2_loaders_css_1 = require('angular2-loaders-css');
 var app_customer_add_page_component_1 = require('./app.customer.add.page.component');
 var CustomerAddPageModule = (function () {
     function CustomerAddPageModule() {
     }
     CustomerAddPageModule = __decorate([
         core_1.NgModule({
-            imports: [forms_1.FormsModule, router_1.RouterModule, common_1.CommonModule, angular2_toaster_1.ToasterModule, app_header_module_1.AppHeaderModule],
+            imports: [forms_1.FormsModule, router_1.RouterModule, common_1.CommonModule, angular2_toaster_1.ToasterModule, app_header_module_1.AppHeaderModule, angular2_loaders_css_1.LoadersCssModule],
             declarations: [app_customer_add_page_component_1.CustomerAddPageComponent],
             exports: [app_customer_add_page_component_1.CustomerAddPageComponent]
         }), 

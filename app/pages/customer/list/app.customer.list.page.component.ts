@@ -20,6 +20,7 @@ export class CustomerListPageComponent implements OnInit{
     private searchTerm$ = new Subject<string>();
     private cityFilter = new Subject<string>();
     private statesList : any = STATES;
+    private loading : boolean = false;
 
     constructor(private router : Router,
                 private toastrService : ToasterService,
@@ -66,7 +67,9 @@ export class CustomerListPageComponent implements OnInit{
     *   This method applies advanced filter based on selection
     */
     private applyFilter(filterType : string, filterValue : string) : void {
+        this.loading = true;
         this.customerProvider.applyFilter(filterType, filterValue).then(res => {
+            this.loading = false;
             if(res.status === 200){
                 this.customersList = res.customer;
             }else if(res.status === 401) {
@@ -81,14 +84,17 @@ export class CustomerListPageComponent implements OnInit{
     *   This method resets the filter
     */
     private resetFilter() : void {
+        this.loading = true;
         $("#filterCollapse").removeClass('show');
         $("#filterState").val('0');
         $("#cityFilter").val('');
         $("#customerName").val('');
         this.getOnlyCustomers();
+        this.loading = false;
     }
 
     ngOnInit() : void {
+        this.loading = true;
         this.getOnlyCustomers();
 
         // Customer name filter
@@ -110,5 +116,7 @@ export class CustomerListPageComponent implements OnInit{
                     this.toastrService.pop('error', 'Server Error', 'We encountered server error. Please try later !');
                 }
             });
+
+        this.loading = false;
     }
 }

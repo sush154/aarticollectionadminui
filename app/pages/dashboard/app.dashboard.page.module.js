@@ -19,6 +19,7 @@ var app_order_parser_module_1 = require('../../util/order/app.order.parser.modul
 var angular2_toaster_1 = require('angular2-toaster');
 var app_order_status_module_1 = require('../../util/sort/orderStatus/app.order.status.module');
 var app_header_module_1 = require('../../modules/header/app.header.module');
+var angular2_loaders_css_1 = require('angular2-loaders-css');
 var app_dashboard_pages_ordersList_component_1 = require('./ordersList/app.dashboard.pages.ordersList.component');
 var app_dashboard_pages_productsList_component_1 = require('./productsList/app.dashboard.pages.productsList.component');
 var app_order_provider_1 = require('../../providers/order/app.order.provider');
@@ -29,7 +30,8 @@ var AppDashboardPageModule = (function () {
     AppDashboardPageModule = __decorate([
         core_1.NgModule({
             imports: [common_1.CommonModule, angular2_highcharts_1.ChartModule.forRoot(require('highcharts')), app_date_parser_module_1.DateParserModule, app_order_parser_module_1.OrderParserModule,
-                ngx_pagination_1.NgxPaginationModule, angular2_toaster_1.ToasterModule, app_order_status_module_1.OrderStatusSortModule, router_1.RouterModule, app_header_module_1.AppHeaderModule],
+                ngx_pagination_1.NgxPaginationModule, angular2_toaster_1.ToasterModule, app_order_status_module_1.OrderStatusSortModule, router_1.RouterModule, app_header_module_1.AppHeaderModule,
+                angular2_loaders_css_1.LoadersCssModule],
             declarations: [app_dashboard_page_component_1.AppDashboardPageComponent, app_dashboard_pages_ordersList_component_1.DashboardOrdersListComponent, app_dashboard_pages_productsList_component_1.DashboardProductsListComponent],
             exports: [app_dashboard_page_component_1.AppDashboardPageComponent],
             providers: [app_order_provider_1.OrderProvider, app_product_provider_1.ProductProvider]

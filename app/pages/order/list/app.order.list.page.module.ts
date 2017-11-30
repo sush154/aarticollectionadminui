@@ -9,10 +9,11 @@ import {AppHeaderModule} from '../../../modules/header/app.header.module';
 import {DateParserModule} from '../../../util/dateParser/app.date.parser.module';
 import {OrderParserModule} from '../../../util/order/app.order.parser.module';
 import {OrderStatusSortModule} from '../../../util/sort/orderStatus/app.order.status.module';
+import { LoadersCssModule } from 'angular2-loaders-css';
 
 @NgModule({
     imports : [CommonModule, DateParserModule, OrderParserModule, RouterModule, NgxPaginationModule,
-                OrderStatusSortModule, AppHeaderModule],
+                OrderStatusSortModule, AppHeaderModule, LoadersCssModule],
     declarations : [OrderListPageComponent],
     exports  :[OrderListPageComponent]
 })

@@ -22,6 +22,7 @@ var CustomerListPageComponent = (function () {
         this.searchTerm$ = new Subject_1.Subject();
         this.cityFilter = new Subject_1.Subject();
         this.statesList = app_states_1.STATES;
+        this.loading = false;
     }
     /*
     *   This method retrieves all the customers list for admin user
@@ -68,7 +69,9 @@ var CustomerListPageComponent = (function () {
     */
     CustomerListPageComponent.prototype.applyFilter = function (filterType, filterValue) {
         var _this = this;
+        this.loading = true;
         this.customerProvider.applyFilter(filterType, filterValue).then(function (res) {
+            _this.loading = false;
             if (res.status === 200) {
                 _this.customersList = res.customer;
             }
@@ -84,14 +87,17 @@ var CustomerListPageComponent = (function () {
     *   This method resets the filter
     */
     CustomerListPageComponent.prototype.resetFilter = function () {
+        this.loading = true;
         $("#filterCollapse").removeClass('show');
         $("#filterState").val('0');
         $("#cityFilter").val('');
         $("#customerName").val('');
         this.getOnlyCustomers();
+        this.loading = false;
     };
     CustomerListPageComponent.prototype.ngOnInit = function () {
         var _this = this;
+        this.loading = true;
         this.getOnlyCustomers();
         // Customer name filter
         this.customerProvider.applyTextFilter('customerName', this.searchTerm$)
@@ -113,6 +119,7 @@ var CustomerListPageComponent = (function () {
                 _this.toastrService.pop('error', 'Server Error', 'We encountered server error. Please try later !');
             }
         });
+        this.loading = false;
     };
     CustomerListPageComponent = __decorate([
         core_1.Component({

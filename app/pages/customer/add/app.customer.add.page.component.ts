@@ -18,6 +18,7 @@ export class CustomerAddPageComponent implements OnInit{
     private stateSelected : boolean = false;
     private newCustomer : any = {};
     private passwordFlag : boolean = false;
+    private loading : boolean = false;
 
     constructor(private customerProvider : AppCustomerProvider,
                 private toastrService : ToasterService,
@@ -51,10 +52,12 @@ export class CustomerAddPageComponent implements OnInit{
     *   This method adds new customer
     */
     addCustomer() : void {
+        this.loading = true;
         this.newCustomer.createdFrom = 'admin-portal';
         this.newCustomer.role = 'customer';
         
         this.customerProvider.addCustomer(this.newCustomer).then((res) => {
+            this.loading = false;
             if(res.status === 200){
                 this.location.back();
             }else if(res.status === 201) {

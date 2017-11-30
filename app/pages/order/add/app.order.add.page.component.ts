@@ -41,6 +41,7 @@ export class AddOrderPageComponent implements OnInit{
     private transactTrackFlag : Boolean = false;
     private displayCustomerDropDown : Boolean = false;
     private newCustomerName : string;
+    private loading : boolean = false;
 
     constructor(private customerProvider : AppCustomerProvider,
                 private router : Router,
@@ -150,6 +151,7 @@ export class AddOrderPageComponent implements OnInit{
     *   This method adds new order
     */
     private addNewOrder() : void {
+        this.loading = true;
         if(this.newOrder.orderDate !== undefined && this.newOrder.orderDate !== 'undefined'){
             this.newOrder.orderDate = this.formatDate(this.newOrder.orderDate);
         }
@@ -175,6 +177,7 @@ export class AddOrderPageComponent implements OnInit{
         }
 
         this.orderProvider.addNewOrder(this.newOrder).then((res) => {
+            this.loading = false;
             if(res.status === 200){
                 this.location.back();
             }else if(res.status === 401){
@@ -196,6 +199,7 @@ export class AddOrderPageComponent implements OnInit{
     }
 
     ngOnInit() : void {
+        this.loading = true;
         this.getAllCustomers();
         this.getAllProducts();
 
@@ -225,5 +229,6 @@ export class AddOrderPageComponent implements OnInit{
         this.newOrder.paymentType = '-1';
         this.newOrder.orderType = '-1';
         this.newOrder.deliveryType = '-1';
+        this.loading = false;
     }
 }

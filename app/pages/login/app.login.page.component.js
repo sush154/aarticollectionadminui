@@ -27,6 +27,7 @@ var LoginPageComponent = (function () {
         this.statesList = app_states_1.STATES;
         this.selectedState = true;
         this.registrationSuccess = false;
+        this.loading = false;
         this.newUser = {};
     }
     LoginPageComponent.prototype.toggleForms = function (flag) {
@@ -65,9 +66,11 @@ var LoginPageComponent = (function () {
     };
     LoginPageComponent.prototype.register = function (registerObj) {
         var _this = this;
+        this.loading = true;
         registerObj.role = "admin";
         registerObj.createdFrom = "admin-portal";
         this.registerProvider.register(registerObj).then(function (res) {
+            _this.loading = false;
             if (res.status === 200) {
                 _this.toastrService.pop('success', 'Registered !', 'User has been successfully registered. Please go to Login page to sign in the application');
                 _this.toggleForms('registrationSuccess');
@@ -79,9 +82,11 @@ var LoginPageComponent = (function () {
     };
     LoginPageComponent.prototype.login = function (loginObj) {
         var _this = this;
+        this.loading = true;
         loginObj.role = 'admin';
         loginObj.loginFrom = 'admin-portal';
         this.loginProvider.login(loginObj).then(function (res) {
+            _this.loading = false;
             if (res.status === 200) {
                 _this.router.navigate(['/dashboard']);
             }

@@ -22,6 +22,7 @@ export class LoginPageComponent implements OnInit{
       private statesList : any = STATES;
       private selectedState : boolean = true;
       private registrationSuccess : boolean = false;
+      private loading : boolean = false;
 
       private newUser : any = {};
 
@@ -66,9 +67,11 @@ export class LoginPageComponent implements OnInit{
       }
 
       private register(registerObj : any) : void {
+        this.loading = true;
         registerObj.role = "admin";
         registerObj.createdFrom = "admin-portal";
         this.registerProvider.register(registerObj).then((res) => {
+          this.loading = false;
           if(res.status === 200){
             this.toastrService.pop('success', 'Registered !', 'User has been successfully registered. Please go to Login page to sign in the application');
             this.toggleForms('registrationSuccess');
@@ -80,9 +83,11 @@ export class LoginPageComponent implements OnInit{
       }
 
       private login(loginObj : any) : void {
+        this.loading = true;
         loginObj.role = 'admin';
         loginObj.loginFrom = 'admin-portal'
         this.loginProvider.login(loginObj).then((res) => {
+            this.loading = false;
             if(res.status === 200){
                 this.router.navigate(['/dashboard']);
             }else if(res.status === 401){

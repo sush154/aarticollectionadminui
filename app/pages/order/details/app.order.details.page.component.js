@@ -38,6 +38,7 @@ var OrderDetailsPageComponent = (function () {
         this.myDatePickerOptions = {
             dateFormat: 'dd/mm/yyyy',
         };
+        this.loading = false;
     }
     /*
     *   This method populates details of selected order
@@ -205,7 +206,9 @@ var OrderDetailsPageComponent = (function () {
     */
     OrderDetailsPageComponent.prototype.addNewCourier = function () {
         var _this = this;
+        this.loading = true;
         this.courierProvider.addNewCourier(this.newCourier).then(function (res) {
+            _this.loading = false;
             if (res.status === 200) {
                 _this.orderDetails.courier = res.Id;
                 _this.toastrService.pop('success', 'Courier Added', 'New Courier has been added successfully!');
@@ -223,6 +226,7 @@ var OrderDetailsPageComponent = (function () {
     */
     OrderDetailsPageComponent.prototype.updateOrderDetails = function () {
         var _this = this;
+        this.loading = true;
         if (Object.keys(this.deliveryDateObj).length !== 0) {
             this.orderDetails.deliveryDate = this.formatDate(this.deliveryDateObj);
         }
@@ -240,6 +244,7 @@ var OrderDetailsPageComponent = (function () {
                 _this.toastrService.pop('error', 'Server Error', 'We encountered server error. Please try later !');
             }
         });
+        this.loading = false;
     };
     /*
     *   This method populates couriers list
@@ -291,10 +296,12 @@ var OrderDetailsPageComponent = (function () {
         this.location.back();
     };
     OrderDetailsPageComponent.prototype.ngOnInit = function () {
+        this.loading = true;
         document.body.scrollTop = 0; /* For Chrome, Safari and Opera*/
         document.documentElement.scrollTop = 0; /* For IE and Firefox*/
         this.getOrderDetails();
         this.getCourierList();
+        this.loading = false;
     };
     OrderDetailsPageComponent = __decorate([
         core_1.Component({

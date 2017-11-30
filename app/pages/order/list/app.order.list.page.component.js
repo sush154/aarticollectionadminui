@@ -15,6 +15,7 @@ var OrderListPageComponent = (function () {
     function OrderListPageComponent(orderProvider, router) {
         this.orderProvider = orderProvider;
         this.router = router;
+        this.loading = false;
     }
     OrderListPageComponent.prototype.populateOrdersList = function () {
         var _this = this;
@@ -28,7 +29,9 @@ var OrderListPageComponent = (function () {
         this.router.navigate(['/orders', orderId]);
     };
     OrderListPageComponent.prototype.ngOnInit = function () {
+        this.loading = true;
         this.populateOrdersList();
+        this.loading = false;
     };
     OrderListPageComponent = __decorate([
         core_1.Component({

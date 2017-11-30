@@ -25,6 +25,7 @@ var AppDashboardPageComponent = (function () {
         this.newOrdersCount = 0;
         this.totalProductsCount = 0;
         this.totalIncomeTillDate = 0;
+        this.loading = false;
     }
     AppDashboardPageComponent.prototype.getOrderCountAndIncome = function () {
         var _this = this;
@@ -135,11 +136,13 @@ var AppDashboardPageComponent = (function () {
         });
     };
     AppDashboardPageComponent.prototype.ngOnInit = function () {
+        this.loading = true;
         this.populateChart();
         this.getOrderCountAndIncome();
         this.getNewOrdersCount();
         this.getTotalProductsCount();
         this.getTotalIncomeThisYear();
+        this.loading = false;
     };
     AppDashboardPageComponent = __decorate([
         core_1.Component({

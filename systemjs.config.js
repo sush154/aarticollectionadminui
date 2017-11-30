@@ -32,7 +32,9 @@
       'ngx-pagination': 'https://npmcdn.com/ngx-pagination',
       'angular2-highcharts': 'node_modules/angular2-highcharts',
       'highcharts': 'node_modules/highcharts',
-      "ng2-rating": "node_modules/ng2-rating"
+      "ng2-rating": "node_modules/ng2-rating",
+      'angular2-loaders-css': 'node_modules/angular2-loaders-css',
+      'ng2-file-upload' : 'npm:ng2-file-upload'
     },
     // packages tells the System loader how to load when no filename and/or no extension
     packages: {
@@ -52,7 +54,12 @@
         main: './index.js',
         defaultExtension: 'js'
       },
-      "ng2-rating": { "main": "index.js", "defaultExtension": "js" }
+      "ng2-rating": { "main": "index.js", "defaultExtension": "js" },
+      'angular2-loaders-css': { main: 'index.js', defaultExtension: 'js' },
+      'ng2-file-upload' : {
+        main: './ng2-file-upload.js',
+        defaultExtension: 'js'
+      }
     }
   });
 })(this);

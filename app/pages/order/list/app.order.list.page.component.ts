@@ -13,6 +13,7 @@ import {OrderProvider} from '../../../providers/order/app.order.provider';
 export class OrderListPageComponent implements OnInit{
 
     ordersList : any;
+    private loading : boolean = false;
 
     constructor(private orderProvider : OrderProvider,
                 private router : Router){}
@@ -30,6 +31,8 @@ export class OrderListPageComponent implements OnInit{
     }
 
     ngOnInit() : void {
+        this.loading = true;
         this.populateOrdersList();
+        this.loading = false;
     }
 }

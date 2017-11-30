@@ -16,6 +16,8 @@ import {OrderDetailsPageModule} from '../pages/order/details/app.order.details.p
 import {LoginPageModule} from '../pages/login/app.login.page.module';
 import {CustomerListModule} from '../pages/customer/list/app.customer.list.page.module';
 import {CustomerDetailsPageModule} from '../pages/customer/details/app.customer.details.page.module';
+import {ProductListPageModule} from '../pages/product/list/app.product.list.page.module';
+import {AddProductPageModule} from '../pages/product/add/app.product.add.page.module';
 
 import {AppComponent} from './app.component';
 
@@ -23,7 +25,8 @@ import {AppComponent} from './app.component';
     imports: [
         BrowserModule, RouterModule, HttpModule, AppHeaderModule, AppRoutingModule, AppDashboardPageModule,
         OrderListPageModule, AddOrderPageModule, CustomerAddPageModule, OrderDetailsPageModule, LoginPageModule,
-        CommonModule, CustomerListModule, CustomerDetailsPageModule, InputSelectBoxModule
+        CommonModule, CustomerListModule, CustomerDetailsPageModule, InputSelectBoxModule, ProductListPageModule,
+        AddProductPageModule
     ],
     declarations: [AppComponent],
     bootstrap : [AppComponent]

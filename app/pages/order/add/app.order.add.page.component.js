@@ -44,6 +44,7 @@ var AddOrderPageComponent = (function () {
         this.totalOrderAmount = 0;
         this.transactTrackFlag = false;
         this.displayCustomerDropDown = false;
+        this.loading = false;
     }
     /*
     *   This method formats the date
@@ -147,6 +148,7 @@ var AddOrderPageComponent = (function () {
     */
     AddOrderPageComponent.prototype.addNewOrder = function () {
         var _this = this;
+        this.loading = true;
         if (this.newOrder.orderDate !== undefined && this.newOrder.orderDate !== 'undefined') {
             this.newOrder.orderDate = this.formatDate(this.newOrder.orderDate);
         }
@@ -166,6 +168,7 @@ var AddOrderPageComponent = (function () {
             this.newOrder.amount = this.totalOrderAmount;
         }
         this.orderProvider.addNewOrder(this.newOrder).then(function (res) {
+            _this.loading = false;
             if (res.status === 200) {
                 _this.location.back();
             }
@@ -187,6 +190,7 @@ var AddOrderPageComponent = (function () {
     };
     AddOrderPageComponent.prototype.ngOnInit = function () {
         var _this = this;
+        this.loading = true;
         this.getAllCustomers();
         this.getAllProducts();
         this.productProvider.productNameFilter(this.searchTerm$)
@@ -217,6 +221,7 @@ var AddOrderPageComponent = (function () {
         this.newOrder.paymentType = '-1';
         this.newOrder.orderType = '-1';
         this.newOrder.deliveryType = '-1';
+        this.loading = false;
     };
     AddOrderPageComponent = __decorate([
         core_1.Component({

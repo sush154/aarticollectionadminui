@@ -4,6 +4,10 @@
 
     <toaster-container></toaster-container>
 
+    <div class="loader-parent" *ngIf="loading">
+        <loaders-css [loader]="'ball-clip-rotate'" [loaderClass]="'my-loader'"></loaders-css>
+    </div>
+
     <div class="bg-white p-50px row">
         <!-- Search section - check with protracker project -->
         <div class="view col-lg-2 col-md-2 col-sm-12">

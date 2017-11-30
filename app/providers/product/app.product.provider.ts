@@ -86,4 +86,38 @@ export class ProductProvider {
                 }
             })
     }
+
+    /*
+    *   This method adds new product
+    */
+    addProduct(newProduct : any) : Promise<any> {
+        let url = this.serviceUrl + "/addProduct";
+
+        return this.http
+            .post(url, JSON.stringify(newProduct), {headers : this.headers, withCredentials : true})
+            .toPromise()
+            .then((res) => {
+                return res.json().data;
+            })
+            .catch((err) => {
+                this.handleError(err);
+            });
+    }
+
+    /*
+    *   This method retrieves images list for the selected product
+    */
+    getImagesList(productId : any) : Promise<any> {
+        let url = this.serviceUrl + "/getImagesList/"+productId;
+
+        return this.http
+            .get(url, {headers : this.headers, withCredentials : true})
+            .toPromise()
+            .then((res) => {
+                return res.json();
+            })
+            .catch((err) => {
+                this.handleError(err);
+            });
+    }
 }

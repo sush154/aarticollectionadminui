@@ -14,6 +14,7 @@ var forms_1 = require('@angular/forms');
 var router_1 = require('@angular/router');
 var angular2_toaster_1 = require('angular2-toaster');
 var app_state_parser_module_1 = require('../../../util/state/app.state.parser.module');
+var angular2_loaders_css_1 = require('angular2-loaders-css');
 var app_header_module_1 = require('../../../modules/header/app.header.module');
 var app_customer_details_page_component_1 = require('./app.customer.details.page.component');
 var CustomerDetailsPageModule = (function () {
@@ -21,7 +22,7 @@ var CustomerDetailsPageModule = (function () {
     }
     CustomerDetailsPageModule = __decorate([
         core_1.NgModule({
-            imports: [common_1.CommonModule, forms_1.FormsModule, router_1.RouterModule, app_header_module_1.AppHeaderModule, angular2_toaster_1.ToasterModule, app_state_parser_module_1.StateParserModule],
+            imports: [common_1.CommonModule, forms_1.FormsModule, router_1.RouterModule, app_header_module_1.AppHeaderModule, angular2_toaster_1.ToasterModule, app_state_parser_module_1.StateParserModule, angular2_loaders_css_1.LoadersCssModule],
             declarations: [app_customer_details_page_component_1.CustomerDetailsPageComponent],
             exports: [app_customer_details_page_component_1.CustomerDetailsPageComponent]
         }), 

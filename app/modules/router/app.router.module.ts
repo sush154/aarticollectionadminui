@@ -10,11 +10,14 @@ import {OrderDetailsPageComponent} from '../../pages/order/details/app.order.det
 import {LoginPageComponent} from '../../pages/login/app.login.page.component';
 import {CustomerListPageComponent} from '../../pages/customer/list/app.customer.list.page.component';
 import {CustomerDetailsPageComponent} from '../../pages/customer/details/app.customer.details.page.component';
+import {ProductsListPageComponent} from '../../pages/product/list/app.product.list.page.component';
+import {AddProductPageComponent} from '../../pages/product/add/app.product.add.page.component';
 
 const routes : Routes = [
     {path : 'login', component : LoginPageComponent},
     {path : 'dashboard' , component : AppDashboardPageComponent},
-    {path : 'products', component : AppDashboardPageComponent},
+    {path : 'products', component : ProductsListPageComponent},
+    {path : 'products/addProduct', component : AddProductPageComponent},
     {path : 'orders', component : OrderListPageComponent},
     {path : 'orders/addOrder', component : AddOrderPageComponent},
     {path : 'orders/:id', component : OrderDetailsPageComponent},

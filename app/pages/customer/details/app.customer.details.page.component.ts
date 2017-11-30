@@ -18,6 +18,7 @@ export class CustomerDetailsPageComponent implements OnInit{
     private customerObj : any = {};
     private stateList : any = STATES;
     private updatedCustomer : any = {};
+    private loading : boolean = false;
 
     constructor(private location : Location,
                 private currentRoute : ActivatedRoute,
@@ -57,8 +58,9 @@ export class CustomerDetailsPageComponent implements OnInit{
     }
 
     private updateCustomer(updatedCust : any) : void {
-
+        this.loading = true;
         this.customerProvider.updateCustomer(updatedCust).then(res => {
+            this.loading = false;
             if(res.status === 200){
                 this.toastrService.pop('success', 'Update Successful', 'Customer Details are updated successfully !');
                 $('#editCustomerDetails').modal('hide');
@@ -80,6 +82,8 @@ export class CustomerDetailsPageComponent implements OnInit{
     }
 
     ngOnInit() : void {
+        this.loading = true;
         this.getCustomerDetails();
+        this.loading = false;
     }
 }

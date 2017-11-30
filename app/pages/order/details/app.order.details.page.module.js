@@ -15,6 +15,7 @@ var app_order_details_page_component_1 = require('./app.order.details.page.compo
 var angular2_toaster_1 = require('angular2-toaster');
 var mydatepicker_1 = require('mydatepicker');
 var app_header_module_1 = require('../../../modules/header/app.header.module');
+var angular2_loaders_css_1 = require('angular2-loaders-css');
 var app_payment_parser_module_1 = require('../../../util/payment/app.payment.parser.module');
 var app_delivery_parser_module_1 = require('../../../util/delivery/app.delivery.parser.module');
 var app_state_parser_module_1 = require('../../../util/state/app.state.parser.module');
@@ -25,7 +26,7 @@ var OrderDetailsPageModule = (function () {
     OrderDetailsPageModule = __decorate([
         core_1.NgModule({
             imports: [angular2_toaster_1.ToasterModule, common_1.CommonModule, app_payment_parser_module_1.AppPaymentParserModule, app_delivery_parser_module_1.AppDeliveryParserModule, app_state_parser_module_1.StateParserModule,
-                forms_1.FormsModule, app_discount_parser_module_1.DiscountParserModule, mydatepicker_1.MyDatePickerModule, app_header_module_1.AppHeaderModule],
+                forms_1.FormsModule, app_discount_parser_module_1.DiscountParserModule, mydatepicker_1.MyDatePickerModule, app_header_module_1.AppHeaderModule, angular2_loaders_css_1.LoadersCssModule],
             declarations: [app_order_details_page_component_1.OrderDetailsPageComponent],
             exports: [app_order_details_page_component_1.OrderDetailsPageComponent]
         }), 

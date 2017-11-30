@@ -1,0 +1,158 @@
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {ToasterService} from 'angular2-toaster';
+import {IMyDpOptions} from 'mydatepicker';
+import {Location} from '@angular/common';
+import { Subject } from 'rxjs/Subject';
+import { FileUploader } from 'ng2-file-upload';
+import {URL} from '../../../util/app.service.url';
+import { DomSanitizer } from '@angular/platform-browser';
+
+import {ProductProvider} from '../../../providers/product/app.product.provider';
+import {CategoryProvider} from '../../../providers/category/app.category.provider';
+import {FIREBASECONFIG} from '../../../util/firebase/app.firebase.config';
+
+@Component({
+    selector : 'add-product-page',
+    templateUrl : './app/pages/product/add/app.product.add.page.component.html',
+    styleUrls : ['./app/pages/product/add/app.product.add.page.component.css'],
+    providers : [ToasterService, ProductProvider, CategoryProvider]
+})
+
+export class AddProductPageComponent implements OnInit{
+
+    private newProduct : any = {};
+    private categoriesList : any;
+    private myDatePickerOptions: IMyDpOptions = {
+        dateFormat: 'dd/mm/yyyy',
+    };
+    private loading : boolean = false;
+    private firstSection : boolean = false;
+    private secondSection : boolean = true;
+    private thirdSection : boolean = false;
+    private displayCategories : boolean = false;
+    private categoriesName = new Subject<string>();
+    private newCategory : any = {};
+    private selectedCategory : string;
+    private imagesList : any;
+    private uploader : FileUploader;
+
+    constructor(private router : Router,
+                private location : Location,
+                private toastrService : ToasterService,
+                private productProvider : ProductProvider,
+                private categoryProvider : CategoryProvider,
+                private sanitizer: DomSanitizer){}
+
+
+
+    private goBack() : void {
+        this.location.back();
+    }
+
+    private addCategory() : void {
+        this.loading = true;
+        this.categoryProvider.addNewCategory(this.newCategory).then(res => {
+            this.loading = false;
+            if(res.status === 200){
+                this.toastrService.pop('success', 'Category Added !', 'New Category has been added !');
+
+                this.getAllCategories();
+
+                (<HTMLFormElement>document.getElementById("addCategoryForm")).reset();
+                $("#addCategoryModal").modal('hide');
+            }else if(res.status === 401){
+                this.router.navigate(['/login']);
+            }else {
+                this.toastrService.pop('error', 'Server Error', 'We encountered server error. Please try later !');
+            }
+        })
+    }
+
+    private getAllCategories() : void {
+        this.loading = true;
+        this.categoryProvider.getAllCategories().then(res => {
+            if(res.status === 200){
+                this.categoriesList = res.category;
+            }else if(res.status === 401){
+                this.router.navigate(['/login']);
+            }else {
+                this.toastrService.pop('error', 'Server Error', 'We encountered server error. Please try later !');
+            }
+            this.loading = false;
+        });
+    }
+
+    private filterCategories() : void {
+        this.loading = true;
+        this.categoryProvider.filterCategory(this.categoriesName)
+            .subscribe((res) => {
+                if(res.status === 200) {
+                    this.categoriesList  = res.category;
+                }else if(res.status === 401){
+                    this.router.navigate(['/login']);
+                }else {
+                    this.toastrService.pop('error', 'Server Error', 'We encountered server error. Please try later !');
+                }
+            });
+        this.loading = false;
+    }
+
+    private addProduct(sectionName : string) : void {
+        this.loading = true;
+        if(sectionName === 'firstSection'){
+            this.productProvider.addProduct(this.newProduct).then((res) => {
+                this.loading = false;
+                if(res.status === 200){
+                    this.newProduct._id = res.product._id;
+                    this.firstSection = false;
+                    this.secondSection = true;
+                    let url = URL + "/product/addImage/"+this.newProduct._id;
+                    this.uploader = new FileUploader({url:url});
+                }else if(res.status === 401){
+                    this.router.navigate(['/login']);
+                }else {
+                    this.toastrService.pop('error', 'Server Error', 'We encountered server error. Please try later !');
+                }
+            });
+        }
+    }
+
+    private addImages() : void {
+        //this.loading = true;
+        this.uploader.uploadAll();
+        this.uploader.onCompleteItem = (item, response, status, header) => {
+
+          if(JSON.parse(response).data.status === 200){
+            //TODO: get images list
+            this.getImagesList(this.newProduct._id);
+          }
+        }
+    }
+
+    private getImagesList(productId : any) : void {
+        this.productProvider.getImagesList(productId).then(res => {
+            this.imagesList = res;
+            //console.log(res);
+        })
+    }
+
+    private selectCategory(category : any) : void {
+        this.newProduct.category = category._id;
+        this.selectedCategory = category.categoryName;
+        this.displayCategories = false;
+    }
+
+    private continue() : void {
+        this.firstSection = false;
+        this.secondSection = false;
+        this.thirdSection = true;
+    }
+
+    ngOnInit() : void {
+
+        this.getAllCategories();
+        this.newCategory.parentCategory = 0;
+        this.filterCategories();
+    }
+}

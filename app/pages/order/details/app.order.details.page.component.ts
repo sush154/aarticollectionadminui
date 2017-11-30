@@ -38,6 +38,7 @@ export class OrderDetailsPageComponent implements OnInit{
         dateFormat: 'dd/mm/yyyy',
     };
     private deliveryDateObj : Object;
+    private loading : boolean = false;
 
     constructor(private orderProvider : OrderProvider,
                 private toastrService : ToasterService,
@@ -226,7 +227,9 @@ export class OrderDetailsPageComponent implements OnInit{
     *   This method adds new courier
     */
     private addNewCourier() : void {
+        this.loading = true;
         this.courierProvider.addNewCourier(this.newCourier).then((res) => {
+            this.loading = false;
             if(res.status === 200){
                 this.orderDetails.courier = res.Id;
                 this.toastrService.pop('success', 'Courier Added', 'New Courier has been added successfully!');
@@ -243,7 +246,7 @@ export class OrderDetailsPageComponent implements OnInit{
     *   This method updates order details
     */
     private updateOrderDetails() : void {
-
+        this.loading = true;
         if(Object.keys(this.deliveryDateObj).length !== 0){
             this.orderDetails.deliveryDate = this.formatDate(this.deliveryDateObj);
         }else {
@@ -259,7 +262,9 @@ export class OrderDetailsPageComponent implements OnInit{
             }else {
                 this.toastrService.pop('error', 'Server Error', 'We encountered server error. Please try later !');
             }
-        })
+        });
+
+        this.loading = false;
     }
 
     /*
@@ -319,9 +324,11 @@ export class OrderDetailsPageComponent implements OnInit{
     }
 
     ngOnInit() : void {
+        this.loading = true;
         document.body.scrollTop = 0; /* For Chrome, Safari and Opera*/
         document.documentElement.scrollTop = 0; /* For IE and Firefox*/
         this.getOrderDetails();
         this.getCourierList();
+        this.loading = false;
     }
 }

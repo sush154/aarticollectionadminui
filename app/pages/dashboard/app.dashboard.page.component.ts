@@ -22,6 +22,7 @@ export class AppDashboardPageComponent implements OnInit{
     newOrdersCount : Number = 0;
     totalProductsCount : Number = 0;
     totalIncomeTillDate : Number = 0;
+    private loading : boolean = false;
 
     constructor(private orderProvider : OrderProvider,
                 private sortOrderForChart : SortOrderForChart,
@@ -135,11 +136,13 @@ export class AppDashboardPageComponent implements OnInit{
     }
 
     ngOnInit() : void {
+        this.loading = true;
         this.populateChart();
         this.getOrderCountAndIncome();
         this.getNewOrdersCount();
         this.getTotalProductsCount();
         this.getTotalIncomeThisYear();
+        this.loading = false;
     }
 
 }

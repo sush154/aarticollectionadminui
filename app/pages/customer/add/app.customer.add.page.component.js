@@ -22,6 +22,7 @@ var CustomerAddPageComponent = (function () {
         this.stateSelected = false;
         this.newCustomer = {};
         this.passwordFlag = false;
+        this.loading = false;
     }
     /*
     *   This method changes the disability mode of city input box based on state filter selected
@@ -52,9 +53,11 @@ var CustomerAddPageComponent = (function () {
     */
     CustomerAddPageComponent.prototype.addCustomer = function () {
         var _this = this;
+        this.loading = true;
         this.newCustomer.createdFrom = 'admin-portal';
         this.newCustomer.role = 'customer';
         this.customerProvider.addCustomer(this.newCustomer).then(function (res) {
+            _this.loading = false;
             if (res.status === 200) {
                 _this.location.back();
             }

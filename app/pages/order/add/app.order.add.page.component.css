@@ -2,12 +2,6 @@ label {
     font-size: 18px;
 }
 
-.addOrder-btn {
-    color: #fff;
-    background-color: #ed9c28;
-    border-color: #d58512;
-}
-
 .customer-dropdown-div {
     border: 1px solid rgba(0,0,0,0.15);
     border-radius: 5px;

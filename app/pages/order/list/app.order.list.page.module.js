@@ -17,13 +17,14 @@ var app_header_module_1 = require('../../../modules/header/app.header.module');
 var app_date_parser_module_1 = require('../../../util/dateParser/app.date.parser.module');
 var app_order_parser_module_1 = require('../../../util/order/app.order.parser.module');
 var app_order_status_module_1 = require('../../../util/sort/orderStatus/app.order.status.module');
+var angular2_loaders_css_1 = require('angular2-loaders-css');
 var OrderListPageModule = (function () {
     function OrderListPageModule() {
     }
     OrderListPageModule = __decorate([
         core_1.NgModule({
             imports: [common_1.CommonModule, app_date_parser_module_1.DateParserModule, app_order_parser_module_1.OrderParserModule, router_1.RouterModule, ngx_pagination_1.NgxPaginationModule,
-                app_order_status_module_1.OrderStatusSortModule, app_header_module_1.AppHeaderModule],
+                app_order_status_module_1.OrderStatusSortModule, app_header_module_1.AppHeaderModule, angular2_loaders_css_1.LoadersCssModule],
             declarations: [app_order_list_page_component_1.OrderListPageComponent],
             exports: [app_order_list_page_component_1.OrderListPageComponent]
         }), 

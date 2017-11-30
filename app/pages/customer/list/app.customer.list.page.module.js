@@ -14,13 +14,14 @@ var router_1 = require('@angular/router');
 var angular2_toaster_1 = require('angular2-toaster');
 var app_header_module_1 = require('../../../modules/header/app.header.module');
 var app_state_parser_module_1 = require('../../../util/state/app.state.parser.module');
+var angular2_loaders_css_1 = require('angular2-loaders-css');
 var app_customer_list_page_component_1 = require('./app.customer.list.page.component');
 var CustomerListModule = (function () {
     function CustomerListModule() {
     }
     CustomerListModule = __decorate([
         core_1.NgModule({
-            imports: [common_1.CommonModule, router_1.RouterModule, app_header_module_1.AppHeaderModule, angular2_toaster_1.ToasterModule, app_state_parser_module_1.StateParserModule],
+            imports: [common_1.CommonModule, router_1.RouterModule, app_header_module_1.AppHeaderModule, angular2_toaster_1.ToasterModule, app_state_parser_module_1.StateParserModule, angular2_loaders_css_1.LoadersCssModule],
             declarations: [app_customer_list_page_component_1.CustomerListPageComponent],
             exports: [app_customer_list_page_component_1.CustomerListPageComponent]
         }), 

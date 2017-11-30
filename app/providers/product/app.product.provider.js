@@ -85,6 +85,38 @@ var ProductProvider = (function () {
             }
         });
     };
+    /*
+    *   This method adds new product
+    */
+    ProductProvider.prototype.addProduct = function (newProduct) {
+        var _this = this;
+        var url = this.serviceUrl + "/addProduct";
+        return this.http
+            .post(url, JSON.stringify(newProduct), { headers: this.headers, withCredentials: true })
+            .toPromise()
+            .then(function (res) {
+            return res.json().data;
+        })
+            .catch(function (err) {
+            _this.handleError(err);
+        });
+    };
+    /*
+    *   This method retrieves images list for the selected product
+    */
+    ProductProvider.prototype.getImagesList = function (productId) {
+        var _this = this;
+        var url = this.serviceUrl + "/getImagesList/" + productId;
+        return this.http
+            .get(url, { headers: this.headers, withCredentials: true })
+            .toPromise()
+            .then(function (res) {
+            return res.json();
+        })
+            .catch(function (err) {
+            _this.handleError(err);
+        });
+    };
     ProductProvider = __decorate([
         core_1.Injectable(), 
         __metadata('design:paramtypes', [http_1.Http])

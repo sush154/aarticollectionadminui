@@ -1,6 +1,10 @@
 <app-header></app-header>
 <div class="container p-t-50px">
 
+    <div class="loader-parent" *ngIf="loading">
+        <loaders-css [loader]="'ball-clip-rotate'" [loaderClass]="'my-loader'"></loaders-css>
+    </div>
+
     <div class="bg-white">
         <table class="table table-hover">
             <thead class="thead-inverse">

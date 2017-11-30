@@ -23,6 +23,7 @@ var CustomerDetailsPageComponent = (function () {
         this.customerObj = {};
         this.stateList = app_states_1.STATES;
         this.updatedCustomer = {};
+        this.loading = false;
     }
     CustomerDetailsPageComponent.prototype.getCustomerDetails = function () {
         var _this = this;
@@ -54,7 +55,9 @@ var CustomerDetailsPageComponent = (function () {
     };
     CustomerDetailsPageComponent.prototype.updateCustomer = function (updatedCust) {
         var _this = this;
+        this.loading = true;
         this.customerProvider.updateCustomer(updatedCust).then(function (res) {
+            _this.loading = false;
             if (res.status === 200) {
                 _this.toastrService.pop('success', 'Update Successful', 'Customer Details are updated successfully !');
                 $('#editCustomerDetails').modal('hide');
@@ -75,7 +78,9 @@ var CustomerDetailsPageComponent = (function () {
         }
     };
     CustomerDetailsPageComponent.prototype.ngOnInit = function () {
+        this.loading = true;
         this.getCustomerDetails();
+        this.loading = false;
     };
     CustomerDetailsPageComponent = __decorate([
         core_1.Component({

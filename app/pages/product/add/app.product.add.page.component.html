@@ -1,0 +1,156 @@
+<app-header></app-header>
+
+<div class="container p-t-50px">
+
+    <toaster-container></toaster-container>
+
+    <div class="loader-parent" *ngIf="loading">
+        <loaders-css [loader]="'ball-clip-rotate'" [loaderClass]="'my-loader'"></loaders-css>
+    </div>
+
+    <div class="bg-white p-50px">
+        <div class="m-t-b-10px">
+            <button class="btn btn-danger btn-sm" (click)="goBack()">Go Back</button>
+        </div>
+
+        <div *ngIf="firstSection">
+            <form id="addProductForm" #addProductForm="ngForm" name="addProductForm">
+                <div class="form-group row p-t-20px">
+                    <label for="productName" class="col-sm-2 col-form-label no-wrap">Product Name</label>
+                    <div class="col-sm-10">
+                        <input type="text" id="productName" name="productName" class="form-control" [(ngModel)]="newProduct.productName" required>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="category" class="col-sm-2 col-form-label no-wrap">Category</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-10 col-lg-10 col-md-10">
+                                <input type="text" id="category" name="category" class="form-control" (focus)="displayCategories = true;" [(ngModel)]="selectedCategory" (keyup)="categoriesName.next($event.target.value)" required>
+                                <div class="category-dropdown-div" *ngIf="displayCategories && categoriesList?.length > 0">
+                                    <ul>
+                                        <li *ngFor="let category of categoriesList" (click)="selectCategory(category)">
+                                            <a>{{category.categoryName}}</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-sm-2 col-lg-2 col-md-2">
+                                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#addCategoryModal">
+                                    <i class="fa fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="price" class="col-sm-2 col-form-label no-wrap">Price</label>
+                    <div class="col-sm-10">
+                        <input type="number" id="price" name="price" class="form-control no-spin" [(ngModel)]="newProduct.price" required>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="quantity" class="col-sm-2 col-form-label no-wrap">Quantity</label>
+                    <div class="col-sm-10">
+                        <input type="number" id="quantity" name="quantity" class="form-control no-spin" [(ngModel)]="newProduct.quantity" required>
+                    </div>
+                </div>
+            </form>
+            <div class="form-group row p-t-50px">
+                <div class="col-sm-12">
+                    <button type="button" class="btn addNew-btn float-right" (click)="addProduct('firstSection')">Add Product</button>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="secondSection">
+            <div class="image-box">
+                <div class="d-inline" *ngFor="let image of imagesList; let i=index">
+                    <img [src]="sanitizer.bypassSecurityTrustResourceUrl('data:image;base64,' + image.img.data)" alt="{{i}}" class="img-thumbnail product-img">
+                </div>
+                <div class="text-center mt-5" *ngIf="imagesList?.length === 0">
+                    <h1>No Images Available !</h1>
+                </div>
+            </div>
+
+            <div class="p-t-20px">
+
+                <input type="file" class="form-control" id="addImage" name="addImage" ng2FileSelect [uploader]="uploader">
+
+                <div class="form-group row p-t-50px">
+                    <div class="col-sm-12">
+                        <button type="button" class="btn btn-success float-right" (click)="continue()">Continue</button>
+                        <button type="button" class="btn addNew-btn float-right m-r-20px" (click)="addImages()">Upload Image</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="thirdSection">
+            <form id="productMetaInfo" name="productMetaInfo" #productMetaInfo="ngForm">
+                <div class="form-group row p-t-20px">
+                    <label for="description" class="col-sm-2 col-form-label no-wrap align-middle">Product Description</label>
+                    <div class="col-sm-10">
+                        <textarea id="description" name="description" [(ngModel)]="newProduct.description" class="form-control" rows="5" required></textarea>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="highlights" class="col-sm-2 col-form-label no-wrap">HighLights</label>
+                    <div class="col-sm-10">
+                        <input type="text" id="highlights" name="highlights" class="form-control" [(ngModel)]="newProduct.highlights" required>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+<div class="modal" id="addCategoryModal" tabindex="-1" role="dialog" aria-labelledby="categoryModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="categoryModalLabel">Add Category</h5>
+            </div>
+            <div class="modal-body">
+                <form id="addCategoryForm" name="addCategoryForm" #addCategoryForm="ngForm">
+                    <div class="form-group row">
+                        <label for="categoryName" class="col-sm-2 col-form-label no-wrap">Category Name</label>
+                        <div class="col-sm-10 col-lg-10">
+                            <input type="text" id="categoryName" name="categoryName" class="form-control" [(ngModel)]="newCategory.categoryName" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="parentCategory" class="col-sm-2 col-form-label no-wrap">Parent Category</label>
+                        <div class="col-sm-10">
+                            <select id="parentCategory" name="parentCategory" class="form-control" [(ngModel)]="newCategory.parentCategory">
+                                <option [value]="0">-- Select Parent Category --</option>
+                                <option [value]="1">Dress Material</option>
+                                <option [value]="2">Saree</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" (click)="addCategory()">Add Category</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+  var fileButton = document.getElementById("addImage");
+  fileButton.addEventListener('change', function(e){
+        console.log("asdaddsadsada");
+      var file = e.target.files[0];
+      var storageRef = firebase.storage().ref(file.name);
+      storageRef.put(file);
+  });
+</script>

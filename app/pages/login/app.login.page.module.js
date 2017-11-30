@@ -13,13 +13,14 @@ var forms_1 = require('@angular/forms');
 var router_1 = require('@angular/router');
 var angular2_toaster_1 = require('angular2-toaster');
 var common_1 = require('@angular/common');
+var angular2_loaders_css_1 = require('angular2-loaders-css');
 var app_login_page_component_1 = require('./app.login.page.component');
 var LoginPageModule = (function () {
     function LoginPageModule() {
     }
     LoginPageModule = __decorate([
         core_1.NgModule({
-            imports: [forms_1.FormsModule, router_1.RouterModule, angular2_toaster_1.ToasterModule, common_1.CommonModule],
+            imports: [forms_1.FormsModule, router_1.RouterModule, angular2_toaster_1.ToasterModule, common_1.CommonModule, angular2_loaders_css_1.LoadersCssModule],
             declarations: [app_login_page_component_1.LoginPageComponent],
             exports: [app_login_page_component_1.LoginPageComponent]
         }), 

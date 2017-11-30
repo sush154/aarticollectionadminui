@@ -1,0 +1,50 @@
+<app-header></app-header>
+
+<div class="container p-t-50px">
+
+    <toaster-container></toaster-container>
+
+    <div class="loader-parent" *ngIf="loading">
+        <loaders-css [loader]="'ball-clip-rotate'" [loaderClass]="'my-loader'"></loaders-css>
+    </div>
+
+    <div class="bg-white">
+        <table class="table table-hover">
+            <thead class="thead-inverse">
+                <tr>
+                    <th>#</th>
+                    <th>Product Name</th>
+                    <th>Category</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let product of productsList | paginate: { itemsPerPage: 10, currentPage: p, id: 'first'}">
+                    <td>{{product.productId}}</td>
+                    <td>{{product.productName}}</td>
+                    <td>{{product.category.categoryName}}</td>
+                    <td>{{product.price}}</td>
+                    <td>{{product.quantity}}</td>
+                </tr>
+            </tbody>
+            <tr *ngIf="productsList?.length > 10">
+                <td colspan="5">
+                    <pagination-controls (pageChange)="p = $event" id="first" style="float: right;"></pagination-controls>
+                </td>
+            </tr>
+            <tr *ngIf="productsList?.length === 0">
+                <td colspan="5" style="text-align: center;">
+                    <h5 class="h5">No Products to Show</h5>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+
+    <div class="fixed-action-button">
+        <button type="button" class="btn btn-primary" [routerLink]="['/products/addProduct']">
+            <i class="fa fa-plus"></i>
+        </button>
+    </div>
+</div>
