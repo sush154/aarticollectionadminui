@@ -94,17 +94,37 @@
                 <div class="form-group row p-t-20px">
                     <label for="description" class="col-sm-2 col-form-label no-wrap align-middle">Product Description</label>
                     <div class="col-sm-10">
-                        <textarea id="description" name="description" [(ngModel)]="newProduct.description" class="form-control" rows="5" required></textarea>
+                        <textarea id="description" name="description" [(ngModel)]="updatedProduct.description" class="form-control" rows="5" required></textarea>
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <label for="highlights" class="col-sm-2 col-form-label no-wrap">HighLights</label>
                     <div class="col-sm-10">
-                        <input type="text" id="highlights" name="highlights" class="form-control" [(ngModel)]="newProduct.highlights" required>
+                        <input type="text" id="highlights" name="highlights" class="form-control" [(ngModel)]="updatedProduct.highlights" required>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="colorVariants" class="col-sm-2 col-form-label no-wrap">Color Variants</label>
+                    <div class="col-sm-10">
+                        <input type="text" id="colorVariants" name="colorVariants" class="form-control" [(ngModel)]="updatedProduct.colorVariants" required>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="discount" class="col-sm-2 col-form-label no-wrap">Discount</label>
+                    <div class="col-sm-10">
+                        <input type="number" id="discount" name="discount" class="form-control no-spin" [(ngModel)]="updatedProduct.discount">
                     </div>
                 </div>
             </form>
+
+            <div class="form-group row p-t-50px">
+                <div class="col-sm-12">
+                    <button type="button" class="btn addNew-btn float-right m-r-20px" (click)="updateProduct()">Update Meta Info</button>
+                </div>
+            </div>
         </div>
     </div>
 

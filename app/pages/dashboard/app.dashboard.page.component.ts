@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ToasterService} from 'angular2-toaster';
 import {OrderProvider} from '../../providers/order/app.order.provider';
 import {ProductProvider} from '../../providers/product/app.product.provider';
+import {AppCustomerProvider} from '../../providers/customer/app.customer.provider';
 import {SortOrderForChart} from '../../util/sort/orderChart/app.order.sort.chart';
 import {Router} from '@angular/router';
 
@@ -9,7 +10,7 @@ import {Router} from '@angular/router';
     selector : 'dashboard-page',
     templateUrl : './app/pages/dashboard/app.dashboard.page.component.html',
     styleUrls : ['./app/pages/dashboard/app.dashboard.page.component.css'],
-    providers : [OrderProvider, SortOrderForChart]
+    providers : [OrderProvider, SortOrderForChart, AppCustomerProvider]
 })
 
 export class AppDashboardPageComponent implements OnInit{
@@ -20,7 +21,7 @@ export class AppDashboardPageComponent implements OnInit{
     currentMonthOrderCount : Number;
     currentMonthIncome : Number;
     newOrdersCount : Number = 0;
-    totalProductsCount : Number = 0;
+    activeCustomersCount : Number = 0;
     totalIncomeTillDate : Number = 0;
     private loading : boolean = false;
 
@@ -28,7 +29,8 @@ export class AppDashboardPageComponent implements OnInit{
                 private sortOrderForChart : SortOrderForChart,
                 private productProvider : ProductProvider,
                 private toastrService : ToasterService,
-                private router : Router){}
+                private router : Router,
+                private customersProvider : AppCustomerProvider){}
 
     getOrderCountAndIncome() : void {
         this.orderProvider.getOrderCountAndIncome().then((res) => {
@@ -54,12 +56,12 @@ export class AppDashboardPageComponent implements OnInit{
         });
     }
 
-    getTotalProductsCount() : void {
-        this.productProvider.getTotalProductsCount().then((res) => {
+    getActiveCustomersCount() : void {
+        this.customersProvider.getCustomersCount().then(res => {
             if(res.status === 200){
-                this.totalProductsCount = res.product;
+                this.activeCustomersCount = res.customer;
             }else if(res.status === 401){
-                this.router.navigate(['/login']);
+                this.router.navigate(['/login'])
             }else {
                 this.toastrService.pop('error', 'Server Error', 'We encountered server error. Please try later !');
             }
@@ -140,7 +142,7 @@ export class AppDashboardPageComponent implements OnInit{
         this.populateChart();
         this.getOrderCountAndIncome();
         this.getNewOrdersCount();
-        this.getTotalProductsCount();
+        this.getActiveCustomersCount();
         this.getTotalIncomeThisYear();
         this.loading = false;
     }

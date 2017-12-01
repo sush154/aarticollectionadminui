@@ -33,8 +33,8 @@
                                 <input type="text" id="customer" name="customer" class="form-control" (focus)="displayCustomerDropDown = true;" [(ngModel)]="newCustomerName" (keyup)="customerName.next($event.target.value)">
                                 <div class="customer-dropdown-div" *ngIf="displayCustomerDropDown" >
                                     <ul>
-                                        <li *ngFor="let customer of customersList">
-                                            <a (click)="selectCustomer(customer)">{{customer.customerName}}, {{customer.city}}</a>
+                                        <li *ngFor="let customer of customersList" (click)="selectCustomer(customer)">
+                                            <a >{{customer.customerName}}, {{customer.city}}</a>
                                         </li>
                                     </ul>
                                 </div>

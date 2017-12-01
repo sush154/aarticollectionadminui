@@ -55,9 +55,9 @@ var AddOrderPageComponent = (function () {
     /*
     *   This method retrieves all the customers list
     */
-    AddOrderPageComponent.prototype.getAllCustomers = function () {
+    AddOrderPageComponent.prototype.getCustomers = function () {
         var _this = this;
-        this.customerProvider.getAllCustomers().then(function (res) {
+        this.customerProvider.getOnlyCustomers().then(function (res) {
             if (res.status === 200) {
                 _this.customersList = res.customer;
             }
@@ -191,7 +191,7 @@ var AddOrderPageComponent = (function () {
     AddOrderPageComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.loading = true;
-        this.getAllCustomers();
+        this.getCustomers();
         this.getAllProducts();
         this.productProvider.productNameFilter(this.searchTerm$)
             .subscribe(function (res) {

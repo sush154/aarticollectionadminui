@@ -12,18 +12,20 @@ var core_1 = require('@angular/core');
 var angular2_toaster_1 = require('angular2-toaster');
 var app_order_provider_1 = require('../../providers/order/app.order.provider');
 var app_product_provider_1 = require('../../providers/product/app.product.provider');
+var app_customer_provider_1 = require('../../providers/customer/app.customer.provider');
 var app_order_sort_chart_1 = require('../../util/sort/orderChart/app.order.sort.chart');
 var router_1 = require('@angular/router');
 var AppDashboardPageComponent = (function () {
-    function AppDashboardPageComponent(orderProvider, sortOrderForChart, productProvider, toastrService, router) {
+    function AppDashboardPageComponent(orderProvider, sortOrderForChart, productProvider, toastrService, router, customersProvider) {
         this.orderProvider = orderProvider;
         this.sortOrderForChart = sortOrderForChart;
         this.productProvider = productProvider;
         this.toastrService = toastrService;
         this.router = router;
+        this.customersProvider = customersProvider;
         this.orders = [];
         this.newOrdersCount = 0;
-        this.totalProductsCount = 0;
+        this.activeCustomersCount = 0;
         this.totalIncomeTillDate = 0;
         this.loading = false;
     }
@@ -54,11 +56,11 @@ var AppDashboardPageComponent = (function () {
             }
         });
     };
-    AppDashboardPageComponent.prototype.getTotalProductsCount = function () {
+    AppDashboardPageComponent.prototype.getActiveCustomersCount = function () {
         var _this = this;
-        this.productProvider.getTotalProductsCount().then(function (res) {
+        this.customersProvider.getCustomersCount().then(function (res) {
             if (res.status === 200) {
-                _this.totalProductsCount = res.product;
+                _this.activeCustomersCount = res.customer;
             }
             else if (res.status === 401) {
                 _this.router.navigate(['/login']);
@@ -140,7 +142,7 @@ var AppDashboardPageComponent = (function () {
         this.populateChart();
         this.getOrderCountAndIncome();
         this.getNewOrdersCount();
-        this.getTotalProductsCount();
+        this.getActiveCustomersCount();
         this.getTotalIncomeThisYear();
         this.loading = false;
     };
@@ -149,9 +151,9 @@ var AppDashboardPageComponent = (function () {
             selector: 'dashboard-page',
             templateUrl: './app/pages/dashboard/app.dashboard.page.component.html',
             styleUrls: ['./app/pages/dashboard/app.dashboard.page.component.css'],
-            providers: [app_order_provider_1.OrderProvider, app_order_sort_chart_1.SortOrderForChart]
+            providers: [app_order_provider_1.OrderProvider, app_order_sort_chart_1.SortOrderForChart, app_customer_provider_1.AppCustomerProvider]
         }), 
-        __metadata('design:paramtypes', [app_order_provider_1.OrderProvider, app_order_sort_chart_1.SortOrderForChart, app_product_provider_1.ProductProvider, angular2_toaster_1.ToasterService, router_1.Router])
+        __metadata('design:paramtypes', [app_order_provider_1.OrderProvider, app_order_sort_chart_1.SortOrderForChart, app_product_provider_1.ProductProvider, angular2_toaster_1.ToasterService, router_1.Router, app_customer_provider_1.AppCustomerProvider])
     ], AppDashboardPageComponent);
     return AppDashboardPageComponent;
 }());

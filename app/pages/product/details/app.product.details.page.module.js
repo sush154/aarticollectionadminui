@@ -16,20 +16,20 @@ var angular2_toaster_1 = require('angular2-toaster');
 var app_header_module_1 = require('../../../modules/header/app.header.module');
 var angular2_loaders_css_1 = require('angular2-loaders-css');
 var ng2_file_upload_1 = require('ng2-file-upload');
-var app_product_add_page_component_1 = require('./app.product.add.page.component');
-var AddProductPageModule = (function () {
-    function AddProductPageModule() {
+var app_product_details_page_component_1 = require('./app.product.details.page.component');
+var ProductDetailsPageModule = (function () {
+    function ProductDetailsPageModule() {
     }
-    AddProductPageModule = __decorate([
+    ProductDetailsPageModule = __decorate([
         core_1.NgModule({
             imports: [common_1.CommonModule, forms_1.FormsModule, router_1.RouterModule, angular2_toaster_1.ToasterModule, app_header_module_1.AppHeaderModule, angular2_loaders_css_1.LoadersCssModule,
                 ng2_file_upload_1.FileUploadModule],
-            declarations: [app_product_add_page_component_1.AddProductPageComponent],
-            exports: [app_product_add_page_component_1.AddProductPageComponent]
+            declarations: [app_product_details_page_component_1.ProductDetailsPageComponent],
+            exports: [app_product_details_page_component_1.ProductDetailsPageComponent]
         }), 
         __metadata('design:paramtypes', [])
-    ], AddProductPageModule);
-    return AddProductPageModule;
+    ], ProductDetailsPageModule);
+    return ProductDetailsPageModule;
 }());
-exports.AddProductPageModule = AddProductPageModule;
-//# sourceMappingURL=app.product.add.page.module.js.map
+exports.ProductDetailsPageModule = ProductDetailsPageModule;
+//# sourceMappingURL=app.product.details.page.module.js.map

@@ -162,4 +162,21 @@ export class AppCustomerProvider {
                 this.handleError(err);
             });
     }
+
+    /*
+    *   This method retrieves customers count
+    */
+    getCustomersCount() : Promise<any> {
+        let url = this.serviceUrl + "/getCustomersCount";
+
+        return this.http
+            .get(url, {headers : this.headers, withCredentials : true})
+            .toPromise()
+            .then((res) => {
+                return res.json().data;
+            })
+            .catch((err) => {
+                this.handleError(err);
+            });
+    }
 }

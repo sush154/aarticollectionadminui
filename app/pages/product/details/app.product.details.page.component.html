@@ -1,0 +1,60 @@
+<app-header></app-header>
+
+<div class="container p-t-50px">
+
+    <toaster-container></toaster-container>
+
+    <div class="loader-parent" *ngIf="loading">
+        <loaders-css [loader]="'ball-clip-rotate'" [loaderClass]="'my-loader'"></loaders-css>
+    </div>
+
+    <div class="bg-white p-50px">
+
+        <div style="height: 50px;">
+            <button class="btn btn-danger btn-sm" (click)="goBack()">Go Back</button>
+        </div>
+
+        <div class="m-t-20px">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item active">
+                    <h3>Product Details</h3>
+                </li>
+            </ol>
+
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#generalInfo" data-toggle="tab">Product Info</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#images" data-toggle="tab">Images</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#metaInfo" data-toggle="tab">Meta Info</a>
+                </li>
+            </ul>
+
+            <div class="tab-content">
+                <div class="tab-pane m-t-20px active" id="generalInfo">
+                    <h1>Product &nbsp; #{{productDetails.productId}}</h1>
+
+                    <div class="m-t-50px">
+                        <h3 class="d-inline-block">{{productDetails.productName}}</h3>
+                        <h3 class="d-inline-block float-right" *ngIf="productDetails.quantity <= 5">
+                            <span class="badge badge-danger low-quality-badge">Low Quantity</span>
+                        </h3>
+                    </div>
+
+                    <div class="m-t-50px">
+
+                    </div>
+                </div>
+                <div class="tab-pane m-t-20px" id="images">
+                    Images List
+                </div>
+                <div class="tab-pane m-t-20px" id="metaInfo">
+                    meta info
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

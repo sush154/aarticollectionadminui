@@ -33,6 +33,9 @@ var ProductsListPageComponent = (function () {
             }
         });
     };
+    ProductsListPageComponent.prototype.navigateToProductDetails = function (productId) {
+        this.router.navigate(['/products', productId]);
+    };
     ProductsListPageComponent.prototype.ngOnInit = function () {
         this.loading = true;
         this.getProductsList();

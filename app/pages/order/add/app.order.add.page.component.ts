@@ -60,8 +60,8 @@ export class AddOrderPageComponent implements OnInit{
     /*
     *   This method retrieves all the customers list
     */
-    private getAllCustomers() : void {
-        this.customerProvider.getAllCustomers().then((res) => {
+    private getCustomers() : void {
+        this.customerProvider.getOnlyCustomers().then((res) => {
             if(res.status === 200) {
                 this.customersList = res.customer;
             }else if(res.status === 401){
@@ -200,7 +200,7 @@ export class AddOrderPageComponent implements OnInit{
 
     ngOnInit() : void {
         this.loading = true;
-        this.getAllCustomers();
+        this.getCustomers();
         this.getAllProducts();
 
         this.productProvider.productNameFilter(this.searchTerm$)

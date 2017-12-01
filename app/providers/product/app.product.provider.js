@@ -59,6 +59,22 @@ var ProductProvider = (function () {
         });
     };
     /*
+    *   This method retrieves product details
+    */
+    ProductProvider.prototype.getProductDetails = function (productId) {
+        var _this = this;
+        var url = this.serviceUrl + "/getProductDetails/" + productId;
+        return this.http
+            .get(url, { headers: this.headers, withCredentials: true })
+            .toPromise()
+            .then(function (res) {
+            return res.json().data;
+        })
+            .catch(function (err) {
+            _this.handleError(err);
+        });
+    };
+    /*
     *   This method filter applied on the Product Name
     */
     ProductProvider.prototype.productNameFilter = function (filterValue) {
@@ -112,6 +128,22 @@ var ProductProvider = (function () {
             .toPromise()
             .then(function (res) {
             return res.json();
+        })
+            .catch(function (err) {
+            _this.handleError(err);
+        });
+    };
+    /*
+    *   This method updates product details
+    */
+    ProductProvider.prototype.updateProductDetails = function (updatedProduct) {
+        var _this = this;
+        var url = this.serviceUrl + "/addMetaInfo";
+        return this.http
+            .post(url, JSON.stringify(updatedProduct), { headers: this.headers, withCredentials: true })
+            .toPromise().
+            then(function (res) {
+            return res.json().data;
         })
             .catch(function (err) {
             _this.handleError(err);

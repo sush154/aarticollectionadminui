@@ -5,15 +5,15 @@ import {RouterModule} from '@angular/router';
 import {ToasterModule, ToasterService} from 'angular2-toaster';
 import {AppHeaderModule} from '../../../modules/header/app.header.module';
 import { LoadersCssModule } from 'angular2-loaders-css';
-import { FileUploadModule  } from 'ng2-file-upload';
+import { FileUploadModule } from 'ng2-file-upload';
 
-import {AddProductPageComponent} from './app.product.add.page.component';
+import {ProductDetailsPageComponent} from './app.product.details.page.component';
 
 @NgModule({
     imports : [CommonModule, FormsModule, RouterModule, ToasterModule, AppHeaderModule, LoadersCssModule,
                 FileUploadModule ],
-    declarations : [AddProductPageComponent],
-    exports : [AddProductPageComponent]
+    declarations : [ProductDetailsPageComponent],
+    exports : [ProductDetailsPageComponent]
 })
 
-export class AddProductPageModule {}
+export class ProductDetailsPageModule {}

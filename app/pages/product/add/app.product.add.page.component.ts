@@ -10,7 +10,6 @@ import { DomSanitizer } from '@angular/platform-browser';
 
 import {ProductProvider} from '../../../providers/product/app.product.provider';
 import {CategoryProvider} from '../../../providers/category/app.category.provider';
-import {FIREBASECONFIG} from '../../../util/firebase/app.firebase.config';
 
 @Component({
     selector : 'add-product-page',
@@ -27,8 +26,8 @@ export class AddProductPageComponent implements OnInit{
         dateFormat: 'dd/mm/yyyy',
     };
     private loading : boolean = false;
-    private firstSection : boolean = false;
-    private secondSection : boolean = true;
+    private firstSection : boolean = true;
+    private secondSection : boolean = false;
     private thirdSection : boolean = false;
     private displayCategories : boolean = false;
     private categoriesName = new Subject<string>();
@@ -36,6 +35,7 @@ export class AddProductPageComponent implements OnInit{
     private selectedCategory : string;
     private imagesList : any;
     private uploader : FileUploader;
+    private updatedProduct : any = {};
 
     constructor(private router : Router,
                 private location : Location,
@@ -105,6 +105,7 @@ export class AddProductPageComponent implements OnInit{
                 this.loading = false;
                 if(res.status === 200){
                     this.newProduct._id = res.product._id;
+                    this.updatedProduct._id = this.newProduct._id;
                     this.firstSection = false;
                     this.secondSection = true;
                     let url = URL + "/product/addImage/"+this.newProduct._id;
@@ -119,19 +120,20 @@ export class AddProductPageComponent implements OnInit{
     }
 
     private addImages() : void {
-        //this.loading = true;
+        this.loading = true;
         this.uploader.uploadAll();
         this.uploader.onCompleteItem = (item, response, status, header) => {
-
           if(JSON.parse(response).data.status === 200){
-            //TODO: get images list
+            this.loading = false;
             this.getImagesList(this.newProduct._id);
           }
         }
     }
 
     private getImagesList(productId : any) : void {
+        this.loading = true;
         this.productProvider.getImagesList(productId).then(res => {
+            this.loading = false;
             this.imagesList = res;
             //console.log(res);
         })
@@ -141,6 +143,20 @@ export class AddProductPageComponent implements OnInit{
         this.newProduct.category = category._id;
         this.selectedCategory = category.categoryName;
         this.displayCategories = false;
+    }
+
+    private updateProduct() : void {
+        this.loading = true;
+        this.productProvider.updateProductDetails(this.updatedProduct).then(res => {
+            this.loading = false;
+            if(res.status === 200){
+                this.location.back();
+            }else if(res.status === 401){
+                this.router.navigate(['/login']);
+            }else {
+                this.toastrService.pop('error', 'Server Error', 'We encountered server error. Please try later !');
+            }
+        });
     }
 
     private continue() : void {

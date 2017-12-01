@@ -31,12 +31,13 @@ var AddProductPageComponent = (function () {
             dateFormat: 'dd/mm/yyyy',
         };
         this.loading = false;
-        this.firstSection = false;
-        this.secondSection = true;
+        this.firstSection = true;
+        this.secondSection = false;
         this.thirdSection = false;
         this.displayCategories = false;
         this.categoriesName = new Subject_1.Subject();
         this.newCategory = {};
+        this.updatedProduct = {};
     }
     AddProductPageComponent.prototype.goBack = function () {
         this.location.back();
@@ -101,6 +102,7 @@ var AddProductPageComponent = (function () {
                 _this.loading = false;
                 if (res.status === 200) {
                     _this.newProduct._id = res.product._id;
+                    _this.updatedProduct._id = _this.newProduct._id;
                     _this.firstSection = false;
                     _this.secondSection = true;
                     var url = app_service_url_1.URL + "/product/addImage/" + _this.newProduct._id;
@@ -117,18 +119,20 @@ var AddProductPageComponent = (function () {
     };
     AddProductPageComponent.prototype.addImages = function () {
         var _this = this;
-        //this.loading = true;
+        this.loading = true;
         this.uploader.uploadAll();
         this.uploader.onCompleteItem = function (item, response, status, header) {
             if (JSON.parse(response).data.status === 200) {
-                //TODO: get images list
+                _this.loading = false;
                 _this.getImagesList(_this.newProduct._id);
             }
         };
     };
     AddProductPageComponent.prototype.getImagesList = function (productId) {
         var _this = this;
+        this.loading = true;
         this.productProvider.getImagesList(productId).then(function (res) {
+            _this.loading = false;
             _this.imagesList = res;
             //console.log(res);
         });
@@ -137,6 +141,22 @@ var AddProductPageComponent = (function () {
         this.newProduct.category = category._id;
         this.selectedCategory = category.categoryName;
         this.displayCategories = false;
+    };
+    AddProductPageComponent.prototype.updateProduct = function () {
+        var _this = this;
+        this.loading = true;
+        this.productProvider.updateProductDetails(this.updatedProduct).then(function (res) {
+            _this.loading = false;
+            if (res.status === 200) {
+                _this.location.back();
+            }
+            else if (res.status === 401) {
+                _this.router.navigate(['/login']);
+            }
+            else {
+                _this.toastrService.pop('error', 'Server Error', 'We encountered server error. Please try later !');
+            }
+        });
     };
     AddProductPageComponent.prototype.continue = function () {
         this.firstSection = false;

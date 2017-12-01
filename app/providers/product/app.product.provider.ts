@@ -59,6 +59,23 @@ export class ProductProvider {
     }
 
     /*
+    *   This method retrieves product details
+    */
+    getProductDetails(productId : any) : Promise<any> {
+        let url = this.serviceUrl + "/getProductDetails/"+productId;
+
+        return this.http
+            .get(url, {headers : this.headers, withCredentials : true})
+            .toPromise()
+            .then((res) => {
+                return res.json().data;
+            })
+            .catch((err) => {
+                this.handleError(err);
+            })
+    }
+
+    /*
     *   This method filter applied on the Product Name
     */
     productNameFilter(filterValue : Observable<string>) {
@@ -115,6 +132,23 @@ export class ProductProvider {
             .toPromise()
             .then((res) => {
                 return res.json();
+            })
+            .catch((err) => {
+                this.handleError(err);
+            });
+    }
+
+    /*
+    *   This method updates product details
+    */
+    updateProductDetails(updatedProduct : any) : Promise<any> {
+        let url = this.serviceUrl + "/addMetaInfo";
+
+        return this.http
+            .post(url, JSON.stringify(updatedProduct), {headers : this.headers, withCredentials : true})
+            .toPromise().
+            then((res) => {
+                return res.json().data;
             })
             .catch((err) => {
                 this.handleError(err);

@@ -26,6 +26,10 @@ export class DashboardProductsListComponent implements OnInit{
         });
     }
 
+    private navigateToProductDetails(productId : any) : void {
+        this.router.navigate(['/products', productId]);
+    }
+
     ngOnInit() : void {
         this.populateAllProducts();
     }

@@ -27,6 +27,9 @@ var DashboardProductsListComponent = (function () {
             }
         });
     };
+    DashboardProductsListComponent.prototype.navigateToProductDetails = function (productId) {
+        this.router.navigate(['/products', productId]);
+    };
     DashboardProductsListComponent.prototype.ngOnInit = function () {
         this.populateAllProducts();
     };

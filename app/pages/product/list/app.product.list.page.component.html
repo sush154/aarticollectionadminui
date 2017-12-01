@@ -20,7 +20,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let product of productsList | paginate: { itemsPerPage: 10, currentPage: p, id: 'first'}">
+                <tr *ngFor="let product of productsList | paginate: { itemsPerPage: 10, currentPage: p, id: 'first'}" (click)="navigateToProductDetails(product.productId)">
                     <td>{{product.productId}}</td>
                     <td>{{product.productName}}</td>
                     <td>{{product.category.categoryName}}</td>

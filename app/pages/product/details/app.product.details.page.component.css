@@ -1,0 +1,19 @@
+.nav-link {
+    border: none;
+}
+
+.nav-link.active {
+    border-bottom: 4px solid !important;
+    border-color: #495057 !important;
+    font-weight: bold;
+}
+
+.nav-item a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.low-quality-badge {
+    border-radius : 2px !important;
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,.16), 0 2px 10px 0 rgba(0,0,0,.12);
+}

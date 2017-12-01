@@ -154,6 +154,22 @@ var AppCustomerProvider = (function () {
             _this.handleError(err);
         });
     };
+    /*
+    *   This method retrieves customers count
+    */
+    AppCustomerProvider.prototype.getCustomersCount = function () {
+        var _this = this;
+        var url = this.serviceUrl + "/getCustomersCount";
+        return this.http
+            .get(url, { headers: this.headers, withCredentials: true })
+            .toPromise()
+            .then(function (res) {
+            return res.json().data;
+        })
+            .catch(function (err) {
+            _this.handleError(err);
+        });
+    };
     AppCustomerProvider = __decorate([
         core_1.Injectable(), 
         __metadata('design:paramtypes', [http_1.Http])
