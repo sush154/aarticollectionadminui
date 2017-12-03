@@ -266,6 +266,10 @@ table tbody > tr:hover {
     width: 200px !important;
 }
 
+.ng2-tag-input-field.ng-touched {
+    border: none !important;
+}
+
 
 /* Extra small devices (portrait phones, less than 576px)*/
 @media (max-width: 575px) {

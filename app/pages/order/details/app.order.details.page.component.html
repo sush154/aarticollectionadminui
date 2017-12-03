@@ -136,7 +136,7 @@
                                     </div>
                                     <div class="col-sm-6">
                                         <select id="courier" name="courier" class="form-control" [(ngModel)]="orderDetails.courier" (change)="navigateAddCourier(courierDD.value)" #courierDD [disabled]="orderDetails.orderStatus === '3'">
-                                            <option [value]="0" style="color: #ccccc;">-- Select Courier --</option>
+                                            <option [value]="0" style="color: #cccccc;">-- Select Courier --</option>
                                             <option [value]="-1" style="color: #ff0000;">Add New Courier</option>
                                             <option [value]="courier._id" *ngFor="let courier of courierList">{{courier.name}}</option>
                                         </select>

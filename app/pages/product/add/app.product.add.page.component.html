@@ -122,7 +122,7 @@
 
             <div class="form-group row p-t-50px">
                 <div class="col-sm-12">
-                    <button type="button" class="btn addNew-btn float-right m-r-20px" (click)="updateProduct()">Update Meta Info</button>
+                    <button type="button" class="btn addNew-btn float-right m-r-20px" (click)="addProductMetaInfo()">Update Meta Info</button>
                 </div>
             </div>
         </div>
@@ -150,8 +150,7 @@
                         <div class="col-sm-10">
                             <select id="parentCategory" name="parentCategory" class="form-control" [(ngModel)]="newCategory.parentCategory">
                                 <option [value]="0">-- Select Parent Category --</option>
-                                <option [value]="1">Dress Material</option>
-                                <option [value]="2">Saree</option>
+                                <option [value]="pc.id" *ngFor="let pc of parentCategoryList">{{pc.value}}</option>
                             </select>
                         </div>
                     </div>

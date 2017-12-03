@@ -12,6 +12,7 @@
 
         <div style="height: 50px;">
             <button class="btn btn-danger btn-sm" (click)="goBack()">Go Back</button>
+            <button type="button" class="btn float-right btn-primary" data-toggle="modal" data-target="#editProductDetails" (click)="editDetails(productDetails)" >Edit Details</button>
         </div>
 
         <div class="m-t-20px">
@@ -29,7 +30,7 @@
                     <a class="nav-link" href="#images" data-toggle="tab">Images</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#metaInfo" data-toggle="tab">Meta Info</a>
+                    <a class="nav-link" href="#userRatings" data-toggle="tab">User Ratings</a>
                 </li>
             </ul>
 
@@ -44,17 +45,203 @@
                         </h3>
                     </div>
 
-                    <div class="m-t-50px">
+                    <div class="row m-t-50px">
+                        <div class="col-lg-6">
+                            <div class="row">
+                                <div class="col-lg-5 col-md-5 col-sm-12">
+                                    <span class="black-bold-text font-18">Category:</span>
+                                </div>
+                                <div class="col-lg-7 col-md-7 col-sm-12">
+                                    <span class="product-view">{{categoryDetails.categoryName}}</span>
+                                </div>
+                            </div>
+                            <div class="row m-t-50px">
+                                <div class="col-lg-5 col-md-5 col-sm-12">
+                                    <span class="black-bold-text font-18">Parent Category: </span>
+                                </div>
+                                <div class="col-lg-7 col-md-7 col-sm-12">
+                                    <span class="product-view">{{categoryDetails.parentCategory}}</span>
+                                </div>
+                            </div>
+                            <div class="row m-t-50px">
+                                <div class="col-lg-5 col-md-5 col-sm-12">
+                                    <span class="black-bold-text font-18">Highlights: </span>
+                                </div>
+                                <div class="col-lg-7 col-md-7 col-sm-12">
+                                    <ul *ngFor="let highlight of productDetails.highlights" class="d-inline p-l-0">
+                                        <i class="fa fa-circle p-d-bullet" aria-hidden="true"></i>
+                                        <li class="d-inline m-r-20px product-view">{{highlight}}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="row m-t-50px">
+                                <div class="col-lg-5 col-md-5 col-sm-12">
+                                    <span class="black-bold-text font-18">Color Variants: </span>
+                                </div>
+                                <div class="col-lg-7 col-md-7 col-sm-12">
+                                    <ul class="d-inline p-l-0" *ngFor="let colorVariant of productDetails.colorVariants">
+                                        <i class="fa fa-circle p-d-bullet" aria-hidden="true"></i>
+                                        <li class="d-inline m-r-20px product-view">{{colorVariant}}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-6">
+                            <div class="statuses">
+                                <div class="status">
+                                    <div class="row">
+                                        <div class="d-inline col-sm-6">
+                                            <label for="quantity" class="label no-wrap">Quantity: </label>
+                                        </div>
+                                        <div class="d-inline col-sm-6">
+                                            <input type="number" class="form-control no-spin" id="quantity" name="quantity" [(ngModel)]="productDetails.quantity">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="status m-t-20px">
+                                    <div class="row">
+                                        <div class="d-inline col-sm-6">
+                                            <label for="price" class="label no-wrap">Price: </label>
+                                        </div>
+                                        <div class="d-inline col-sm-6">
+                                            <input type="number" class="form-control no-spin" id="price" name="price" [(ngModel)]="productDetails.price">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="status m-t-20px">
+                                    <div class="row">
+                                        <div class="d-inline col-sm-6">
+                                            <label for="discount" class="label no-wrap">Discount: </label>
+                                        </div>
+                                        <div class="d-inline col-sm-6">
+                                            <input type="number" class="form-control no-spin" id="discount" name="discount" [(ngModel)]="productDetails.discount">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="status m-t-50px">
+                                    <div class="row">
+                                        <div class="col-sm-12 p-r-50px">
+                                            <button type="button" class="btn btn-save float-right" (click)="saveProductDetails()">Save</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
+                    <div class="m-t-50px">
+                        <!-- <div class="col-lg-4 col-md-4 col-sm-12">
+                            <h4>Product Description</h4>
+                        </div>
+                        <div class="col-lg-8 col-md-8 col-sm-12">
+                            <span>{{productDetails.description}}</span>
+                        </div> -->
+                        <h4>Product Description</h4>
+
+                        <div class="m-t-20px p-l-r-50">
+                            {{productDetails.description}}
+                        </div>
                     </div>
                 </div>
                 <div class="tab-pane m-t-20px" id="images">
-                    Images List
+                    <div class="image-box">
+                        <div class="d-inline" *ngFor="let image of imagesList; let i = index">
+                                <a data-target="#{{i}}" data-toggle="modal">
+                                    <img [src]="sanitizer.bypassSecurityTrustResourceUrl('data:image;base64,' + image.img.data)" alt="{{i}}" class="img-thumbnail product-img">
+                                </a>
+                                <div id="{{i}}" class="modal" tabindex="-1" role="dialog" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg" role="document">
+                                        <div class="dialog-content">
+                                            <img [src]="sanitizer.bypassSecurityTrustResourceUrl('data:image;base64,' + image.img.data)" alt="{{i}}">
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+
+                    <div class="p-t-20px">
+                            
+                        <input type="file" class="form-control" id="addImage" name="addImage" ng2FileSelect [uploader]="uploader">
+        
+                        <div class="form-group row p-t-50px">
+                            <div class="col-sm-12">
+                                <button type="button" class="btn addNew-btn float-right m-r-20px" (click)="addImages()">Upload Image</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="tab-pane m-t-20px" id="metaInfo">
-                    meta info
+                <div class="tab-pane m-t-20px" id="userRatings">
+                    User Ratings
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<div id="editProductDetails" class="modal" tabindex="-1" role="dialog" aria-hidden="true" aria-labelledby="productModelLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="productModelLabel">Edit Product Details</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <form id="updatePoductDetails" name="updatePoductDetails" #updatePoductDetails="ngForm">
+                    <div class="form-group row">
+                        <label for="editProductName" class="col-sm-2 col-form-label no-wrap">Product Name</label>
+                        <div class="col-sm-10">
+                            <input type="text" id="editProductName" name="editProductName" class="form-control" [(ngModel)]="editableProduct.productName">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="category" class="col-sm-2 col-form-label no-wrap">Product Category</label>
+                        <div class="col-sm-10">
+                            <input type="text" id="category" name="category" class="form-control" (focus)="displayCategories = true;" [(ngModel)]="selectedCategory" (keyup)="categoriesName.next($event.target.value)" required>
+                            <div class="category-dropdown-div" *ngIf="displayCategories && categoriesList?.length > 0">
+                                <ul>
+                                    <li *ngFor="let category of categoriesList" (click)="selectCategory(category)">
+                                        <a>{{category.categoryName}}</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="description" class="col-sm-2 col-form-label no-wrap">Description</label>
+                        <div class="col-sm-10">
+                            <textarea id="description" name="description" [(ngModel)]="editableProduct.description" class="form-control"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="highlights" class="col-sm-2 col-form-label no-wrap">Highlights</label>
+                        <div class="col-sm-10">
+                            <input id="highlights" name="highlights" class="form-control" [(ngModel)]="editableProduct.highlights">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="colorVariants" class="col-sm-2 col-form-label no-wrap">Color Variants</label>
+                        <div class="col-sm-10">
+                            <input id="colorVariants" name="colorVariants" class="form-control" [(ngModel)]="editableProduct.colorVariants">
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" (click)="updateProductDetails(editableProduct)">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

@@ -7,6 +7,7 @@ import { Subject } from 'rxjs/Subject';
 import { FileUploader } from 'ng2-file-upload';
 import {URL} from '../../../util/app.service.url';
 import { DomSanitizer } from '@angular/platform-browser';
+import {PARENTCATEGORY} from '../../../common/app.parent.category';
 
 import {ProductProvider} from '../../../providers/product/app.product.provider';
 import {CategoryProvider} from '../../../providers/category/app.category.provider';
@@ -36,6 +37,8 @@ export class AddProductPageComponent implements OnInit{
     private imagesList : any;
     private uploader : FileUploader;
     private updatedProduct : any = {};
+    private highlights : any;
+    private parentCategoryList : any = PARENTCATEGORY;
 
     constructor(private router : Router,
                 private location : Location,
@@ -145,11 +148,25 @@ export class AddProductPageComponent implements OnInit{
         this.displayCategories = false;
     }
 
-    private updateProduct() : void {
+    private addProductMetaInfo() : void {
         this.loading = true;
-        this.productProvider.updateProductDetails(this.updatedProduct).then(res => {
+        
+        let highlightArr : any = [];
+        for(let hl of this.updatedProduct.highlights.split(',')){
+            highlightArr.push(hl);
+        }
+        this.updatedProduct.highlights = highlightArr;
+
+        let colorArr : any = [];
+        for(let cv of this.updatedProduct.colorVariants.split(',')){
+            colorArr.push(cv);
+        }
+        this.updatedProduct.colorVariants = colorArr;
+        
+        this.productProvider.updateProductMetaInfo(this.updatedProduct).then(res => {
             this.loading = false;
             if(res.status === 200){
+                this.toastrService.pop('success', 'Meta Info Updated', 'Meta Information of Product are updated successfully !');
                 this.location.back();
             }else if(res.status === 401){
                 this.router.navigate(['/login']);

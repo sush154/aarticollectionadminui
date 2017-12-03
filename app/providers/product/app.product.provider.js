@@ -134,15 +134,31 @@ var ProductProvider = (function () {
         });
     };
     /*
-    *   This method updates product details
+    *   This method adds product meta info
     */
-    ProductProvider.prototype.updateProductDetails = function (updatedProduct) {
+    ProductProvider.prototype.updateProductMetaInfo = function (updatedProduct) {
         var _this = this;
         var url = this.serviceUrl + "/addMetaInfo";
         return this.http
             .post(url, JSON.stringify(updatedProduct), { headers: this.headers, withCredentials: true })
             .toPromise().
             then(function (res) {
+            return res.json().data;
+        })
+            .catch(function (err) {
+            _this.handleError(err);
+        });
+    };
+    /**
+     * This method updates product details
+     */
+    ProductProvider.prototype.updateProductDetails = function (updatedProduct) {
+        var _this = this;
+        var url = this.serviceUrl + "/updateProduct";
+        return this.http
+            .post(url, JSON.stringify(updatedProduct), { headers: this.headers, withCredentials: true })
+            .toPromise()
+            .then(function (res) {
             return res.json().data;
         })
             .catch(function (err) {

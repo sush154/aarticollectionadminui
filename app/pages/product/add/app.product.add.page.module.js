@@ -16,6 +16,7 @@ var angular2_toaster_1 = require('angular2-toaster');
 var app_header_module_1 = require('../../../modules/header/app.header.module');
 var angular2_loaders_css_1 = require('angular2-loaders-css');
 var ng2_file_upload_1 = require('ng2-file-upload');
+var app_inputtag_module_1 = require('../../../util/input-tag/app.inputtag.module');
 var app_product_add_page_component_1 = require('./app.product.add.page.component');
 var AddProductPageModule = (function () {
     function AddProductPageModule() {
@@ -23,7 +24,7 @@ var AddProductPageModule = (function () {
     AddProductPageModule = __decorate([
         core_1.NgModule({
             imports: [common_1.CommonModule, forms_1.FormsModule, router_1.RouterModule, angular2_toaster_1.ToasterModule, app_header_module_1.AppHeaderModule, angular2_loaders_css_1.LoadersCssModule,
-                ng2_file_upload_1.FileUploadModule],
+                ng2_file_upload_1.FileUploadModule, app_inputtag_module_1.InputTagModule],
             declarations: [app_product_add_page_component_1.AddProductPageComponent],
             exports: [app_product_add_page_component_1.AddProductPageComponent]
         }), 

@@ -139,9 +139,9 @@ export class ProductProvider {
     }
 
     /*
-    *   This method updates product details
+    *   This method adds product meta info
     */
-    updateProductDetails(updatedProduct : any) : Promise<any> {
+    updateProductMetaInfo(updatedProduct : any) : Promise<any> {
         let url = this.serviceUrl + "/addMetaInfo";
 
         return this.http
@@ -153,5 +153,22 @@ export class ProductProvider {
             .catch((err) => {
                 this.handleError(err);
             });
+    }
+
+    /**
+     * This method updates product details
+     */
+    updateProductDetails(updatedProduct : any) : Promise<any> {
+        let url = this.serviceUrl + "/updateProduct";
+
+        return this.http
+            .post(url, JSON.stringify(updatedProduct), {headers : this.headers, withCredentials : true})
+            .toPromise()
+            .then((res) => {
+                return res.json().data;
+            })
+            .catch((err) =>{
+                this.handleError(err);
+            })
     }
 }

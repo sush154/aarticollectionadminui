@@ -16,6 +16,7 @@ var Subject_1 = require('rxjs/Subject');
 var ng2_file_upload_1 = require('ng2-file-upload');
 var app_service_url_1 = require('../../../util/app.service.url');
 var platform_browser_1 = require('@angular/platform-browser');
+var app_parent_category_1 = require('../../../common/app.parent.category');
 var app_product_provider_1 = require('../../../providers/product/app.product.provider');
 var app_category_provider_1 = require('../../../providers/category/app.category.provider');
 var AddProductPageComponent = (function () {
@@ -38,6 +39,7 @@ var AddProductPageComponent = (function () {
         this.categoriesName = new Subject_1.Subject();
         this.newCategory = {};
         this.updatedProduct = {};
+        this.parentCategoryList = app_parent_category_1.PARENTCATEGORY;
     }
     AddProductPageComponent.prototype.goBack = function () {
         this.location.back();
@@ -142,12 +144,25 @@ var AddProductPageComponent = (function () {
         this.selectedCategory = category.categoryName;
         this.displayCategories = false;
     };
-    AddProductPageComponent.prototype.updateProduct = function () {
+    AddProductPageComponent.prototype.addProductMetaInfo = function () {
         var _this = this;
         this.loading = true;
-        this.productProvider.updateProductDetails(this.updatedProduct).then(function (res) {
+        var highlightArr = [];
+        for (var _i = 0, _a = this.updatedProduct.highlights.split(','); _i < _a.length; _i++) {
+            var hl = _a[_i];
+            highlightArr.push(hl);
+        }
+        this.updatedProduct.highlights = highlightArr;
+        var colorArr = [];
+        for (var _b = 0, _c = this.updatedProduct.colorVariants.split(','); _b < _c.length; _b++) {
+            var cv = _c[_b];
+            colorArr.push(cv);
+        }
+        this.updatedProduct.colorVariants = colorArr;
+        this.productProvider.updateProductMetaInfo(this.updatedProduct).then(function (res) {
             _this.loading = false;
             if (res.status === 200) {
+                _this.toastrService.pop('success', 'Meta Info Updated', 'Meta Information of Product are updated successfully !');
                 _this.location.back();
             }
             else if (res.status === 401) {
