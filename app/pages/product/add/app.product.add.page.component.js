@@ -148,15 +148,19 @@ var AddProductPageComponent = (function () {
         var _this = this;
         this.loading = true;
         var highlightArr = [];
-        for (var _i = 0, _a = this.updatedProduct.highlights.split(','); _i < _a.length; _i++) {
-            var hl = _a[_i];
-            highlightArr.push(hl);
+        if (this.updatedProduct.highlights) {
+            for (var _i = 0, _a = this.updatedProduct.highlights.split(','); _i < _a.length; _i++) {
+                var hl = _a[_i];
+                highlightArr.push(hl);
+            }
         }
         this.updatedProduct.highlights = highlightArr;
         var colorArr = [];
-        for (var _b = 0, _c = this.updatedProduct.colorVariants.split(','); _b < _c.length; _b++) {
-            var cv = _c[_b];
-            colorArr.push(cv);
+        if (this.updatedProduct.colorVariants) {
+            for (var _b = 0, _c = this.updatedProduct.colorVariants.split(','); _b < _c.length; _b++) {
+                var cv = _c[_b];
+                colorArr.push(cv);
+            }
         }
         this.updatedProduct.colorVariants = colorArr;
         this.productProvider.updateProductMetaInfo(this.updatedProduct).then(function (res) {

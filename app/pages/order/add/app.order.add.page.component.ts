@@ -165,6 +165,7 @@ export class AddOrderPageComponent implements OnInit{
 
             let product : any = {};
 
+            product._id = p._id;
             product.productId = p.productId;
             product.productName = p.productName;
             product.price = p.price;

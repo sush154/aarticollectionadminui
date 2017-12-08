@@ -3,7 +3,7 @@ import {Pipe, PipeTransform} from '@angular/core';
 import {PARENTCATEGORY} from '../../common/app.parent.category';
 
 @Pipe({
-    name : 'parentCatgoryParser'
+    name : 'parentCategoryParser'
 })
 
 export class ParentCategoryParser implements PipeTransform {

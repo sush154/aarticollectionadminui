@@ -13,6 +13,7 @@ import {CustomerDetailsPageComponent} from '../../pages/customer/details/app.cus
 import {ProductsListPageComponent} from '../../pages/product/list/app.product.list.page.component';
 import {AddProductPageComponent} from '../../pages/product/add/app.product.add.page.component';
 import {ProductDetailsPageComponent} from '../../pages/product/details/app.product.details.page.component';
+import {PageNotFoundComponent} from '../../pages/error/app.pageNotFound.page.component';
 
 const routes : Routes = [
     {path : 'login', component : LoginPageComponent},
@@ -25,7 +26,8 @@ const routes : Routes = [
     {path : 'orders/:id', component : OrderDetailsPageComponent},
     {path : 'customers', component : CustomerListPageComponent},
     {path : 'customers/addCustomer', component : CustomerAddPageComponent},
-    {path : 'customers/:id', component : CustomerDetailsPageComponent}
+    {path : 'customers/:id', component : CustomerDetailsPageComponent},
+    {path : '**', component : PageNotFoundComponent}
 ]
 
 @NgModule({

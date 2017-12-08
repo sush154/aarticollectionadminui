@@ -36,6 +36,14 @@ var ProductsListPageComponent = (function () {
     ProductsListPageComponent.prototype.navigateToProductDetails = function (productId) {
         this.router.navigate(['/products', productId]);
     };
+    ProductsListPageComponent.prototype.lowInQuantity = function (quantity) {
+        if (quantity <= 5) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    };
     ProductsListPageComponent.prototype.ngOnInit = function () {
         this.loading = true;
         this.getProductsList();

@@ -152,15 +152,23 @@ export class AddProductPageComponent implements OnInit{
         this.loading = true;
         
         let highlightArr : any = [];
-        for(let hl of this.updatedProduct.highlights.split(',')){
-            highlightArr.push(hl);
+        if(this.updatedProduct.highlights){
+            for(let hl of this.updatedProduct.highlights.split(',')){
+                highlightArr.push(hl);
+            }
         }
+
         this.updatedProduct.highlights = highlightArr;
 
         let colorArr : any = [];
-        for(let cv of this.updatedProduct.colorVariants.split(',')){
-            colorArr.push(cv);
+
+        if(this.updatedProduct.colorVariants){
+            for(let cv of this.updatedProduct.colorVariants.split(',')){
+                colorArr.push(cv);
+            }
         }
+
+
         this.updatedProduct.colorVariants = colorArr;
         
         this.productProvider.updateProductMetaInfo(this.updatedProduct).then(res => {

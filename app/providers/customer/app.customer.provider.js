@@ -70,6 +70,7 @@ var AppCustomerProvider = (function () {
             .toPromise()
             .then(function (res) {
             return res.json().data;
+            ;
         })
             .catch(function (err) {
             _this.handleError(err);

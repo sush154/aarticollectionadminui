@@ -36,6 +36,14 @@ export class ProductsListPageComponent implements OnInit{
         this.router.navigate(['/products', productId]);
     }
 
+    private lowInQuantity(quantity : number) : boolean{
+        if(quantity <= 5){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
     ngOnInit() : void {
         this.loading = true;
         this.getProductsList();

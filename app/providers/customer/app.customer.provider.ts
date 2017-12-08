@@ -70,7 +70,7 @@ export class AppCustomerProvider {
             .post(url, JSON.stringify(newCustomer), {headers: this.headers,withCredentials: true})
             .toPromise()
             .then((res) => {
-                return res.json().data;
+                return res.json().data;;
             })
             .catch((err) => {
                 this.handleError(err);

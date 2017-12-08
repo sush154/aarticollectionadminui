@@ -159,6 +159,7 @@ var AddOrderPageComponent = (function () {
                 this.newOrder.productIds.push(product._id);
             }*/
             var product = {};
+            product._id = p._id;
             product.productId = p.productId;
             product.productName = p.productName;
             product.price = p.price;

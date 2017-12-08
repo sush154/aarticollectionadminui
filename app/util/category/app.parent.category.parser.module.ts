@@ -8,4 +8,4 @@ import {ParentCategoryParser} from './app.parent.category.parser';
     exports : [ParentCategoryParser]
 })
 
-export class CategoryParesrModule{}
+export class CategoryParserModule{}

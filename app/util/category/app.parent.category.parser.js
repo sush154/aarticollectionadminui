@@ -25,7 +25,7 @@ var ParentCategoryParser = (function () {
     };
     ParentCategoryParser = __decorate([
         core_1.Pipe({
-            name: 'parentCatgoryParser'
+            name: 'parentCategoryParser'
         }), 
         __metadata('design:paramtypes', [])
     ], ParentCategoryParser);

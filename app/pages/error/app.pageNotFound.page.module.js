@@ -9,19 +9,20 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var app_parent_category_parser_1 = require('./app.parent.category.parser');
-var CategoryParserModule = (function () {
-    function CategoryParserModule() {
+var router_1 = require('@angular/router');
+var app_pageNotFound_page_component_1 = require('./app.pageNotFound.page.component');
+var PageNotFoundModule = (function () {
+    function PageNotFoundModule() {
     }
-    CategoryParserModule = __decorate([
+    PageNotFoundModule = __decorate([
         core_1.NgModule({
-            imports: [],
-            declarations: [app_parent_category_parser_1.ParentCategoryParser],
-            exports: [app_parent_category_parser_1.ParentCategoryParser]
+            imports: [router_1.RouterModule],
+            declarations: [app_pageNotFound_page_component_1.PageNotFoundComponent],
+            exports: [app_pageNotFound_page_component_1.PageNotFoundComponent]
         }), 
         __metadata('design:paramtypes', [])
-    ], CategoryParserModule);
-    return CategoryParserModule;
+    ], PageNotFoundModule);
+    return PageNotFoundModule;
 }());
-exports.CategoryParserModule = CategoryParserModule;
-//# sourceMappingURL=app.parent.category.parser.module.js.map
+exports.PageNotFoundModule = PageNotFoundModule;
+//# sourceMappingURL=app.pageNotFound.page.module.js.map

@@ -9,19 +9,23 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var app_parent_category_parser_1 = require('./app.parent.category.parser');
-var CategoryParserModule = (function () {
-    function CategoryParserModule() {
+var router_1 = require('@angular/router');
+var PageNotFoundComponent = (function () {
+    function PageNotFoundComponent(router) {
+        this.router = router;
     }
-    CategoryParserModule = __decorate([
-        core_1.NgModule({
-            imports: [],
-            declarations: [app_parent_category_parser_1.ParentCategoryParser],
-            exports: [app_parent_category_parser_1.ParentCategoryParser]
+    PageNotFoundComponent.prototype.goBack = function () {
+        this.router.navigate(['/dashboard']);
+    };
+    PageNotFoundComponent = __decorate([
+        core_1.Component({
+            selector: 'page-not-found',
+            templateUrl: './app/pages/error/app.pageNotFound.page.component.html',
+            styleUrls: ['./app/pages/error/app.pageNotFound.page.component.css']
         }), 
-        __metadata('design:paramtypes', [])
-    ], CategoryParserModule);
-    return CategoryParserModule;
+        __metadata('design:paramtypes', [router_1.Router])
+    ], PageNotFoundComponent);
+    return PageNotFoundComponent;
 }());
-exports.CategoryParserModule = CategoryParserModule;
-//# sourceMappingURL=app.parent.category.parser.module.js.map
+exports.PageNotFoundComponent = PageNotFoundComponent;
+//# sourceMappingURL=app.pageNotFound.page.component.js.map

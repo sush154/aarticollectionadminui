@@ -1,0 +1,46 @@
+
+.agile {
+    width: 80%;
+    margin: 0 auto;
+    color : #000;
+}
+
+.w31 {
+    margin: 4em 0;
+}
+
+.text {
+    width: 64%;
+    float: left;
+    padding: 5em 0em 3em 0em;
+    color : #000;
+}
+
+h1 {
+    font-size: 70px;
+    text-align: left;
+    margin-bottom: 20px;
+    margin-top: 0px;
+
+    font-weight: 700;
+    color : #000;
+}
+
+p {
+    font-weight: 600;
+    font-size: 20px;
+    text-align: left;
+    color : #000;
+    line-height: 32px;
+    padding-top: 10px;
+}
+
+.image {
+    width: 30%;
+    float: left;
+    margin-top: 40px;
+}
+
+.image img {
+    width: 100%;
+}
