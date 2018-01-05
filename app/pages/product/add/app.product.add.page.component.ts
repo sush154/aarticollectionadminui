@@ -5,7 +5,7 @@ import {IMyDpOptions} from 'mydatepicker';
 import {Location} from '@angular/common';
 import { Subject } from 'rxjs/Subject';
 import { FileUploader } from 'ng2-file-upload';
-import {URL} from '../../../util/app.service.url';
+import {CMSURL} from '../../../util/app.service.url';
 import { DomSanitizer } from '@angular/platform-browser';
 import {PARENTCATEGORY} from '../../../common/app.parent.category';
 
@@ -111,7 +111,7 @@ export class AddProductPageComponent implements OnInit{
                     this.updatedProduct._id = this.newProduct._id;
                     this.firstSection = false;
                     this.secondSection = true;
-                    let url = URL + "/product/addImage/"+this.newProduct._id;
+                    let url = CMSURL + "/saveImage";
                     this.uploader = new FileUploader({url:url});
                 }else if(res.status === 401){
                     this.router.navigate(['/login']);
@@ -126,9 +126,15 @@ export class AddProductPageComponent implements OnInit{
         this.loading = true;
         this.uploader.uploadAll();
         this.uploader.onCompleteItem = (item, response, status, header) => {
+
           if(JSON.parse(response).data.status === 200){
             this.loading = false;
-            this.getImagesList(this.newProduct._id);
+
+            this.productProvider.addImage(this.newProduct._id, JSON.parse(response).data.imagePath).then(res => {
+                if(res.status === 200){
+                    this.getImagesList(this.newProduct._id);
+                }
+            });
           }
         }
     }
@@ -137,9 +143,13 @@ export class AddProductPageComponent implements OnInit{
         this.loading = true;
         this.productProvider.getImagesList(productId).then(res => {
             this.loading = false;
-            this.imagesList = res;
-            //console.log(res);
+            this.imagesList = res.image[0].images;
+
         })
+    }
+
+    private getImageFromCMS(imagePath : any) : String {
+        return CMSURL + "/getImg/"+ imagePath;
     }
 
     private selectCategory(category : any) : void {

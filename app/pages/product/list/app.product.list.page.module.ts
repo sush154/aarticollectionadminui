@@ -7,12 +7,13 @@ import {DateParserModule} from '../../../util/dateParser/app.date.parser.module'
 import {ToasterModule, ToasterService} from 'angular2-toaster';
 import {AppHeaderModule} from '../../../modules/header/app.header.module';
 import { LoadersCssModule } from 'angular2-loaders-css';
+import {CategoryParserModule} from '../../../util/category/app.parent.category.parser.module';
 
 import {ProductsListPageComponent} from './app.product.list.page.component';
 
 @NgModule({
     imports : [CommonModule, RouterModule, NgxPaginationModule, DateParserModule, ToasterModule,
-                AppHeaderModule, LoadersCssModule],
+                AppHeaderModule, LoadersCssModule, CategoryParserModule],
     declarations : [ProductsListPageComponent],
     exports : [ProductsListPageComponent]
 })

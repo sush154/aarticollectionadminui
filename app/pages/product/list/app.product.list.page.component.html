@@ -23,7 +23,7 @@
                 <tr *ngFor="let product of productsList | paginate: { itemsPerPage: 10, currentPage: p, id: 'first'}" (click)="navigateToProductDetails(product.productId)" [class.low-quantity]="lowInQuantity(product.quantity)">
                     <td>{{product.productId}}</td>
                     <td>{{product.productName}}</td>
-                    <td>{{product.category.categoryName}}</td>
+                    <td>{{product.category.categoryName}}, {{product.category.parentCategory | parentCategoryParser}}</td>
                     <td>{{product.price}}</td>
                     <td>{{product.quantity}}</td>
                 </tr>

@@ -5,6 +5,7 @@ import 'rxjs/add/operator/switchMap';
 import {Location} from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
 import {URL} from '../../../util/app.service.url';
+import {CMSURL} from '../../../util/app.service.url';
 
 import {ToasterService} from 'angular2-toaster';
 import {ProductProvider} from '../../../providers/product/app.product.provider';
@@ -60,7 +61,8 @@ export class ProductDetailsPageComponent implements OnInit{
             if(res.status === 200){
                 this.productDetails = res.product;
                 this.categoryDetails = res.product.category;
-                this.getImagesList(this.productDetails._id);
+                this.imagesList = res.product.images;
+                //this.getImagesList(this.productDetails._id);
                 let url = URL + "/product/addImage/"+this.productDetails._id;
                 this.uploader = new FileUploader({url:url});
             }else if(res.status === 401){
@@ -186,6 +188,10 @@ export class ProductDetailsPageComponent implements OnInit{
                 this.toastrService.pop('error', 'Server Error', 'We encountered server error. Please try later !');
             }
         })
+    }
+
+    private getImageFromCMS(imagePath : any) : String {
+        return CMSURL + "/getImg/"+ imagePath;
     }
 
     ngOnInit() : void {

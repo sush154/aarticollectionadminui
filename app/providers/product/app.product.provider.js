@@ -118,6 +118,26 @@ var ProductProvider = (function () {
         });
     };
     /*
+    *   This method adds image path to image array in product
+    */
+    ProductProvider.prototype.addImage = function (productId, imagePath) {
+        var _this = this;
+        var url = this.serviceUrl + '/addImage';
+        var data = {
+            "productID": productId,
+            "imagePath": imagePath
+        };
+        return this.http
+            .post(url, JSON.stringify(data), { headers: this.headers, withCredentials: true })
+            .toPromise()
+            .then(function (res) {
+            return res.json().data;
+        })
+            .catch(function (err) {
+            _this.handleError(err);
+        });
+    };
+    /*
     *   This method retrieves images list for the selected product
     */
     ProductProvider.prototype.getImagesList = function (productId) {
@@ -127,7 +147,7 @@ var ProductProvider = (function () {
             .get(url, { headers: this.headers, withCredentials: true })
             .toPromise()
             .then(function (res) {
-            return res.json();
+            return res.json().data;
         })
             .catch(function (err) {
             _this.handleError(err);

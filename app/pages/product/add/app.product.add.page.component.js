@@ -107,7 +107,7 @@ var AddProductPageComponent = (function () {
                     _this.updatedProduct._id = _this.newProduct._id;
                     _this.firstSection = false;
                     _this.secondSection = true;
-                    var url = app_service_url_1.URL + "/product/addImage/" + _this.newProduct._id;
+                    var url = app_service_url_1.CMSURL + "/saveImage";
                     _this.uploader = new ng2_file_upload_1.FileUploader({ url: url });
                 }
                 else if (res.status === 401) {
@@ -126,7 +126,11 @@ var AddProductPageComponent = (function () {
         this.uploader.onCompleteItem = function (item, response, status, header) {
             if (JSON.parse(response).data.status === 200) {
                 _this.loading = false;
-                _this.getImagesList(_this.newProduct._id);
+                _this.productProvider.addImage(_this.newProduct._id, JSON.parse(response).data.imagePath).then(function (res) {
+                    if (res.status === 200) {
+                        _this.getImagesList(_this.newProduct._id);
+                    }
+                });
             }
         };
     };
@@ -135,9 +139,11 @@ var AddProductPageComponent = (function () {
         this.loading = true;
         this.productProvider.getImagesList(productId).then(function (res) {
             _this.loading = false;
-            _this.imagesList = res;
-            //console.log(res);
+            _this.imagesList = res.image[0].images;
         });
+    };
+    AddProductPageComponent.prototype.getImageFromCMS = function (imagePath) {
+        return app_service_url_1.CMSURL + "/getImg/" + imagePath;
     };
     AddProductPageComponent.prototype.selectCategory = function (category) {
         this.newProduct.category = category._id;

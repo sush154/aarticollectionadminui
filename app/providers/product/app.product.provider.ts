@@ -122,6 +122,28 @@ export class ProductProvider {
     }
 
     /*
+    *   This method adds image path to image array in product
+    */
+    addImage(productId : any, imagePath : any) : Promise<any> {
+        let url = this.serviceUrl + '/addImage';
+
+        let data = {
+            "productID" : productId,
+            "imagePath" : imagePath
+        };
+
+        return this.http
+            .post(url, JSON.stringify(data), {headers : this.headers, withCredentials : true})
+            .toPromise()
+            .then((res) => {
+                return res.json().data;
+            })
+            .catch((err) => {
+                this.handleError(err);
+            })
+    }
+
+    /*
     *   This method retrieves images list for the selected product
     */
     getImagesList(productId : any) : Promise<any> {
@@ -131,7 +153,7 @@ export class ProductProvider {
             .get(url, {headers : this.headers, withCredentials : true})
             .toPromise()
             .then((res) => {
-                return res.json();
+                return res.json().data;
             })
             .catch((err) => {
                 this.handleError(err);

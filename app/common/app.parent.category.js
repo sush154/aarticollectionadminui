@@ -1,8 +1,14 @@
+/*export const PARENTCATEGORY = [
+    {"id" : "1", "value" : "Dress Material"},
+    {"id" : "2", "value" : "Saree"},
+    {"id" : "3", "value" : "Kurtis"},
+    {"id" : "4", "value" : "Lehengas"}
+];*/
 "use strict";
 exports.PARENTCATEGORY = [
-    { "id": "1", "value": "Dress Material" },
-    { "id": "2", "value": "Saree" },
-    { "id": "3", "value": "Curtis" },
-    { "id": "4", "value": "Lehengas" }
+    { "id": "1", "value": "PC1" },
+    { "id": "2", "value": "PC2" },
+    { "id": "3", "value": "PC3" },
+    { "id": "4", "value": "PC4" }
 ];
 //# sourceMappingURL=app.parent.category.js.map

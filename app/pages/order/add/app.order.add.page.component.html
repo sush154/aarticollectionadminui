@@ -163,7 +163,7 @@
                             <tbody>
                                 <tr *ngFor="let filteredProduct of filteredProductsList | paginate: { itemsPerPage: 10, currentPage: p, id: 'first' }">
                                     <td>{{filteredProduct.productId}}</td>
-                                    <td>{{filteredProduct.productName}}</td>
+                                    <td>{{filteredProduct.productName}} {{filteredProduct.category.categoryName}}</td>
                                     <td></td>
                                     <td>{{filteredProduct.price}}</td>
                                     <td>

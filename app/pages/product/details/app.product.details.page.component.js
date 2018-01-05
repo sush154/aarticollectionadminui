@@ -15,6 +15,7 @@ require('rxjs/add/operator/switchMap');
 var common_1 = require('@angular/common');
 var platform_browser_1 = require('@angular/platform-browser');
 var app_service_url_1 = require('../../../util/app.service.url');
+var app_service_url_2 = require('../../../util/app.service.url');
 var angular2_toaster_1 = require('angular2-toaster');
 var app_product_provider_1 = require('../../../providers/product/app.product.provider');
 var ng2_file_upload_1 = require('ng2-file-upload');
@@ -54,7 +55,8 @@ var ProductDetailsPageComponent = (function () {
             if (res.status === 200) {
                 _this.productDetails = res.product;
                 _this.categoryDetails = res.product.category;
-                _this.getImagesList(_this.productDetails._id);
+                _this.imagesList = res.product.images;
+                //this.getImagesList(this.productDetails._id);
                 var url = app_service_url_1.URL + "/product/addImage/" + _this.productDetails._id;
                 _this.uploader = new ng2_file_upload_1.FileUploader({ url: url });
             }
@@ -179,6 +181,9 @@ var ProductDetailsPageComponent = (function () {
                 _this.toastrService.pop('error', 'Server Error', 'We encountered server error. Please try later !');
             }
         });
+    };
+    ProductDetailsPageComponent.prototype.getImageFromCMS = function (imagePath) {
+        return app_service_url_2.CMSURL + "/getImg/" + imagePath;
     };
     ProductDetailsPageComponent.prototype.ngOnInit = function () {
         this.getProductDetails();

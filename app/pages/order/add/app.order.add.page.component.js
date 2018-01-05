@@ -96,9 +96,12 @@ var AddOrderPageComponent = (function () {
     *   This method adds product to cart
     */
     AddOrderPageComponent.prototype.addProductToCart = function (product, productQuantity) {
+        console.log(product);
         if (productQuantity > 0) {
             product.productQuantity = productQuantity;
             product.amount = parseInt(product.price) * productQuantity;
+            product.productName = product.productName + ' ' + product.category.categoryName;
+            product.category = product.category;
             this.productsList.push(product);
             this.totalOrderAmount = this.totalOrderAmount + parseInt(product.amount);
             document.getElementById("productNameFilterForm").reset();

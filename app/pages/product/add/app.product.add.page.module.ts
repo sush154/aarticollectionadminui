@@ -7,12 +7,13 @@ import {AppHeaderModule} from '../../../modules/header/app.header.module';
 import { LoadersCssModule } from 'angular2-loaders-css';
 import { FileUploadModule  } from 'ng2-file-upload';
 import {InputTagModule} from '../../../util/input-tag/app.inputtag.module';
+import {CategoryParserModule} from '../../../util/category/app.parent.category.parser.module';
 
 import {AddProductPageComponent} from './app.product.add.page.component';
 
 @NgModule({
     imports : [CommonModule, FormsModule, RouterModule, ToasterModule, AppHeaderModule, LoadersCssModule,
-                FileUploadModule, InputTagModule ],
+                FileUploadModule, InputTagModule, CategoryParserModule ],
     declarations : [AddProductPageComponent],
     exports : [AddProductPageComponent]
 })

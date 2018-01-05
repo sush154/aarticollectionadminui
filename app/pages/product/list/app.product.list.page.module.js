@@ -16,6 +16,7 @@ var app_date_parser_module_1 = require('../../../util/dateParser/app.date.parser
 var angular2_toaster_1 = require('angular2-toaster');
 var app_header_module_1 = require('../../../modules/header/app.header.module');
 var angular2_loaders_css_1 = require('angular2-loaders-css');
+var app_parent_category_parser_module_1 = require('../../../util/category/app.parent.category.parser.module');
 var app_product_list_page_component_1 = require('./app.product.list.page.component');
 var ProductListPageModule = (function () {
     function ProductListPageModule() {
@@ -23,7 +24,7 @@ var ProductListPageModule = (function () {
     ProductListPageModule = __decorate([
         core_1.NgModule({
             imports: [common_1.CommonModule, router_1.RouterModule, ngx_pagination_1.NgxPaginationModule, app_date_parser_module_1.DateParserModule, angular2_toaster_1.ToasterModule,
-                app_header_module_1.AppHeaderModule, angular2_loaders_css_1.LoadersCssModule],
+                app_header_module_1.AppHeaderModule, angular2_loaders_css_1.LoadersCssModule, app_parent_category_parser_module_1.CategoryParserModule],
             declarations: [app_product_list_page_component_1.ProductsListPageComponent],
             exports: [app_product_list_page_component_1.ProductsListPageComponent]
         }), 
